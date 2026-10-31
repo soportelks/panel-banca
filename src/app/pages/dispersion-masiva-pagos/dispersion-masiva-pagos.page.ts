@@ -38,6 +38,8 @@ export class DispersionMasivaPagosPage implements OnInit {
   montoComicion: number = 0;
   mostrarTotalMontos: boolean = false;
   mostrarBotonProcesar: boolean = true;
+  isProcessing: boolean = false;
+  idLoteActual: string = '';
   datosComisiones: any = null;
 
   datosSaldo: any = {

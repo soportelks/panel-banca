@@ -70,16 +70,19 @@
       class="disperse-button"
       fill="solid"
       (click)="procesarPagos()"
-      *ngIf="mostrarBotonProcesar"
+      [disabled]="isProcessing || csvData.length === 0"
+      *ngIf="mostrarBotonProcesar && csvData.length > 0"
     >
-      <ion-icon name="paper-plane-outline"></ion-icon>
-      Enviar CSV
+      <ion-spinner name="crescent" *ngIf="isProcessing"></ion-spinner>
+      <ion-icon name="paper-plane-outline" *ngIf="!isProcessing"></ion-icon>
+      {{ isProcessing ? ' Procesando nómina...' : ' Enviar CSV' }}
     </ion-button>
     <ion-button
       color="secondary"
       class="disperse-button"
       *ngIf="csvData.length > 0"
       fill="solid"
+      [disabled]="isProcessing"
       (click)="clearTableData()"
     >
       <ion-icon name="trash-outline"></ion-icon>
