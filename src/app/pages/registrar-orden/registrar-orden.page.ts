@@ -530,6 +530,7 @@ export class RegistrarOrdenPage implements AfterViewInit {
   async openOtpModal(email: string, resolve: (value: boolean | PromiseLike<boolean>) => void) {
     this.alertInstance = await this.alertCtrl.create({
       header: 'Ingresar Codigo de verificación',
+      backdropDismiss: false,
       message: `
      
         Tiempo restante: ${this.timeLeft} segundos
@@ -557,7 +558,9 @@ export class RegistrarOrdenPage implements AfterViewInit {
           text: 'Verificar',
           handler: async (data) => {
             const isValid = await this.verifyOtp(email, data.otpCode);
-            resolve(isValid); // Validamos el código OTP
+            if (isValid) {
+              resolve(true);
+            }
             return isValid;
           }
         }
@@ -576,21 +579,30 @@ export class RegistrarOrdenPage implements AfterViewInit {
 
   verifyOtp(email: string, code: number) {
     return new Promise<boolean>((resolve) => {
-      if (email && code !== null) {
-        this.otpService.verifyOtp(email, code).subscribe(valid => {
-          if (valid) {
-            this.message = 'Código correcto. Autenticación exitosa.';
-            clearInterval(this.timer);
-            resolve(true);
-          } else {
-            this.message = ' : Código incorrecto. Puedes intentarlo de nuevo.';
-            this.incorrectMessage = ' : Código incorrecto. Inténtalo nuevamente.';
-            this.resendDisabled = false;
+      if (email && code !== null && code !== undefined && `${code}`.trim() !== '') {
+        this.otpService.verifyOtp(email, code).subscribe(
+          valid => {
+            if (valid) {
+              this.message = 'Código correcto. Autenticación exitosa.';
+              clearInterval(this.timer);
+              resolve(true);
+            } else {
+              this.message = ' : Código incorrecto. Puedes intentarlo de nuevo.';
+              this.incorrectMessage = ' : Código incorrecto. Inténtalo nuevamente.';
+              this.resendDisabled = false;
+              this.updateAlertMessage();
+              resolve(false);
+            }
+          },
+          () => {
+            this.incorrectMessage = ' : Error al validar el código. Inténtalo nuevamente.';
             this.updateAlertMessage();
             resolve(false);
           }
-        });
+        );
       } else {
+        this.incorrectMessage = ' : Ingresa un código de verificación válido.';
+        this.updateAlertMessage();
         resolve(false);
       }
     });
