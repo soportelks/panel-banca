@@ -1,0 +1,50 @@
+# Dependencias de Node.js
+node_modules/
+package-lock.json
+yarn.lock
+
+# Archivos generados por Angular/Ionic
+.angular/
+.angular/cache/
+www/
+dist/
+build/
+
+# Archivos de compilación y caché
+www/
+platforms/
+plugins/
+build/
+dist/
+
+# Archivos de configuración y temporales
+.idea/
+.vscode/
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Configuración de Capacitor/Cordova
+android/
+ios/
+capacitor.config.json
+cordova/platforms/
+cordova/plugins/
+cordova/node_modules/
+
+# Archivos específicos de Ionic
+.env
+.ionic/
+.sourcemaps/
+.sass-cache/
+
+# Archivos generados por el sistema operativo
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Archivos sensibles
+firebase.json
+google-services.json
+GoogleService-Info.plist

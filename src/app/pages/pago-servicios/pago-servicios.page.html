@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Servicios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-segment value="servicio" color="secondary" [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="servicio">
+      <ion-label><i class="fa-solid fa-1"></i> Servicio</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="verificacion" disabled="true">
+      <ion-label><i class="fa-solid fa-2"></i> Verificación</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="type">
+    <ion-list *ngSwitchCase="'servicio'" lines="full">
+      <form [formGroup]="formServicio">
+        <div *ngIf="datosServices.info">
+          <ion-item>
+            <ion-select formControlName="servicio" color="secondary" aria-label="Servicio" placeholder="Servicio"
+              (ionChange)="handleChange($event)">
+              <ion-select-option *ngFor="let item of datosServices.info">{{item.producto}}</ion-select-option>
+            </ion-select>
+            <i class="fa-solid fa-building-user" slot="start"></i>
+          </ion-item>
+        </div>
+        <ion-item>
+          <ion-input formControlName="referencia" required="true" label="Referencia:" labelPlacement="floating"
+            inputmode="numeric" type="numeric" color="secondary">
+          </ion-input>
+          <i class="fa-regular fa-file-lines" slot="start"></i>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="digitoVerif" label="Dígito Verificador:" labelPlacement="floating"
+            inputmode="numeric" type="numeric" color="secondary">
+          </ion-input>
+          <i class="fa-solid fa-bars" slot="start"></i>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="monto" required="true" label="Monto:" labelPlacement="floating"
+            inputmode="decimal" type="decimal" color="secondary">
+          </ion-input>
+          <i class="fa-solid fa-dollar-sign" slot="start"></i>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="confirMonto" required="true" label="Confirmar Monto:" labelPlacement="floating"
+            inputmode="decimal" type="decimal" color="secondary">
+          </ion-input>
+          <i class="fa-solid fa-dollar-sign" slot="start"></i>
+        </ion-item>
+      </form>
+      <div class="ion-text-center">
+        <ion-button (click)=" obtenerDatos()" class="ion-margin-top" shape="round"
+          color="secondary">Siguiente</ion-button>
+      </div>
+    </ion-list>
+    <ion-list *ngSwitchCase="'verificacion'">
+      <ion-item>
+        <ion-text>¡Verifica que los datos que ingresaste sean correctos!</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-text><strong style="color: var(--ion-color-secondary);">Servicio: </strong>{{seleccion}}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-text><strong style="color: var(--ion-color-secondary);">Referencia:
+          </strong>{{datosForm.referencia}}</ion-text>
+      </ion-item>
+      <ion-item *ngIf="datosForm.digitoVerif">
+        <ion-text><strong style="color: var(--ion-color-secondary);">Digito Verificador:
+          </strong>{{datosForm.digitoVerif}}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-text><strong style="color: var(--ion-color-secondary);">Monto: </strong>{{datosForm.monto |
+          currency}}</ion-text>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row class="ion-text-center">
+          <ion-col>
+            <ion-button class="ion-margin-top" shape="round" color="secondary"
+              (click)="type = 'servicio'">Regresar</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button (click)="realizarPago()" class="ion-margin-top" shape="round"
+              color="secondary">Continuar</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </div>
+  <ion-modal id="example-modal" #modal>
+    <ng-template>
+      <!--app-comprobante [datosTransaccion]="datosTransaccion"></app-comprobante-->
+    </ng-template>
+  </ion-modal>
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Recuperar Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]=" true" class="ion-text-center ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>
+        Para recuperar tu contraseña por favor <br />
+        ingresa el número de teléfono que <br />
+        usaste al abrir tu cuenta.
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-icon name="call-outline" class="ion-margin-end"></ion-icon>
+        <ion-input
+          [(ngModel)]="phoneNumber"
+          label="Ingresa tu teléfono"
+          labelPlacement="floating"
+          color="primary"
+          maxlength="10"
+          minlength="10"
+        >
+        </ion-input>
+      </ion-item>
+
+      <ion-button
+        shape="round"
+        (click)="searchClientForRecovery()"
+        expand="block"
+        class="ion-margin-top"
+      >
+        Continuar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

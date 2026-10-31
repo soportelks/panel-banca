@@ -1,0 +1,16 @@
+{
+  "name": "onboarding",
+  "integrations": {
+    "capacitor": {},
+    "enterprise": {
+      "keyId": 13851,
+      "productKey": "key_35718a4e03214d6da03e4bca36b27a3d",
+      "appId": "c452a66a",
+      "orgId": "40f26439-992a-4a9a-8339-d48e46950658",
+      "registries": [
+        "@ionic-enterprise;https://registry.ionicframework.com/"
+      ]
+    }
+  },
+  "type": "angular"
+}

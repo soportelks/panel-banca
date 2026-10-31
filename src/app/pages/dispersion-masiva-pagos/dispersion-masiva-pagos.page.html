@@ -1,0 +1,137 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Disperción Masiva</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense"></ion-header>
+
+  <ion-item color="secondary">
+    <div>
+      <div *ngIf="datosSaldo?.info; else sinSaldo">
+        <ion-text>
+          Tu saldo en ahorro:
+          <strong style="font-size: 20px">
+            {{ datosSaldo.info.saldo | currency }}
+          </strong>
+        </ion-text>
+      </div>
+      <ng-template #sinSaldo>
+        <ion-text>
+          Tu saldo en ahorro:
+          <strong style="font-size: 20px">{{ 0 | currency }}</strong>
+        </ion-text>
+      </ng-template>
+    </div>
+  </ion-item>
+
+  <ion-item color="secondary" *ngIf="mostrarTotalMontos">
+    <div>
+      <div *ngIf="totalMontos !== null; else sinTotalMontos">
+        <ion-text>
+          Total de montos procesados:
+          <strong style="font-size: 20px">
+            {{ totalMontos | currency }}
+          </strong>
+        </ion-text>
+      </div>
+      <ng-template #sinTotalMontos>
+        <ion-text>
+          Total de montos procesados:
+          <strong style="font-size: 20px">{{ 0 | currency }}</strong>
+        </ion-text>
+      </ng-template>
+    </div>
+  </ion-item>
+
+  <div class="csv-button-container" color="secondary">
+    <input
+      type="file"
+      (change)="onFileSelect($event)"
+      accept=".xlsx"
+      hidden
+      #fileInput
+    />
+    <ion-button
+      color="secondary"
+      class="disperse-button"
+      *ngIf="csvData.length < 1"
+      fill="solid"
+      (click)="fileInput.click()"
+    >
+      Cargar Pagos
+    </ion-button>
+    <ion-button
+      color="secondary"
+      class="disperse-button"
+      fill="solid"
+      (click)="procesarPagos()"
+      *ngIf="mostrarBotonProcesar"
+    >
+      <ion-icon name="paper-plane-outline"></ion-icon>
+      Enviar CSV
+    </ion-button>
+    <ion-button
+      color="secondary"
+      class="disperse-button"
+      *ngIf="csvData.length > 0"
+      fill="solid"
+      (click)="clearTableData()"
+    >
+      <ion-icon name="trash-outline"></ion-icon>
+      Limpiar CSV
+    </ion-button>
+  </div>
+
+  <!-- Tabla Responsiva -->
+  <ion-card *ngIf="csvData.length > 0">
+    <ion-card-header>
+      <ion-card-title>Datos del CSV</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="table-container">
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let header of headersConfig" class="header-col">
+              {{ header.title }}
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let row of paginatedData">
+            <ion-col *ngFor="let header of headersConfig">
+              {{ row[header.key] }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-card-content>
+    <!-- Paginación -->
+    <div class="pagination-container">
+      <ion-button *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <ion-button
+        *ngIf="currentPage < totalPages"
+        (click)="changePage(currentPage + 1)"
+      >
+        Siguiente
+      </ion-button>
+    </div>
+  </ion-card>
+
+  <!-- Mensaje si no hay datos cargados -->
+  <ion-card *ngIf="csvData.length === 0">
+    <ion-card-header>
+      <ion-card-title>No hay datos cargados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Por favor, carga un archivo CSV para empezar con la dispersión de pagos.
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

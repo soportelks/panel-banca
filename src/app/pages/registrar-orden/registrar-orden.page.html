@@ -1,0 +1,179 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Registrar Pagos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-item color="secondary">
+  <div>
+    <div *ngIf="datosSaldo?.info; else sinSaldo">
+      <ion-text>
+        Tu saldo en ahorro:
+        <strong style="font-size: 20px">
+          {{ datosSaldo.info.saldo | currency }}
+        </strong>
+      </ion-text>
+    </div>
+    <ng-template #sinSaldo>
+      <ion-text>
+        Tu saldo en ahorro:
+        <strong style="font-size: 20px">{{ 0 | currency }}</strong>
+      </ion-text>
+    </ng-template>
+  </div>
+</ion-item>
+
+<ion-item color="secondary" *ngIf="mostrarTotalMontos">
+  <div>
+    <div *ngIf="totalMontos !== null; else sinTotalMontos">
+      <ion-text>
+        Total de montos con comición:
+        <strong style="font-size: 20px"> {{ totalMontos | currency }} </strong>
+      </ion-text>
+    </div>
+    <ng-template #sinTotalMontos>
+      <ion-text>
+        Total de montos con comición:
+        <strong style="font-size: 20px">{{ 0 | currency }}</strong>
+      </ion-text>
+    </ng-template>
+  </div>
+</ion-item>
+
+<ion-content>
+  <form [formGroup]="formOrden">
+    <ion-item>
+      <ion-icon name="card-outline" slot="start"></ion-icon>
+      <ion-input
+        formControlName="cuentaBeneficiario"
+        label="Cuenta"
+        labelPlacement="floating"
+        inputmode="numeric"
+        maxlength="21"
+        required
+        (ionBlur)="limpiarYVerificarCuenta()"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="business-outline" slot="start"></ion-icon>
+      <ion-label>Banco</ion-label>
+      <ion-select
+        formControlName="institucionContraparte"
+        placeholder="Seleccionar banco"
+        [disabled]="institucionSeleccionada"
+      >
+        <ion-select-option
+          *ngFor="let institucion of institucionesList"
+          [value]="institucion.participante"
+          required
+        >
+          {{ institucion.institucion }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-input
+        formControlName="nombreBeneficiario"
+        label="Nombre Beneficiario"
+        labelPlacement="floating"
+        maxlength="40"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="id-card-outline" slot="start"></ion-icon>
+      <ion-input
+        formControlName="rfcCurpBeneficiario"
+        label="RFC Beneficiario"
+        labelPlacement="floating"
+        minlength="2"
+        maxlength="18"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="document-text-outline" slot="start"></ion-icon>
+      <ion-input
+        formControlName="conceptoPago"
+        label="Concepto de Pago"
+        labelPlacement="floating"
+        minlength="4"
+        maxlength="40"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="pricetag-outline" slot="start"></ion-icon>
+      <ion-input
+        formControlName="referenciaNumerica"
+        label="Referencia Numérica"
+        labelPlacement="floating"
+        maxlength="7"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="cash-outline" slot="start"></ion-icon>
+      <ion-input
+        formControlName="monto"
+        label="Monto"
+        labelPlacement="floating"
+        type="text"
+        (ionChange)="validarMonto()"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="card-outline" slot="start"></ion-icon>
+      <ion-input
+        formControlName="tipoPago"
+        label="Tercero a Tercero"
+        labelPlacement="floating"
+        type="text"
+        required
+        [disabled]="true"
+        [value]="1"
+      ></ion-input>
+    </ion-item>
+
+    <div>
+      <!-- Botón que se oculta cuando procesandoPago es true -->
+      <ion-card
+        *ngIf="!procesandoPago"
+        color="primary"
+        (click)="registrarPago()"
+        [class.disabled-card]="!formOrden.valid"
+        [class.clickable-card]="formOrden.valid"
+        [disabled]="!formOrden.valid"
+      >
+        <ion-card-content>
+          <ion-icon
+            name="documents-outline"
+            class="fa-xl ion-margin-end"
+          ></ion-icon>
+          <ion-text>Registrar Pago</ion-text>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="procesandoPago">
+        <ion-card-content class="progress-container">
+          <ion-progress-bar
+            [value]="progresoCarga"
+            [color]="colorProgreso"
+          ></ion-progress-bar>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </form>
+</ion-content>

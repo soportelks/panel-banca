@@ -1,0 +1,192 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Movimientos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Saldo -->
+  <ion-item color="secondary" class="saldo">
+    <div *ngIf="datosSaldo.info; else sinSaldo">
+      <ion-text>
+        Tu saldo en ahorro:
+        <strong style="font-size: 20px"
+          >{{datosSaldo.info.saldo | currency}}</strong
+        >
+      </ion-text>
+    </div>
+    <ng-template #sinSaldo>
+      <ion-text>
+        Tu saldo en ahorro:
+        <strong style="font-size: 20px">{{0 | currency}}</strong>
+      </ion-text>
+    </ng-template>
+  </ion-item>
+
+  <ion-segment value="1" class="ion-margin-top">
+    <ion-segment-button value="1" (click)="searchMovs(1)">
+      <ion-label>Mes Actual</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2" (click)="searchMovs(2)">
+      <ion-label>Mes Anterior</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-item class="ion-margin-top" color="primary">
+    <ion-label class="col-mov">Movimiento</ion-label>
+    <ion-label class="ion-text-center col-monto">Monto</ion-label>
+    <ion-label class="ion-text-center col-fecha">Fecha</ion-label>
+    <ion-label class="ion-text-center col-info">Información</ion-label>
+  </ion-item>
+
+  <div *ngIf="datosMovimientos">
+    <ion-item *ngFor="let item of getMovimientosPagina()">
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <ion-label>{{item.descripcion}}</ion-label>
+          </ion-col>
+          <ion-col class="ion-text-center">
+            <ion-label
+              [ngStyle]="item.operacion !== '+' ? {'color':'red'}: {'color':'rgb(4, 125, 57)'}"
+            >
+              <strong>{{item.monto | currency}}</strong>
+            </ion-label>
+          </ion-col>
+          <ion-col class="ion-text-center">
+            <ion-label>{{item.fecha | date}}</ion-label>
+          </ion-col>
+          <ion-col class="ion-text-center">
+            <ion-button
+              *ngIf="item.operacion !== '+' && item.orden === true"
+              fill="clear"
+              (click)="searchMovsOrd(item.movimiento_id)"
+            >
+              <ion-icon name="receipt-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <ion-item *ngIf="!datosMovimientos.info">
+      <ion-label class="ion-text-center">
+        {{datosMovimientos.mensaje}}
+      </ion-label>
+    </ion-item>
+
+    <!-- Paginación -->
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button
+            [disabled]="paginaActual === 1"
+            (click)="cambiarPagina(paginaActual - 1)"
+          >
+            <ion-icon slot="start" name="chevron-back"></ion-icon> Anterior
+          </ion-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center">
+          Página {{paginaActual}} de {{totalPaginas}}
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button
+            [disabled]="paginaActual === totalPaginas"
+            (click)="cambiarPagina(paginaActual + 1)"
+          >
+            Siguiente <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </div>
+</ion-content>
+
+<ion-modal
+  #modal
+  [isOpen]="isModalOpen"
+  [presentingElement]="presentingElement"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Detalle del Movimiento</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <h2>Clave de Rastreo:</h2>
+            <p>{{ movimientosSELECT?.info[0]?.claverastreo }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Concepto:</h2>
+            <p>{{ movimientosSELECT?.info[0]?.conceptopago }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Monto:</h2>
+            <p>{{ movimientosSELECT?.info[0]?.monto | currency }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Fecha:</h2>
+            <p>{{ movimientosSELECT?.info[0]?.fecha_hora | date }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Nombre del Ordenante:</h2>
+            <p>{{ movimientosSELECT?.info[0]?.nombreordenante }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Cuenta Origen:</h2>
+            <p>{{ movimientosSELECT?.info[0]?.cuentaordenante }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Beneficiario:</h2>
+            <p>{{ movimientosSELECT?.info[0]?.nombrebeneficiario }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>Cuenta Destino:</h2>
+            <p>{{ movimientosSELECT?.info[0]?.cuentabeneficiario }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <!-- Barra de progreso -->
+      <ion-progress-bar
+        *ngIf="isLoading"
+        type="indeterminate"
+      ></ion-progress-bar>
+
+      <!-- Botón de generar comprobante -->
+      <ion-button
+        *ngIf="!isLoading"
+        expand="block"
+        (click)="comprobante(movimientosSELECT?.info[0]?.empresa, movimientosSELECT?.info[0]?.claverastreo, movimientosSELECT?.info[0]?.fechaoperacion)"
+      >
+        <ion-icon slot="start" name="receipt-outline"></ion-icon>
+        Generar Comprobante
+      </ion-button>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -1,0 +1,176 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Paso 1 de 3</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]=" true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle class="ion-text-center"
+        >Registra los siguientes datos:</ion-card-subtitle
+      >
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="formCliente">
+        <!-- Correo Electronico -->
+        <ion-item>
+          <ion-icon name="mail-outline" class="ion-margin-end"></ion-icon>
+          <ion-input
+            required="true"
+            label="Correo electrónico"
+            labelPlacement="floating"
+            type="email"
+            inputmode="email"
+            color="primary"
+            formControlName="correoElectronico"
+          >
+          </ion-input>
+        </ion-item>
+        <ng-template ngFor let-error [ngForOf]="validaciones.email">
+          <strong
+            class="ion-margin-start"
+            *ngIf="formCliente.get('correoElectronico')?.hasError(error.type)"
+          >
+            {{error.message}}</strong
+          >
+        </ng-template>
+
+        <!-- Telefono -->
+        <ion-item class="ion-margin-top">
+          <ion-icon name="call-outline" class="ion-margin-end"></ion-icon>
+          <ion-input
+            required="true"
+            label="Teléfono"
+            labelPlacement="floating"
+            inputmode="tel"
+            type="tel"
+            color="primary"
+            formControlName="numeroTelefono"
+            maxlength="10"
+            minlength="10"
+          >
+          </ion-input>
+        </ion-item>
+        <ng-template ngFor let-error [ngForOf]="validaciones.telefono">
+          <strong
+            class="ion-margin-start"
+            *ngIf="formCliente.get('numeroTelefono')?.hasError(error.type)"
+          >
+            {{error.message}}</strong
+          >
+        </ng-template>
+
+        <!-- Contraseña -->
+        <ion-item class="ion-margin-top">
+          <ion-icon
+            name="lock-closed-outline"
+            class="ion-margin-end"
+          ></ion-icon>
+          <ion-input
+            required="true"
+            label="Contraseña"
+            labelPlacement="floating"
+            type="{{ isPasswordVisible ? 'text' : 'password' }}"
+            (input)="onPasswordInput()"
+            color="primary"
+            formControlName="contrasenaCliente"
+          >
+          </ion-input>
+          <ion-icon
+            name="{{isPasswordVisible ? 'eye-outline': 'eye-off-outline'}}"
+            (click)="togglePasswordVisibility()"
+          ></ion-icon>
+        </ion-item>
+        <div
+          class="password-strength-bar ion-margin-start ion-margin-top"
+          [style.width]="passwordStrengthScore + '%'"
+        ></div>
+        <div class="password-strength-text ion-margin-start ion-margin-bottom">
+          {{ getPasswordStrengthText() }}
+        </div>
+        <ng-template ngFor let-error [ngForOf]="validaciones.contrasena">
+          <strong
+            *ngIf="formCliente.get('contrasenaCliente')?.hasError(error.type)"
+          >
+            {{error.message}}</strong
+          >
+        </ng-template>
+
+        <!-- Confirmar Contraseña -->
+        <ion-item class="ion-margin-top">
+          <ion-icon
+            name="lock-closed-outline"
+            class="ion-margin-end"
+          ></ion-icon>
+          <ion-input
+            required="true"
+            label="Confirmar Contraseña"
+            labelPlacement="floating"
+            type="{{ isPasswordVisible ? 'text' : 'password' }}"
+            color="primary"
+            formControlName="confirmarContrasena"
+          >
+          </ion-input>
+          <ion-icon
+            name="{{isPasswordVisible ? 'eye-outline': 'eye-off-outline'}}"
+            (click)="togglePasswordVisibility()"
+          ></ion-icon>
+        </ion-item>
+        <strong
+          class="ion-margin-start"
+          *ngIf="formCliente.get('confirmarContrasena')?.hasError('required')"
+          >La contraseña es obligatoria.</strong
+        >
+        <br />
+        <strong
+          class="ion-margin-start"
+          *ngIf="formCliente.errors?.['passwordMismatch']"
+          >Las contraseñas deben ser iguales.</strong
+        >
+      </form>
+    </ion-card-content>
+  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-button
+          class="ion-margin-top"
+          size="large"
+          color="secondary"
+          shape="round"
+        >
+          <ion-text class="ion-margin-end">
+            <p>Aviso de Privacidad</p>
+          </ion-text>
+          <ion-checkbox
+            [(ngModel)]="chkbxValue"
+            labelPlacement="end"
+          ></ion-checkbox>
+        </ion-button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-button
+          [form]="formCliente"
+          *ngIf="chkbxValue && formCliente.valid"
+          class="ion-margin-top"
+          size="large"
+          color="secondary"
+          (click)="saveEmailandPhone()"
+          shape="round"
+        >
+          Continuar
+        </ion-button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

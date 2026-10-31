@@ -1,0 +1,44 @@
+.scroll-container {
+  width: auto; /* Establece el ancho del contenedor */
+  overflow-x: scroll; /* Activa el desplazamiento horizontal */
+  white-space: nowrap; /* Evita el salto de línea dentro del contenedor */
+}
+
+.scroll-item {
+  display: inline-block; /* Mantiene los elementos en una línea horizontal */
+  width: auto; /* Establece el ancho de cada elemento */
+  height: auto; /* Establece la altura de cada elemento */
+  margin-right: 10px; /* Establece un margen derecho para separar los elementos */
+}
+
+.wrapping-list .item-content, .wrapping-list .item {
+  overflow: initial;
+  white-space: initial;
+}
+
+ion-modal#example-modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#example-modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal#example-modal ion-icon {
+  margin-right: 6px;
+
+  width: 48px;
+  height: 48px;
+
+  padding: 4px 0;
+
+  color: #aaaaaa;
+}
+
+ion-modal#example-modal .wrapper {
+  margin-bottom: 10px;
+}

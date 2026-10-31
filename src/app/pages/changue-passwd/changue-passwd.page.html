@@ -1,0 +1,60 @@
+<ion-header [translucent]="true" class="ion-text-center">
+  <ion-toolbar>
+    <ion-title>Cambiar Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <ion-icon name="lock-closed-outline" class="ion-margin-end"></ion-icon>
+        <ion-input
+          label="Ingresa la nueva contraseña"
+          labelPlacement="floating"
+          [type]="isPasswordVisible ? 'text' : 'password'"
+          [(ngModel)]="password1"
+          (ionChange)="checkPasswordMatch()"
+          color="primary"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="lock-closed-outline" class="ion-margin-end"></ion-icon>
+        <ion-input
+          label="Repite la contraseña"
+          labelPlacement="floating"
+          [type]="isPasswordVisible ? 'text' : 'password'"
+          [(ngModel)]="password2"
+          (ionChange)="checkPasswordMatch()"
+          [color]="passwordsMatch ? 'primary' : 'danger'"
+        ></ion-input>
+      </ion-item>
+
+      <br />
+
+      <ion-item lines="none">
+        <p>Mostrar:</p>
+        <ion-icon
+          [name]="isPasswordVisible ? 'eye-outline' : 'eye-off-outline'"
+          class="ion-margin-start"
+          (click)="togglePasswordVisibility()"
+        ></ion-icon>
+      </ion-item>
+
+      <div class="ion-text-center ion-margin-top">
+        <ion-button
+          shape="round"
+          (click)="cambiarContrasena()"
+          [disabled]="!isCambioContrasenaHabilitado"
+        >
+          Aceptar
+        </ion-button>
+        <br />
+        <ion-button shape="round" class="ion-margin-top" routerLink="/home">
+          Cancelar
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

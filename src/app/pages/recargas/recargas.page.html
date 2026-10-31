@@ -1,0 +1,156 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Recargas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-segment
+    value="compania"
+    color="secondary"
+    [(ngModel)]="type"
+    (ionChange)="segmentChanged($event)"
+  >
+    <ion-segment-button value="compania">
+      <ion-label><i class="fa-solid fa-1"></i> Compañia</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="verificacion" disabled="true">
+      <ion-label><i class="fa-solid fa-2"></i> Verificación</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="type">
+    <ion-list *ngSwitchCase="'compania'">
+      <form [formGroup]="formRecarga">
+        <div *ngIf="companiasData.info">
+          <ion-item>
+            <ion-select
+              formControlName="company"
+              color="secondary"
+              aria-label="Compañia"
+              placeholder="Compañia"
+              (ionChange)="handleChange($event)"
+            >
+              <ion-select-option
+                *ngFor="let item of companiasData.info"
+                [value]="item"
+                >{{item.compania}}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="montos">
+            <ion-select
+              formControlName="monto"
+              color="secondary"
+              aria-label="Monto"
+              placeholder="Monto"
+              (ionChange)="handleChangeMonto($event)"
+            >
+              <ion-select-option *ngFor="let item of montos"
+                >{{item.monto | currency}}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+        </div>
+        <ion-item>
+          <ion-input
+            required="true"
+            label="Número Telefónico (10 dígitos)"
+            labelPlacement="floating"
+            type="tel"
+            inputmode="tel"
+            formControlName="num1"
+            maxlength="10"
+            minlength="10"
+            color="secondary"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            required="true"
+            label="Confirmar Número Telefónico"
+            labelPlacement="floating"
+            type="tel"
+            inputmode="tel"
+            formControlName="num2"
+            maxlength="10"
+            minlength="10"
+            color="secondary"
+          >
+          </ion-input>
+        </ion-item>
+        <!--ion-item *ngIf="estadosData.info">
+          <ion-select formControlName="estado" color="secondary" aria-label="Estado" placeholder="Estado">
+            <ion-select-option *ngFor="let item of estadosData.info">{{item.nombre_estado}}</ion-select-option>
+          </ion-select>
+        </ion-item-->
+      </form>
+      <div class="ion-text-center">
+        <ion-button
+          (click)=" checkNumsMatch()"
+          class="ion-margin-top"
+          shape="round"
+          color="secondary"
+          >Siguiente</ion-button
+        >
+      </div>
+    </ion-list>
+    <ion-list *ngSwitchCase="'verificacion'">
+      <ion-item>
+        <ion-text
+          >¡Verifica que los datos que ingresaste sean correctos!</ion-text
+        >
+      </ion-item>
+      <ion-item>
+        <ion-text
+          ><strong style="color: var(--ion-color-secondary)">Compañia: </strong
+          >{{seleccion.compania}}</ion-text
+        >
+      </ion-item>
+      <ion-item>
+        <ion-text
+          ><strong style="color: var(--ion-color-secondary)">Número: </strong
+          >{{numTelConfirm}}</ion-text
+        >
+      </ion-item>
+      <ion-item>
+        <ion-text
+          ><strong style="color: var(--ion-color-secondary)">Monto: </strong
+          >{{monto}}</ion-text
+        >
+      </ion-item>
+
+      <ion-grid>
+        <ion-row class="ion-text-center">
+          <ion-col>
+            <ion-button
+              class="ion-margin-top"
+              shape="round"
+              color="secondary"
+              (click)="type = 'compania'"
+              >Regresar</ion-button
+            >
+          </ion-col>
+          <ion-col>
+            <ion-button
+              (click)="realizarRecarga()"
+              class="ion-margin-top"
+              shape="round"
+              color="secondary"
+              >Continuar</ion-button
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </div>
+  <ion-modal id="example-modal" #modal>
+    <ng-template>
+      <!--app-comprobante [datosTransaccion]="datosTransaccion"></app-comprobante-->
+    </ng-template>
+  </ion-modal>
+</ion-content>

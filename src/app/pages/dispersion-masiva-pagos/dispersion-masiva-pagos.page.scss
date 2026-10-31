@@ -1,0 +1,124 @@
+.custom-header {
+  background-color: #34568b;
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+
+.csv-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Espaciado entre los botones */
+  margin-top: 20px;
+}
+
+ion-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+ion-card-content {
+  overflow-x: auto; /* Enables horizontal scrolling */
+}
+
+.table-responsive {
+  overflow-x: auto; /* Enables horizontal scroll */
+  white-space: nowrap; /* Keeps everything on a single line */
+}
+
+ion-row:first-child ion-col {
+  font-weight: bold; /* Resalta los encabezados de la tabla */
+  background-color: #34568b; /* Color de fondo para los encabezados */
+  color: white; /* Color de texto para los encabezados */
+}
+
+/* Adjustments for better viewing on small devices */
+@media (max-width: 600px) {
+  ion-col {
+    padding: 8px;
+    min-width: 100px;
+  }
+}
+
+.table-container {
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  white-space: nowrap; /* Evita que las columnas se envuelvan */
+}
+
+ion-grid {
+  display: table; /* Asegura un diseño de tabla */
+  table-layout: auto; /* Ajusta automáticamente las columnas */
+  width: max-content; /* Establece el ancho según el contenido */
+  border-collapse: collapse; /* Colapsa los bordes */
+}
+
+ion-row {
+  display: table-row; /* Define el estilo de fila */
+}
+
+ion-col {
+  display: table-cell; /* Define el estilo de celda */
+  min-width: 150px; /* Ajusta el ancho mínimo de las columnas */
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #dee2e6; /* Agrega bordes entre las celdas */
+  background-color: white; /* Fondo blanco para las celdas */
+  color: black; /* Texto negro */
+}
+
+.header-col {
+  font-weight: bold; /* Resalta los encabezados */
+  background-color: #34568b; /* Fondo azul para los encabezados */
+  color: white; /* Texto blanco para los encabezados */
+}
+
+.disperse-button {
+  --border-radius: 30px;
+  width: 160px;
+  height: 50px;
+  --background: #34568b;
+  --background-activated: #2b4778;
+  --background-hover: #2b4778;
+  --background-focused: #2b4778;
+  font-weight: bold;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  margin-bottom: 4px;
+}
+
+.pagination-container span {
+  margin: 0 10px;
+}
+
+ion-item {
+  --border-color: var(--ion-color-secondary);
+  --border-style: solid;
+  --border-width: 2px;
+  --border-radius: 20px;
+  margin: 10px;
+}
+
+.boton-redondeado::part(native) {
+  border-radius: 20px !important;
+}
+
+.clickable-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.clickable-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

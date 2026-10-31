@@ -1,0 +1,153 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        (click)="sendDataToComponent('inicio')"
+        icon="chevron-back"
+      ></ion-back-button>
+      <ion-title class="ion-text-center">Calculadora Inversiones</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Tu cuenta</ion-card-subtitle>
+      <ion-row>
+        <ion-col>
+          <ion-icon icon="card-outline" size="large"></ion-icon>
+        </ion-col>
+        <ion-col *ngIf="saldo">
+          <ion-text>Saldo: <strong>{{saldo | currency}}</strong></ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="ion-margin-top">
+          <ion-col size="12">
+            <ion-text>¿Cuanto quieres invertir?</ion-text>
+            <br />
+            <form [formGroup]="formInversion">
+              <ion-input
+                *ngIf="saldo && inversionResponse"
+                formControlName="monto"
+                inputmode="numeric"
+                type="number"
+                label="$1000.00"
+                placeholder="$1000.00"
+                min="{{inversionResponse.info[0].monto_inf}}"
+                max="{{saldo}}"
+                labelPlacement="floating"
+                fill="outline"
+                class="ion-margin-bottom"
+                required="true"
+              ></ion-input>
+            </form>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ng-template ngFor let-error [ngForOf]="validaciones.monto">
+            <strong *ngIf="formInversion.get('monto')?.hasError(error.type)">
+              {{error.message}}</strong
+            >
+          </ng-template>
+        </ion-row>
+        <ion-row>
+          <ion-text>¿A que plazo?</ion-text>
+        </ion-row>
+        <div *ngIf="inversionResponse" class="plazos">
+          <div class="scroll-container">
+            <ion-card
+              class="scroll-item"
+              *ngFor="let item of inversionResponse.info"
+            >
+              <ion-card-subtitle
+                shape="round"
+                class="ion-padding"
+                style="cursor: pointer"
+                (click)="calcularInversion(item)"
+              >
+                {{item.plazo}}
+              </ion-card-subtitle>
+            </ion-card>
+          </div>
+        </div>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="inversionCalculada">
+    <ion-card-header>
+      <ion-card-subtitle>Aprovecha e invierte hoy mismo</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-text>
+            <h3>Al finalizar el plazo de {{plazo}} días recibirás</h3>
+          </ion-text>
+        </ion-row>
+        <ion-row>
+          <ion-text>
+            <h1>${{inversionCalculada.info[0].interes}}</h1>
+          </ion-text>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="generalesResponse && inversionCalculada">
+    <ion-list>
+      <ion-item>
+        <ion-toggle
+          justify="space-between"
+          [enableOnOffLabels]="true"
+          (ionChange)="toggle($event)"
+          >Recordar fecha de vencimiento</ion-toggle
+        >
+      </ion-item>
+      <ion-radio-group>
+        <ion-item *ngFor="let item of generalesResponse.info">
+          <ion-radio labelPlacement="end" (click)="radio(item)">
+            <ion-text>{{item.descripcion}}</ion-text>
+          </ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </ion-card>
+
+  <ion-modal id="example-modal" #modal>
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Welcome</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Enter your name</ion-label>
+          <ion-input type="text" placeholder="Your name"></ion-input>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button
+      id="open-custom-dialog"
+      disabled="{{flagInstruccion}}"
+      expand="block"
+      shape="round"
+      class="ion-margin-bottom"
+      (click)="realizarInversion()"
+    >
+      Invertir
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

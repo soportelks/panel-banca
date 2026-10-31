@@ -1,0 +1,128 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Calcular pago</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Calcular pago</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card *ngIf="pago">
+    <ion-card-header>
+      <ion-card-title>
+        Monto: {{pago.monto}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-row>
+            <ion-text>
+              <strong>Interes: $</strong>{{pago.interes}}
+            </ion-text>
+          </ion-row>
+          <ion-row>
+            <ion-text>
+              <strong>IVA: $</strong>{{pago.iva}}
+            </ion-text>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <hr>
+      <ion-row style="text-align: right;">
+        <ion-col>
+          <ion-text>
+            <strong>Total: $</strong>{{pago.total}}
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row style="text-align: right;">
+        <ion-col>
+          <!--ion-text class="btn-pagos" id="open-modal" expand="block">
+            Realizar pago
+          </ion-text-->
+          <ion-button (click)="onWillDismiss(true)" expand="block" size="small">Realizar pago</ion-button>
+          <ion-modal [isOpen]="isModalOpen" trigger="open-modal">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title>Métodos de pago</ion-title>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-list>
+                  <ion-radio-group [(ngModel)]="selectedOption">
+                    <ion-list-header>
+                      Elige una opción:
+                    </ion-list-header>
+                
+                    <ion-item *ngIf="saldoCliente">
+                      <ion-radio value="wallet" labelPlacement="end" justify="start">Cuenta de ahorro (${{saldoCliente}})</ion-radio>
+                    </ion-item>
+                
+                    <ion-item>
+                      <ion-radio value="credDebCard" labelPlacement="end" justify="start">Tarjeta de credito/debito</ion-radio>
+                    </ion-item>
+                    
+                    <div [ngSwitch]="selectedOption" class="ion-padding">
+                      <ion-list *ngSwitchCase="'credDebCard'" [@fadeIn]>
+                        <form [formGroup]="formTarjeta">
+                          <ion-list>
+                            <ion-item>
+                              <ion-icon name="person-outline" class="ion-margin-end"></ion-icon>
+                              <ion-input required="true" label="Nombre del titular" labelPlacement="floating" inputmode="text" type="text"
+                                color="primary" formControlName="nombreTitular">
+                              </ion-input>
+                            </ion-item>
+                        
+                            <ion-item>
+                              <ion-icon name="card-outline" class="ion-margin-end"></ion-icon>
+                              <ion-input required="true" mask="**** **** **** ****" placeholder="0123 4567 8901 2345" label="Número de tarjeta" labelPlacement="floating" type="text" inputmode="numeric"
+                                color="primary" formControlName="numeroTarjeta" maxlength="19" minlength="19">
+                              </ion-input>
+                            </ion-item>
+                        
+                            <ion-item>
+                              <ion-icon name="calendar-outline" class="ion-margin-end"></ion-icon>
+                              <ion-input id="fechaExpiracion" required="true" mask-fecha="**/**" placeholder="MM/YY" label="Fecha de vencimiento" labelPlacement="floating" type="text" 
+                              inputmode="numeric" color="primary" formControlName="fechaExpiracion" maxlength="5">
+                              </ion-input>
+                            </ion-item>
+                            
+                            <ion-item>
+                              <ion-icon name="card-outline" class="ion-margin-end"></ion-icon>
+                              <ion-input required="true" mask="***" placeholder="3 dígitos" label="CVV/CVC" labelPlacement="floating" type="text" inputmode="numeric"
+                                color="primary" formControlName="codigoSeguridad" maxlength="3" minlength="3">
+                              </ion-input>
+                            </ion-item>
+                        
+                          </ion-list>
+                        </form>
+                      </ion-list>
+                    </div>
+
+                  </ion-radio-group>
+                </ion-list>
+                <ion-item class="btns">
+                  <ion-buttons slot="start">
+                    <ion-text (click)="cancel()" class="btn-pagos">Cancel</ion-text>
+                  </ion-buttons>
+                  <ion-buttons slot="end">
+                    <ion-text (click)="confirm()" class="btn-pagos">Confirm</ion-text>
+                  </ion-buttons>
+                </ion-item>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

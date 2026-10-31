@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <div class="ion-text-center">
+        <ion-card-title>Iniciar Sesión</ion-card-title>
+      </div>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="formCliente">
+        <!-- Telefono -->
+        <ion-item>
+          <ion-icon name="call-outline" class="ion-margin-end"></ion-icon>
+          <ion-input
+            required="true"
+            label="Teléfono"
+            labelPlacement="floating"
+            inputmode="tel"
+            type="tel"
+            color="primary"
+            formControlName="numeroTelefono"
+            maxlength="10"
+            minlength="10"
+          >
+          </ion-input>
+        </ion-item>
+        <ng-template ngFor let-error [ngForOf]="validaciones.telefono">
+          <strong
+            class="ion-margin-start"
+            *ngIf="formCliente.get('numeroTelefono')?.hasError(error.type)"
+          >
+            {{error.message}}</strong
+          >
+        </ng-template>
+
+        <!-- Contraseña -->
+        <ion-item class="ion-margin-top">
+          <ion-icon
+            name="lock-closed-outline"
+            class="ion-margin-end"
+          ></ion-icon>
+          <ion-input
+            required="true"
+            label="Ingresa la contraseña"
+            labelPlacement="floating"
+            inputmode="password"
+            color="primary"
+            type="{{ isPasswordVisible ? 'text' : 'password' }}"
+            formControlName="contrasenaCliente"
+          >
+          </ion-input>
+          <ion-icon
+            name="{{isPasswordVisible ? 'eye-outline': 'eye-off-outline'}}"
+            (click)="togglePasswordVisibility()"
+          ></ion-icon>
+        </ion-item>
+        <ng-template ngFor let-error [ngForOf]="validaciones.contrasena">
+          <strong
+            class="ion-margin-start"
+            *ngIf="formCliente.get('contrasenaCliente')?.hasError(error.type)"
+          >
+            {{error.message}}</strong
+          >
+        </ng-template>
+      </form>
+
+      <!-- Boton Iniciar Sesion-->
+      <ion-grid class="ion-margin-top">
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col>
+            <ion-button
+              shape="round"
+              color="secondary"
+              size="large"
+              (click)="searchClient()"
+              >Iniciar Sesión</ion-button
+            >
+          </ion-col>
+          <ion-col></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Link  -->
+      <ion-grid class="ion-margin-top">
+        <ion-row>
+          <ion-col class="ion-text-end">
+            <a
+              routerLink="/recover-passw"
+              style="
+                text-decoration: none;
+                font-weight: bolder;
+                font-size: 20px;
+              "
+              >Olvide mi contraseña</a
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Codigo de Confirmación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding ion-text-center">
+  <p>Ingresa el código <br> recibido via SMS, <br> WhatsApp, Email:</p>
+  <br>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-input type="number"></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-input type="number"></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-input type="number"></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-input type="number"></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-input type="number"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-end ion-margin-top">
+      <a (click)="setOpen(true)">No recibi un código</a>
+      <ion-alert [isOpen]="isAlertOpen" header="Reenviando" message="Le hemos reenviado su código"
+        [buttons]="alertButtons" (didDismiss)="setOpen(false)"></ion-alert>
+    </ion-row>
+  </ion-grid>
+  <br>
+  <ion-button shape="round" class="ion-margin-top" routerLink="/datos-alta" size="large">
+    Continuar
+  </ion-button>
+</ion-content>

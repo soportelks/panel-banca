@@ -1,0 +1,142 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Paso 2 de 3</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="formCliente">
+    <!-- Nombre -->
+    <ion-item class="ion-margin-bottom">
+      <ion-input
+        type="text"
+        label="Nombre"
+        placeholder="Nombre"
+        labelPlacement="floating"
+        formControlName="nombreCliente"
+      ></ion-input>
+    </ion-item>
+    <ng-template ngFor let-error [ngForOf]="validaciones.nombreCliente">
+      <strong
+        class="ion-margin-start"
+        *ngIf="formCliente.get('nombreCliente')?.hasError(error.type)"
+      >
+        {{error.message}}</strong
+      >
+    </ng-template>
+
+    <!-- Apellido Paterno -->
+    <ion-item class="ion-margin-top ion-margin-bottom">
+      <ion-input
+        type="text"
+        label="Apellido paterno"
+        placeholder="Apellido paterno"
+        labelPlacement="floating"
+        formControlName="apellidoPaternoCliente"
+      ></ion-input>
+    </ion-item>
+    <ng-template
+      ngFor
+      let-error
+      [ngForOf]="validaciones.apellidoPaternoCliente"
+    >
+      <strong
+        class="ion-margin-start"
+        *ngIf="formCliente.get('apellidoPaternoCliente')?.hasError(error.type)"
+      >
+        {{error.message}}</strong
+      >
+    </ng-template>
+
+    <!-- Apellido Materno -->
+    <ion-item class="ion-margin-top ion-margin-bottom">
+      <ion-input
+        type="text"
+        label="Apellido materno"
+        placeholder="Apellido materno"
+        labelPlacement="floating"
+        formControlName="apellidoMaternoCliente"
+      ></ion-input>
+    </ion-item>
+    <ng-template
+      ngFor
+      let-error
+      [ngForOf]="validaciones.apellidoMaternoCliente"
+    >
+      <strong
+        class="ion-margin-start"
+        *ngIf="formCliente.get('apellidoMaternoCliente')?.hasError(error.type)"
+      >
+        {{error.message}}</strong
+      >
+    </ng-template>
+
+    <!-- Fecha de Nacimiento -->
+    <ion-item class="ion-margin-top ion-margin-bottom">
+      <ion-input
+        type="date"
+        label="Fecha de Nacimiento"
+        placeholder="Fecha de Nacimiento"
+        labelPlacement="floating"
+        formControlName="fechaNac"
+      ></ion-input>
+    </ion-item>
+    <ng-template ngFor let-error [ngForOf]="validaciones.fechaNac">
+      <strong
+        class="ion-margin-start"
+        *ngIf="formCliente.get('fechaNac')?.hasError(error.type)"
+      >
+        {{error.message}}</strong
+      >
+    </ng-template>
+
+    <!-- Dirección -->
+    <ion-item class="ion-margin-top ion-margin-bottom">
+      <ion-input
+        type="text"
+        label="Calle y Numero #"
+        placeholder="Calle"
+        labelPlacement="floating"
+        formControlName="domicilio"
+      ></ion-input>
+    </ion-item>
+    <ng-template ngFor let-error [ngForOf]="validaciones.domicilio">
+      <strong
+        class="ion-margin-start"
+        *ngIf="formCliente.get('domicilio')?.hasError(error.type)"
+      >
+        {{error.message}}</strong
+      >
+    </ng-template>
+  </form>
+
+  <!-- Datepicker -->
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime id="datetime" presentation="date">
+        <span slot="title">Fecha de nacimiento</span>
+      </ion-datetime>
+    </ng-template>
+  </ion-modal>
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-button
+          class="ion-margin-top"
+          size="large"
+          shape="round"
+          (click)="saveCliente()"
+          *ngIf="formCliente.valid"
+          color="secondary"
+        >
+          Continuar
+        </ion-button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

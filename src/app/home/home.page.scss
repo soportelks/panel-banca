@@ -1,0 +1,10 @@
+ion-img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 1200px) {
+  ion-img {
+    width: 30%;
+  }
+}

@@ -1,0 +1,67 @@
+
+
+
+
+  <ion-header>
+    <ion-toolbar>
+      <!--ion-buttons slot="start">
+        <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+      </ion-buttons-->
+      <ion-title>Detalle</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="medium" (click)="cancel()" [strong]="true">Cerrar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-row>
+      <!--ion-col>
+        <ion-title size="large">Comprobante de Transacción</ion-title>
+      </ion-col-->
+      <ion-col class="comprobante">
+        <ion-row class="info">
+          <label>Nombre del Cliente:</label>
+          <span>{{datosTransaccion.nombreCliente}}</span>
+        </ion-row>
+  
+        <ion-row class="info">
+          <label>Clave Cliente:</label>
+          <span>{{datosTransaccion.cveCliente}}</span>
+        </ion-row>
+  
+        <ion-row class="info">
+          <label>Fecha de Transacción:</label>
+          <span>{{datosTransaccion.fechaTransaccion}} {{datosTransaccion.horaTransaccion}}</span>
+        </ion-row>
+  
+        <ion-row class="info">
+          <label>Clave de Transacción:</label>
+          <span>{{datosTransaccion.cveOperacion}}</span>
+        </ion-row>
+  
+        <ion-row class="detalle">
+          <table>
+            <tr>
+              <th>Descripción</th>
+              <th>Monto</th>
+            </tr>
+            <tr>
+              <td>{{datosTransaccion.descripcion}}</td>
+              <td>{{datosTransaccion.monto | currency}}</td>
+            </tr>
+            <tr>
+              <td>Comisión</td>
+              <td>{{datosTransaccion.comision | currency}}</td>
+            </tr>
+          </table>
+        </ion-row>
+        <ion-row class="total">
+          <label>Total: <span> {{datosTransaccion.total | currency}}</span></label>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  
+  </ion-content>
+
+      
+

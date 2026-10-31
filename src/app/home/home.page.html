@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">BANCA MOVIL RDAM</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-text-center ion-padding" [fullscreen]="true">
+  <swiper-container [loop]="true">
+    <!-- Slide N1 -->
+    <swiper-slide>
+      <ion-img
+        class="ion-margin-top"
+        [src]="isDarkMode ? '../../assets/images/Logo_RDAM_blanco.png' : '../../assets/images/Logo_RDAM_negro.png'"
+      >
+      </ion-img>
+    </swiper-slide>
+  </swiper-container>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button
+          shape="round"
+          routerLink="/register"
+          color="secondary"
+          size="large"
+        >
+          <ion-icon name="create-outline" class="ion-margin-end"></ion-icon
+          >Crear Cuenta
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-button
+          shape="round"
+          routerLink="/login"
+          color="secondary"
+          size="large"
+        >
+          <ion-icon name="log-in-outline" class="ion-margin-end"></ion-icon
+          >Iniciar Sesión
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

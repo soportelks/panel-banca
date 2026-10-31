@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Inversiones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Saldo -->
+  <ion-item color="secondary" class="interes">
+
+      <div *ngIf="interesesResponse.info; else sinSaldo">
+      <ion-text>Tu saldo en inversion: <strong style="font-size: 20px;">{{interesesResponse.info[0].sum |
+          currency}}</strong></ion-text>
+    </div>
+    <ng-template #sinSaldo>
+      <ion-text>Tu saldo en inversion: <strong style="font-size: 20px;">{{0 |
+          currency}}</strong></ion-text>
+    </ng-template>
+  </ion-item>
+
+  <ion-item class="ion-margin-top" color="primary">
+    <ion-label>Inversion</ion-label>
+    <ion-label class="ion-text-center">Monto</ion-label>
+    <ion-label class="ion-text-center">Vencimiento</ion-label>
+  </ion-item>
+  <div *ngIf="inversionesResponse">
+    <ion-item color="light" *ngFor="let item of inversionesResponse.info">
+      <ion-label class="ion-text-wrap">
+        {{item.num_pagare.substring(0, 4)}}{{item.num_pagare.substring(item.num_pagare.length - 7)}}</ion-label>
+      <ion-label class="ion-text-center"><strong>{{item.monto | currency}}</strong></ion-label>
+      <ion-label class="ion-text-center">{{item.fecha_vencimiento}}</ion-label>
+    </ion-item>
+    <ion-item color="light" *ngIf="!inversionesResponse.info">
+      <ion-label class="ion-text-center">{{inversionesResponse.mensaje}}</ion-label>
+    </ion-item>
+  </div>
+  
+</ion-content>

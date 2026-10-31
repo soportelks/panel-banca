@@ -1,0 +1,304 @@
+<ion-menu side="start" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-menu-toggle auto-hide="false">
+      <ion-button expand="block" (click)="sendDataToComponent('ahorro')">
+        Movimientos
+      </ion-button>
+      <ion-button expand="block" (click)="sendDataToComponent('inversiones')">
+        Inversión
+      </ion-button>
+      <ion-button expand="block" (click)="sendDataToComponent('credito')">
+        Crédito
+      </ion-button>
+      <ion-button
+        expand="block"
+        (click)="sendDataToComponent('dispersion-masiva-pagos')"
+      >
+        Dispersión Masiva de Pagos
+      </ion-button>
+      <ion-button
+        expand="block"
+        (click)="sendDataToComponent('registrar-orden')"
+      >
+        Registro Pagos
+      </ion-button>
+      <ion-button expand="block" color="danger" (click)="cerrarSesion()">
+        Cerrar Sesión
+      </ion-button>
+    </ion-menu-toggle>
+  </ion-content>
+</ion-menu>
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <!-- Logo central -->
+    <ion-img
+      style="width: 180px; height: 65px; display: block; margin: auto"
+      [src]="isDarkMode ? '../../assets/images/Logo_RDAM_blanco.png' : '../../assets/images/Logo_RDAM_negro.png'"
+    >
+    </ion-img>
+
+    <!-- Botón de notificación al final -->
+    <ion-buttons slot="end">
+      <ion-button (click)="onNotificationClick()">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Menu -->
+  <div id="main"></div>
+  <ion-item color="secondary">
+    <div>
+      <ion-text>{{datosCliente.nombre_prospecto}} </ion-text>
+    </div>
+  </ion-item>
+  <br />
+
+  <!-- Saldo -->
+  <ion-item color="secondary">
+    <!--ion-avatar slot="end">
+      <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="">
+    </ion-avatar-->
+
+    <div>
+      <div *ngIf="datosSaldo.info; else sinSaldo">
+        <ion-text
+          >Tu saldo en ahorro:
+          <strong style="font-size: 20px"
+            >{{datosSaldo.info.saldo | currency}}</strong
+          ></ion-text
+        >
+      </div>
+      <ng-template #sinSaldo>
+        <ion-text
+          >Tu saldo en ahorro:
+          <strong style="font-size: 20px">{{0 | currency}}</strong></ion-text
+        >
+      </ng-template>
+    </div>
+
+    <!--<ion-icon
+      class="ion-margin-start"
+      name="arrow-back-outline"
+      size="large"
+      color="dark"
+    ></ion-icon>-->
+  </ion-item>
+
+  <!-- Iconos -->
+  <ion-item class="ion-margin-top iconos" color="primary">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center ion-text-center">
+        <ion-col size="2" size-sm="1">
+          <ion-icon
+            name="cash-outline"
+            style="background-color: aliceblue"
+            color="primary"
+            (click)="sendDataToComponent('ahorro')"
+          ></ion-icon>
+          <br />
+          <ion-text>Movimientos</ion-text>
+        </ion-col>
+        <ion-col size="2" size-sm="1">
+          <ion-icon
+            name="bar-chart-outline"
+            style="background-color: aliceblue"
+            color="primary"
+            (click)="sendDataToComponent('inversiones')"
+          ></ion-icon>
+          <br />
+          <ion-text>Inversión</ion-text>
+        </ion-col>
+        <ion-col size="2" size-sm="1">
+          <ion-icon
+            name="card-outline"
+            style="background-color: aliceblue"
+            color="primary"
+            (click)="sendDataToComponent('credito')"
+          ></ion-icon>
+          <br />
+          <ion-text>Credito</ion-text>
+        </ion-col>
+        <ion-col size="2" size-sm="1">
+          <ion-icon
+            name="settings-outline"
+            style="background-color: aliceblue"
+            color="primary"
+            (click)="sendDataToComponent('reset-pass')"
+          ></ion-icon>
+          <br />
+          <ion-text>Configuración</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <!-- Que hacer hoy -->
+  <ion-item class="ion-margin-top" color="primary">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-text>
+            <h4 style="font-weight: bold">Operaciones</h4>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
+        <ion-col>
+          <ion-card
+            color="light"
+            (click)="sendDataToComponent('calculadora-inversiones')"
+          >
+            <ion-card-content color="light" shape="round">
+              <i
+                class="fa-solid fa-hand-holding-dollar fa-xl ion-margin-end"
+              ></i>
+              <ion-text>Invertir</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row> -->
+      <!--<ion-row>
+        <ion-col>
+          <ion-card color="light">
+            <ion-card-content color="light" shape="round">
+              <i class="fa-solid fa-piggy-bank fa-xl ion-margin-end"></i>
+              <ion-text>Depositar</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>-->
+      <!-- <ion-row>
+        <ion-col>
+          <ion-card color="light" (click)="sendDataToComponent('recargas')">
+            <ion-card-content color="light" shape="round">
+              <i class="fa-solid fa-mobile-screen fa-xl ion-margin-end"></i>
+              <ion-text>Recargas</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card
+            color="light"
+            (click)="sendDataToComponent('pago-servicios')"
+          >
+            <ion-card-content>
+              <i class="fa-solid fa-receipt fa-xl ion-margin-end"></i>
+              <ion-text>Paga tus servicios</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row> -->
+      <ion-row>
+        <ion-col>
+          <ion-card
+            color="light"
+            (click)="sendDataToComponent('dispersion-masiva-pagos')"
+          >
+            <ion-card-content>
+              <ion-icon
+                name="documents-outline"
+                class="fa-xl ion-margin-end"
+              ></ion-icon>
+              <ion-text>Dispersión Masiva de Pagos</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row
+        ><ion-col>
+          <ion-card
+            color="light"
+            (click)="sendDataToComponent('registrar-orden')"
+          >
+            <ion-card-content>
+              <ion-icon
+                name="swap-horizontal-outline"
+                class="fa-xl ion-margin-end"
+              ></ion-icon>
+              <ion-text>Registrar Pagos</ion-text>
+            </ion-card-content>
+          </ion-card></ion-col
+        ></ion-row
+      >
+      <ion-row>
+        <ion-col>
+          <ion-card color="light" (click)="sendDataToComponent('traspaso')">
+            <ion-card-content>
+              <ion-icon
+                name="repeat-outline"
+                class="fa-xl ion-margin-end"
+              ></ion-icon>
+              <ion-text>Traspaso</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <!--<ion-item class="ion-margin-top" color="primary">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-text>
+            <h4 style="font-weight: bold">¿Qué mas?</h4>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card color="light">
+            <ion-card-content>
+              <i class="fa-solid fa-gift ion-margin-end"></i>
+              <ion-text>Tengo un código promocional</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card color="light">
+            <ion-card-content>
+              <i class="fa-solid fa-user-group ion-margin-end"></i>
+              <ion-text>Invita a un amigo y gana</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>-->
+</ion-content>
+
+<ion-modal
+  #modal
+  [isOpen]="isModalOpen"
+  [presentingElement]="presentingElement"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Notificaciones</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding"> </ion-content>
+  </ng-template>
+</ion-modal>

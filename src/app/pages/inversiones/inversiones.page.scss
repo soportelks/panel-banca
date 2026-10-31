@@ -1,0 +1,35 @@
+ion-menu::part(backdrop) {
+  background-color: rgba(184, 183, 184, 0.5);
+}
+
+ion-menu::part(container) {
+  border-radius: 0 20px 20px 0;
+
+  box-shadow: 4px 0px 16px rgba(58, 57, 58, 0.18);
+}
+
+
+.interes{
+  --border-radius: 20px;
+}
+
+.iconos ion-icon{
+  font-size: 38px;
+  background-color: var(--ion-color-secondary);
+  border-radius: 100%;
+  padding: 15%;
+}
+
+.iconos ion-text{
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px; /* Ajusta este valor según tus necesidades */
+}

@@ -1,0 +1,18 @@
+ion-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+ion-router-outlet {
+  flex: 1;
+  position: relative; /* Asegura que el contenido fluya normalmente */
+  z-index: 0; /* Asegura que esté debajo del footer */
+}
+
+app-footer {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1; /* Asegura que el footer esté encima */
+}

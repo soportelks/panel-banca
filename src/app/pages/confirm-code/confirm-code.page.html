@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Confirmar Código</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle class="ion-text-center">
+        Ingresa el código que te hemos <br />
+        enviado al correo electronico
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-input
+            [(ngModel)]="otpCode"
+            label="Código"
+            type="number"
+            labelPlacement="floating"
+            color="primary"
+          ></ion-input>
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-margin-top">
+          <p style="font-size: 24px; color: black">{{ formattedTime }}</p>
+        </ion-row>
+        <ion-row class="ion-justify-content-end ion-margin-top">
+          <a (click)="resendOtp()">Reenviar código</a>
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-margin-top">
+          <ion-text class="ion-text-center">
+            <p>
+              El código enviado tiene una vigencia <br />
+              de 2 minutos.
+            </p>
+          </ion-text>
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-margin-top">
+          <ion-row class="ion-justify-content-center ion-margin-top">
+            <ion-button
+              shape="round"
+              size="large"
+              color="danger"
+              (click)="cancelAndReturn()"
+            >
+              Cancelar
+            </ion-button>
+            <ion-button shape="round" size="large" (click)="verifyOtp()">
+              Continuar
+            </ion-button>
+          </ion-row>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

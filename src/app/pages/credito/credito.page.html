@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Creditos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Creditos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card color="primary">
+    <ion-card-header>
+      <ion-card-title>
+         {{nombreCliente}}
+      </ion-card-title>
+
+      <ion-card-subtitle>
+        Estos son tus creditos
+      </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+<ion-row>
+  <ion-col >
+    <ion-card *ngFor="let credito of creditosCliente">
+      <ion-card-header>
+        <ion-card-title>
+          <strong>Cr&eacute;dito: </strong>{{credito.tipo_credito}}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col><ion-text><strong>Estado: </strong>{{credito.estado_credito}}</ion-text></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text><strong>Fecha de último pago: </strong>{{credito.fecha_ultimo_pago}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text><strong>Fecha de vencimiento: </strong>{{credito.fecha_vencimiento}}</ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><strong>Fecha de entrega: </strong>{{credito.fecha_entrega}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col><ion-text><strong>Monto del cr&eacute;dito: </strong>${{credito.monto_credito}}</ion-text></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text><strong>Saldo del cr&eacute;dito: </strong>${{credito.saldo_credito}}</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row style="text-align: right;">
+          <ion-col>
+            <ion-button (click)="sendDataToComponent('calcular-pago',credito)" size="small">Calcular pago</ion-button>
+            <!--ion-text class="btn-pagos" (click)="sendDataToComponent('calcular-pago',credito)">Calcular pago</ion-text-->
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-col>
+</ion-row>
+
+
+</ion-content>

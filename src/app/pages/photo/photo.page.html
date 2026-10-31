@@ -1,0 +1,174 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Paso 3 de 3</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-text-center ion-padding">
+  <ion-icon id="user" name="person-circle-outline"></ion-icon>
+  <!-- Selfie -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>¡Sonríe para la foto!</ion-card-title>
+      <ion-card-subtitle>Asegúrate de tener buena iluminación</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button shape="round" class="ion-margin-bottom" (click)="selectPhoto(1, 1)" size="small"
+              color="secondary">
+              <ion-icon name="camera" slot="start"></ion-icon>
+              Capturar
+
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button shape="round" class="ion-margin-bottom" (click)="selectPhoto(2, 1)" size="small">
+              <ion-icon name="image" slot="start"></ion-icon>
+              Seleccionar
+
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div *ngIf=" photosBase64.length> 1">
+        <ion-img src="{{'data:image/png;base64,' +photosBase64[1]}}"></ion-img>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Frontal Ine -->
+  <div *ngIf=" photosBase64.length> 1">
+    <ion-card class="ion-margin-top">
+      <ion-card-header>
+        <ion-card-title>Ahora captura tu INE por la parte <strong>frontal</strong>.</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" class="ion-margin-bottom" (click)="selectPhoto(1, 2)" size="small"
+                color="secondary">
+                <ion-icon name="camera" slot="start"></ion-icon>
+                Capturar
+
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="round" class="ion-margin-bottom" (click)="selectPhoto(2, 2)" size="small">
+                <ion-icon name="image" slot="start"></ion-icon>
+                Seleccionar
+
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-img *ngIf="photosBase64.length > 2" src="{{'data:image/png;base64,' +photosBase64[2]}}"></ion-img>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Back Ine -->
+  <div *ngIf="photosBase64.length > 2">
+    <ion-card class="ion-margin-top">
+      <ion-card-header>
+        <ion-card-title>Ahora captura tu INE por la parte de <strong>atras</strong>.</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" class="ion-margin-bottom" (click)="selectPhoto(1, 3)" size="small"
+                color="secondary">
+                <ion-icon name="camera" slot="start"></ion-icon>
+                Capturar
+
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="round" class="ion-margin-bottom" (click)="selectPhoto(2, 3)" size="small">
+                <ion-icon name="image" slot="start"></ion-icon>
+                Seleccionar
+
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <ion-img *ngIf="photosBase64.length > 3" src="{{'data:image/png;base64,' +photosBase64[3]}}"></ion-img>
+    </ion-card>
+  </div>
+
+  <!-- Comprobante Domicilio -->
+  <div *ngIf="photosBase64.length > 3">
+    <ion-card class="ion-margin-top">
+      <ion-card-header>
+        <ion-card-title>Ahora captura un <strong>comprobante de domicilio</strong>.</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button shape="round" class="ion-margin-bottom" (click)="selectPhoto(1, 4)" size="small"
+                color="secondary">
+                <ion-icon name="camera" slot="start"></ion-icon>
+                Capturar
+
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button shape="round" class="ion-margin-bottom" (click)="selectPhoto(2, 4)" size="small">
+                <ion-icon name="image" slot="start"></ion-icon>
+                Seleccionar
+
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <ion-img *ngIf="photosBase64.length > 4" src="{{'data:image/png;base64,' +photosBase64[4]}}"></ion-img>
+    </ion-card>
+  </div>
+
+  <!-- Firma -->
+  <div>
+    <ion-card class="ion-margin-top">
+      <ion-card-header>
+        <ion-card-title>Necesitamos tu <strong>firma</strong>.</ion-card-title>
+        <ion-card-subtitle>Firma igual que en tu INE.</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="!signatureImg">
+          <canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)"></canvas>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-button shape="round" color="danger" (click)="clearPad()"><i
+                    class="fa-solid fa-eraser ion-margin-end"></i>
+                  Limpiar</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button shape="round" color="primary" (click)="savePad()"><i
+                    class="fa-solid fa-floppy-disk ion-margin-end"></i>
+                  Guardar</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div *ngIf="signatureImg">
+          <img src='{{ signatureImg }}' style="background-color: white;" alt="Firma Electronica" />
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-button *ngIf="this.photosBase64[0] && this.photosBase64.length === 5" size="large" class="ion-margin-top"
+    shape="round" color="secondary" (click)="uploadPhotos()">
+    <ion-icon name="send" slot="start"></ion-icon>
+    Finalizar
+  </ion-button>
+</ion-content>
