@@ -39,6 +39,19 @@ export class DispersionMasivaPagosPage implements OnInit {
   mostrarTotalMontos: boolean = false;
   mostrarBotonProcesar: boolean = true;
   isProcessing: boolean = false;
+  isResultadoOpen: boolean = false;
+  resultadoDispersion: {
+    duplicado: boolean;
+    exitosos: number;
+    fallidos: number;
+    total: number;
+    monto: string;
+    folio: string;
+    fecha: string;
+    causas: string[];
+    causasRestantes: number;
+  } | null = null;
+  private idempotencyKey: string = '';
   idLoteActual: string = '';
   datosComisiones: any = null;
 
@@ -371,106 +384,206 @@ export class DispersionMasivaPagosPage implements OnInit {
 
     this.mostrarTotalMontos = true;
     this.csvData = updatedData;
+    this.idempotencyKey = this.generarIdempotencyKey();
 
     await this.validarPagos(this.csvData);
     this.updatePaginatedData(this.csvData);
   }
 
   async procesarPagos() {
-
-    const loading1 = await this.presentLoading("Procesando pagos...");
-
-    if (this.csvData.length === 0) {
-      this.presentAlert("No hay datos cargados para iniciar la dispersión.");
-      await loading1.dismiss();
-      this.mostrarBotonProcesar = true;
+    if (this.isProcessing) {
       return;
     }
 
-    await this.searchSaldoCliente();
-
-    const totalMonto = this.totalMontos.toFixed(2);
-
-    if (!this.datosSaldo?.info?.saldo || totalMonto > this.datosSaldo.info.saldo) {
-      this.presentAlert("Saldo insuficiente para esta operación.");
-      await loading1.dismiss();
-      this.mostrarBotonProcesar = true;
+    if (!this.datosCliente?.correo_electronico) {
+      await this.presentAlertDetalle(
+        "Correo no registrado",
+        "Tu cuenta no tiene un correo electrónico registrado. No es posible enviar el código de verificación."
+      );
       return;
     }
 
-    if (!this.validarPagos(this.csvData)) {
-      await loading1.dismiss();
-      this.mostrarBotonProcesar = true;
-      return;
-    }
-
-    await loading1.dismiss();
-
-    // Oculta el botón y espera la verificación OTP
-    const otpVerified = await this.sendOtp(this.datosCliente.correo_electronico.trim());
-
-    if (!otpVerified) {
-      return;
-    }
-
-    const loading = await this.presentLoading("Procesando pagos...");
-
-    const pagosLimpios = this.csvData.map(pago => ({
-      conceptoPago: pago.conceptoPago,
-      cuentaOrdenante: this.ordenate.cuentaOrdenante,
-      cuentaBeneficiario: pago.cuentaBeneficiario,
-      empresa: pago.empresa,
-      institucionContraparte: pago.institucionContraparte,
-      institucionOperante: this.ordenate.institucionOperante.participante,
-      monto: pago.monto,
-      nombreBeneficiario: pago.nombreBeneficiario,
-      nombreOrdenante: this.ordenate.nombreOrdenante,
-      referenciaNumerica: pago.referenciaNumerica,
-      rfcCurpBeneficiario: pago.rfcCurpBeneficiario,
-      rfcCurpOrdenante: this.ordenate.rfcCurpOrdenante,
-      tipoCuentaBeneficiario: pago.tipoCuentaBeneficiario,
-      tipoCuentaOrdenante: this.ordenate.tipoCuentaOrdenante,
-      tipoPago: "1",
-      latitud: pago.latitud,
-      longitud: pago.longitud,
-    }));
-
-    const payload = {
-      pago: pagosLimpios,
-      cliente: {
-        datos: {
-          numero_cliente: this.ordenate.cveCliente,
-          montoConComicion: this.totalMontos
-        },
-        accion: 1
-      }
-    };
+    this.isProcessing = true;
+    this.mostrarBotonProcesar = true;
+    let loading: HTMLIonLoadingElement | null = null;
 
     try {
-      const respuesta = await this.dispersionesMasivasSrv.envioPagosMasivos(payload).toPromise();
+      if (this.csvData.length === 0) {
+        await this.presentAlert("No hay datos cargados para iniciar la dispersión.");
+        return;
+      }
+
+      loading = await this.presentLoading("Validando nómina...");
+      await this.searchSaldoCliente();
+
+      const totalMonto = this.totalMontos.toFixed(2);
+
+      if (!this.datosSaldo?.info?.saldo || totalMonto > this.datosSaldo.info.saldo) {
+        await loading.dismiss();
+        loading = null;
+        await this.presentAlert("Saldo insuficiente para esta operación.");
+        return;
+      }
+
+      if (!(await this.validarPagos(this.csvData))) {
+        await loading.dismiss();
+        loading = null;
+        return;
+      }
 
       await loading.dismiss();
-      this.mostrarBotonProcesar = true;
+      loading = null;
+
+      const otpVerified = await this.sendOtp(this.datosCliente.correo_electronico.trim());
+
+      if (!otpVerified) {
+        return;
+      }
+
+      const idempotencyKey = this.idempotencyKey || this.generarIdempotencyKey();
+      this.idempotencyKey = idempotencyKey;
+
+      loading = await this.presentLoading("Procesando dispersión...");
+
+      const pagosLimpios = this.csvData.map(pago => ({
+        conceptoPago: pago.conceptoPago,
+        cuentaOrdenante: this.ordenate.cuentaOrdenante,
+        cuentaBeneficiario: pago.cuentaBeneficiario,
+        empresa: pago.empresa,
+        institucionContraparte: pago.institucionContraparte,
+        institucionOperante: this.ordenate.institucionOperante.participante,
+        monto: pago.monto,
+        nombreBeneficiario: pago.nombreBeneficiario,
+        nombreOrdenante: this.ordenate.nombreOrdenante,
+        referenciaNumerica: pago.referenciaNumerica,
+        rfcCurpBeneficiario: pago.rfcCurpBeneficiario,
+        rfcCurpOrdenante: this.ordenate.rfcCurpOrdenante,
+        tipoCuentaBeneficiario: pago.tipoCuentaBeneficiario,
+        tipoCuentaOrdenante: this.ordenate.tipoCuentaOrdenante,
+        tipoPago: "1",
+        latitud: pago.latitud,
+        longitud: pago.longitud,
+      }));
+
+      const payload = {
+        idempotencyKey,
+        pago: pagosLimpios,
+        cliente: {
+          datos: {
+            numero_cliente: this.ordenate.cveCliente,
+            montoConComicion: this.totalMontos
+          },
+          accion: 1
+        }
+      };
+
+      const respuesta = await lastValueFrom(
+        this.dispersionesMasivasSrv.envioPagosMasivos(payload)
+      );
+
+      await loading.dismiss();
+      loading = null;
 
       if (respuesta.codigo === "0") {
-        const mensaje = `✅ Procesamiento completado\n\n` +
-          `✔️ Exitosos: ${respuesta.exitosos}\n` +
-          `❌ Fallidos: ${respuesta.fallidos}`;
-
-        this.presentAlert(mensaje);
+        this.abrirResultadoDispersion(respuesta);
         this.clearTableData();
         this.mostrarTotalMontos = false;
         this.totalMontos = 0;
         this.searchSaldoCliente();
+      } else if (respuesta.estado === "EN_PROCESO") {
+        await this.presentAlertDetalle(
+          "Dispersión en proceso",
+          respuesta.mensaje || "Este lote ya está en proceso. No se generaron órdenes nuevas."
+        );
       } else {
-        this.presentAlert(`⚠️ Error: ${respuesta.mensaje || 'Error desconocido'}`);
+        await this.presentAlertDetalle(
+          "Dispersión no realizada",
+          respuesta.mensaje || "No fue posible procesar la dispersión. No se generaron órdenes nuevas."
+        );
       }
 
     } catch (error) {
-      await loading.dismiss();
-      this.presentAlert("❌ Ocurrió un error al procesar los pagos.");
-      this.mostrarBotonProcesar = true;
+      if (loading) {
+        await loading.dismiss();
+        loading = null;
+      }
+      await this.presentAlertDetalle(
+        "Error al procesar la dispersión",
+        "No se pudo completar la operación. Verifica tu conexión e inténtalo de nuevo; el control de duplicados evitará que se disperse dos veces el mismo lote."
+      );
+    } finally {
+      this.isProcessing = false;
     }
+  }
+
+  abrirResultadoDispersion(respuesta: any) {
+    const exitosos = Number(respuesta?.exitosos ?? 0);
+    const fallidos = Number(respuesta?.fallidos ?? 0);
+    const total = Number(respuesta?.totalOrdenes ?? (exitosos + fallidos));
+    const causas: string[] = Array.isArray(respuesta?.causasFallos) ? respuesta.causasFallos : [];
+
+    this.resultadoDispersion = {
+      duplicado: respuesta?.duplicado === true,
+      exitosos,
+      fallidos,
+      total,
+      monto: this.formatearMoneda(respuesta?.montoTotal ?? this.totalMontos),
+      folio: respuesta?.idempotencyKey || this.idempotencyKey || "No disponible",
+      fecha: this.formatearFechaOperacion(respuesta?.fechaOperacion),
+      causas: causas.slice(0, 5),
+      causasRestantes: Math.max(causas.length - 5, 0)
+    };
+    this.isResultadoOpen = true;
+  }
+
+  cerrarResultadoDispersion() {
+    this.isResultadoOpen = false;
+  }
+
+  get resultadoTitulo(): string {
+    if (!this.resultadoDispersion) {
+      return "Dispersión";
+    }
+    if (this.resultadoDispersion.duplicado) {
+      return "Lote ya procesado";
+    }
+    return this.resultadoDispersion.fallidos > 0
+      ? "Dispersión con incidencias"
+      : "Dispersión completada";
+  }
+
+  get resultadoSubtitulo(): string {
+    if (!this.resultadoDispersion) {
+      return "";
+    }
+    if (this.resultadoDispersion.duplicado) {
+      return "No se generaron órdenes nuevas";
+    }
+    return this.resultadoDispersion.fallidos > 0
+      ? "Revisa los motivos de rechazo"
+      : "Resultado de la dispersión de nómina";
+  }
+
+  get resultadoMensaje(): string {
+    if (!this.resultadoDispersion) {
+      return "";
+    }
+    if (this.resultadoDispersion.duplicado) {
+      return "Este lote ya había sido procesado. A continuación se muestra el resultado original.";
+    }
+    return this.resultadoDispersion.fallidos > 0
+      ? "La dispersión se procesó, pero algunas órdenes fueron rechazadas."
+      : "La dispersión se procesó correctamente.";
+  }
+
+  async presentAlertDetalle(header: string, message: string) {
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: ["Aceptar"],
+      cssClass: "custom-alert"
+    });
+    await alert.present();
   }
 
 
@@ -615,11 +728,39 @@ export class DispersionMasivaPagosPage implements OnInit {
       this.currentPage = 1;
       this.mostrarTotalMontos = false;
       this.totalMontos = 0;
+      this.idempotencyKey = '';
 
       if (this.fileInput) {
         this.fileInput.nativeElement.value = "";
       }
     }
+  }
+
+  private generarIdempotencyKey(): string {
+    const cryptoObj = window.crypto as Crypto;
+    if (cryptoObj && typeof cryptoObj.randomUUID === 'function') {
+      return cryptoObj.randomUUID();
+    }
+    return `LOTE-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+
+  private formatearMoneda(valor: any): string {
+    const numero = Number(valor);
+    if (!Number.isFinite(numero)) {
+      return '$0.00';
+    }
+    return new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: 'MXN'
+    }).format(numero);
+  }
+
+  private formatearFechaOperacion(valor: any): string {
+    const texto = String(valor ?? '');
+    if (/^\d{8}$/.test(texto)) {
+      return `${texto.slice(6, 8)}/${texto.slice(4, 6)}/${texto.slice(0, 4)}`;
+    }
+    return texto || new Date().toLocaleDateString('es-MX');
   }
 
 
@@ -740,28 +881,36 @@ export class DispersionMasivaPagosPage implements OnInit {
   }
 
   sendOtp(email: string): Promise<boolean> {
-    return new Promise((resolve) => {
-      if (email) {
-        // Mostrar mensaje de envío antes de hacer la petición
-        this.message = 'Enviando código al correo...';
-        this.incorrectMessage = '';
-
-        this.otpService.sendOtp(email).subscribe(
-          (response) => {
-            this.message = 'Código enviado al correo.';
-            this.resendDisabled = true;
-            this.timeLeft = 120;
-            this.startTimer();
-            this.openOtpModal(email, resolve);
-          },
-          (error) => {
-            this.message = 'Error al enviar el código.';
-            resolve(false);
-          }
-        );
-      } else {
+    return new Promise(async (resolve) => {
+      const correo = (email || '').trim();
+      if (!correo) {
         resolve(false);
+        return;
       }
+
+      this.message = 'Enviando código al correo...';
+      this.incorrectMessage = '';
+      const loading = await this.presentLoading('Enviando código de verificación...');
+
+      this.otpService.sendOtp(correo).subscribe(
+        async () => {
+          await loading.dismiss();
+          this.message = 'Código enviado al correo.';
+          this.resendDisabled = true;
+          this.timeLeft = 120;
+          this.startTimer();
+          this.openOtpModal(correo, resolve);
+        },
+        async () => {
+          await loading.dismiss();
+          this.message = 'Error al enviar el código.';
+          await this.presentAlertDetalle(
+            'No se pudo enviar el código',
+            'Verifica tu conexión e inténtalo de nuevo. No se procesó ninguna dispersión.'
+          );
+          resolve(false);
+        }
+      );
     });
   }
 
@@ -781,6 +930,7 @@ export class DispersionMasivaPagosPage implements OnInit {
   async openOtpModal(email: string, resolve: (value: boolean | PromiseLike<boolean>) => void) {
     this.alertInstance = await this.alertCtrl.create({
       header: 'Ingresar Codigo de verificación',
+      backdropDismiss: false,
       message: `
      
         Tiempo restante: ${this.timeLeft} segundos
@@ -808,7 +958,9 @@ export class DispersionMasivaPagosPage implements OnInit {
           text: 'Verificar',
           handler: async (data) => {
             const isValid = await this.verifyOtp(email, data.otpCode);
-            resolve(isValid); // Validamos el código OTP
+            if (isValid) {
+              resolve(true);
+            }
             return isValid;
           }
         }
@@ -827,21 +979,30 @@ export class DispersionMasivaPagosPage implements OnInit {
 
   verifyOtp(email: string, code: number) {
     return new Promise<boolean>((resolve) => {
-      if (email && code !== null) {
-        this.otpService.verifyOtp(email, code).subscribe(valid => {
-          if (valid) {
-            this.message = 'Código correcto. Autenticación exitosa.';
-            clearInterval(this.timer);
-            resolve(true);
-          } else {
-            this.message = ' : Código incorrecto. Puedes intentarlo de nuevo.';
-            this.incorrectMessage = ' : Código incorrecto. Inténtalo nuevamente.';
-            this.resendDisabled = false;
+      if (email && code !== null && code !== undefined && `${code}`.trim() !== '') {
+        this.otpService.verifyOtp(email, code).subscribe(
+          valid => {
+            if (valid) {
+              this.message = 'Código correcto. Autenticación exitosa.';
+              clearInterval(this.timer);
+              resolve(true);
+            } else {
+              this.message = ' : Código incorrecto. Puedes intentarlo de nuevo.';
+              this.incorrectMessage = ' : Código incorrecto. Inténtalo nuevamente.';
+              this.resendDisabled = false;
+              this.updateAlertMessage();
+              resolve(false);
+            }
+          },
+          () => {
+            this.incorrectMessage = ' : Error al validar el código. Inténtalo nuevamente.';
             this.updateAlertMessage();
             resolve(false);
           }
-        });
+        );
       } else {
+        this.incorrectMessage = ' : Ingresa un código de verificación válido.';
+        this.updateAlertMessage();
         resolve(false);
       }
     });

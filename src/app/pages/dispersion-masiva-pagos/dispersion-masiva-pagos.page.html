@@ -61,6 +61,7 @@
       class="disperse-button"
       *ngIf="csvData.length < 1"
       fill="solid"
+      [disabled]="isProcessing"
       (click)="fileInput.click()"
     >
       Cargar Pagos
@@ -69,10 +70,14 @@
       color="secondary"
       class="disperse-button"
       fill="solid"
+      [disabled]="isProcessing || csvData.length === 0"
       (click)="procesarPagos()"
       [disabled]="isProcessing || csvData.length === 0"
       *ngIf="mostrarBotonProcesar && csvData.length > 0"
     >
+      <ion-spinner *ngIf="isProcessing" name="crescent"></ion-spinner>
+      <ion-icon *ngIf="!isProcessing" name="paper-plane-outline"></ion-icon>
+      {{ isProcessing ? 'Procesando...' : 'Enviar CSV' }}
       <ion-spinner name="crescent" *ngIf="isProcessing"></ion-spinner>
       <ion-icon name="paper-plane-outline" *ngIf="!isProcessing"></ion-icon>
       {{ isProcessing ? ' Procesando nómina...' : ' Enviar CSV' }}
@@ -138,3 +143,95 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+<ion-modal
+  [isOpen]="isResultadoOpen"
+  (didDismiss)="cerrarResultadoDispersion()"
+  class="dispersion-result-modal"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="secondary">
+        <ion-title>{{ resultadoTitulo }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarResultadoDispersion()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <div class="result-modal-body">
+      <div *ngIf="resultadoDispersion" class="result-content">
+        <p class="result-subtitle">{{ resultadoSubtitulo }}</p>
+        <p class="result-message">{{ resultadoMensaje }}</p>
+
+        <div class="result-stats">
+          <div class="result-stat">
+            <div class="result-stat-value">{{ resultadoDispersion.total }}</div>
+            <div class="result-stat-label">Órdenes</div>
+          </div>
+          <div class="result-stat success">
+            <div class="result-stat-value">{{ resultadoDispersion.exitosos }}</div>
+            <div class="result-stat-label">Exitosas</div>
+          </div>
+          <div class="result-stat" [class.danger]="resultadoDispersion.fallidos > 0">
+            <div class="result-stat-value">{{ resultadoDispersion.fallidos }}</div>
+            <div class="result-stat-label">Fallidas</div>
+          </div>
+        </div>
+
+        <div class="result-amount">
+          <span>Monto total</span>
+          <strong>{{ resultadoDispersion.monto }}</strong>
+        </div>
+
+        <div class="result-details">
+          <div class="result-folio-block">
+            <span class="result-detail-label">Folio del lote</span>
+            <span class="result-folio">{{ resultadoDispersion.folio }}</span>
+          </div>
+          <div class="result-detail-row">
+            <span class="result-detail-label">Fecha de operación</span>
+            <span class="result-detail-value">{{ resultadoDispersion.fecha }}</span>
+          </div>
+          <div class="result-detail-row">
+            <span class="result-detail-label">Estado</span>
+            <span class="result-detail-value">
+              {{ resultadoDispersion.duplicado
+                ? 'Procesado previamente'
+                : (resultadoDispersion.fallidos > 0 ? 'Con incidencias' : 'Completado') }}
+            </span>
+          </div>
+        </div>
+
+        <div class="result-errors" *ngIf="resultadoDispersion.fallidos > 0">
+          <h3>Motivos de rechazo</h3>
+          <ul>
+            <li *ngFor="let causa of resultadoDispersion.causas">{{ causa }}</li>
+            <li *ngIf="resultadoDispersion.causas.length === 0">
+              No especificado por el proveedor.
+            </li>
+          </ul>
+          <p *ngIf="resultadoDispersion.causasRestantes > 0" class="result-errors-more">
+            Y {{ resultadoDispersion.causasRestantes }} motivo(s) más.
+          </p>
+        </div>
+
+        <p class="result-footer-note">
+          Conserva el folio del lote para cualquier aclaración.
+        </p>
+      </div>
+    </div>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-button
+          expand="block"
+          color="secondary"
+          (click)="cerrarResultadoDispersion()"
+        >
+          Aceptar
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
