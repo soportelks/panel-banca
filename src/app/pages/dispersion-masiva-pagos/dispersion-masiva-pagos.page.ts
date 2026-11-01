@@ -52,6 +52,7 @@ export class DispersionMasivaPagosPage implements OnInit {
     causasRestantes: number;
   } | null = null;
   private idempotencyKey: string = '';
+  idLoteActual: string = '';
   datosComisiones: any = null;
 
   datosSaldo: any = {
