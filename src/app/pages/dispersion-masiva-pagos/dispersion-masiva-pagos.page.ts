@@ -439,6 +439,25 @@ export class DispersionMasivaPagosPage implements OnInit {
       await loading.dismiss();
       loading = null;
 
+      // Verificación previa de seguridad: validar si el cliente está dentro del tiempo de espera de 10 min
+      try {
+        const cooldownCheck = await lastValueFrom(
+          this.dispersionesMasivasSrv.consultarCooldown({
+            numeroCliente: this.ordenate.cveCliente,
+            cuentaOrdenante: this.ordenate.cuentaOrdenante
+          })
+        );
+        if (cooldownCheck && cooldownCheck.bloqueado) {
+          await this.presentAlertDetalle(
+            "Tiempo de espera de seguridad",
+            cooldownCheck.mensaje || "Por motivos de seguridad, debes esperar 10 minutos entre cada dispersión masiva."
+          );
+          return;
+        }
+      } catch (e) {
+        console.warn("No se pudo consultar el cooldown previo, el backend lo validará al enviar", e);
+      }
+
       const otpVerified = await this.sendOtp(this.datosCliente.correo_electronico.trim());
 
       if (!otpVerified) {
@@ -515,6 +534,11 @@ export class DispersionMasivaPagosPage implements OnInit {
         await this.presentAlertDetalle(
           "Dispersión en proceso",
           respuesta?.mensaje || "Este lote ya está en proceso. No se generaron órdenes nuevas."
+        );
+      } else if (respuesta.estado === "BLOQUEADO_POR_TIEMPO") {
+        await this.presentAlertDetalle(
+          "Tiempo de espera de seguridad",
+          respuesta.mensaje || "Por motivos de seguridad, debes esperar 10 minutos entre cada dispersión masiva."
         );
       } else {
         await this.presentAlertDetalle(

@@ -79,6 +79,16 @@ export class DispersionesMasivasService {
     return this.http.post<any>(url, data, options);
   }
 
+  consultarCooldown(data: any): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('token')
+    });
+    let options = { headers: headers };
+    const url = `${this.apiUrl}/tesoreria/consultar-cooldown-dispersion`;
+    return this.http.post<any>(url, data, options);
+  }
+
   envioPagos(data: any): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
