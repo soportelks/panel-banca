@@ -1,55 +1,398 @@
-a {
-  margin-right: 10px;
+// Register Page Styling - HubSpot Style with AZUL MARINO Theme
+
+$navy-primary: #162d4a;
+$navy-hover: #0e1e33;
+$cream-bg: #fbf7f4;
+$cream-card: #ffffff;
+$border-light: #e5e7eb;
+$text-dark: #111827;
+$text-muted: #4b5563;
+
+ion-toolbar {
+  --background: transparent;
+  --border-width: 0;
 }
 
-ion-item {
-  --border-color: var(--ion-color-secondary);
-  --border-style: solid;
-  --border-width: 2px;
-  --border-radius: 20px;
+.register-content {
+  --background: #{$cream-bg};
+  --padding-top: 1rem;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
 }
 
-ion-checkbox {
-  --size: 30px;
+.register-wrapper {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 5.5rem;
+  box-sizing: border-box;
 }
 
-ion-checkbox::part(container) {
-  border-radius: 25px;
+.register-card {
+  width: 100%;
+  max-width: 490px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1.5px solid #d1d5db;
+  padding: 2.75rem 2.25rem;
+  box-shadow: 0 16px 36px -10px rgba(22, 45, 74, 0.08);
+  box-sizing: border-box;
+  animation: fadeInRegister 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.password-strength-bar {
-  height: 10px;
-  margin-top: 20px;
-  border-radius: 5px;
-  /* Añade bordes redondeados para crear la apariencia de píldora */
-  overflow: hidden;
-  /* Oculta el contenido que se desborda del contenedor redondeado */
+@keyframes fadeInRegister {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.password-strength-bar::after {
-  content: "";
-  display: block;
-  height: 100%;
-  background-color: #ff0000;
-  /* Rojo para Muy débil y Débil */
-  border-radius: 5px;
-  /* Asegura que los extremos también tengan bordes redondeados */
+// Brand & Stepper Header
+.brand-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .brand-logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+
+    .brand-logo {
+      height: 48px;
+      width: auto;
+      max-width: 190px;
+      object-fit: contain;
+    }
+
+    .logo-dark {
+      display: none;
+    }
+    .logo-light {
+      display: block;
+    }
+  }
+
+  .step-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    background: rgba(22, 45, 74, 0.06);
+    color: $navy-primary;
+    border-radius: 4px;
+    font-size: 0.775rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(22, 45, 74, 0.15);
+
+    ion-icon {
+      font-size: 14px;
+    }
+  }
+
+  .brand-title {
+    font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+    font-size: 2.45rem;
+    font-weight: 500;
+    color: $text-dark;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .brand-subtitle {
+    font-size: 0.95rem;
+    color: $text-muted;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.5;
+  }
 }
 
-.password-strength-bar.moderate::after {
-  background-color: #ff9900;
-  /* Naranja para Moderada y Fuerte */
+// Form Inputs
+.register-form {
+  .input-group {
+    margin-bottom: 1.15rem;
+  }
+
+  .custom-input-item {
+    --background: #ffffff;
+    --color: #111827 !important;
+    color: #111827 !important;
+    --border-radius: 6px;
+    --padding-start: 14px;
+    --padding-end: 10px;
+    --inner-padding-end: 4px;
+    --highlight-color-focused: transparent;
+    --border-width: 0;
+    min-height: 56px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+
+    &:focus-within {
+      border-color: $navy-primary;
+      box-shadow: 0 0 0 3px rgba(22, 45, 74, 0.12);
+
+      .input-icon {
+        color: $navy-primary;
+      }
+    }
+
+    .input-icon {
+      font-size: 20px;
+      color: #9ca3af;
+      margin-right: 8px;
+      align-self: center;
+      transition: color 0.2s ease;
+    }
+
+    ion-input {
+      --color: #111827 !important;
+      --placeholder-color: #9ca3af !important;
+      --placeholder-opacity: 1 !important;
+      --highlight-color-focused: transparent;
+      color: #111827 !important;
+      font-size: 0.95rem;
+      font-weight: 500;
+      min-height: 50px;
+
+      input.native-input {
+        color: #111827 !important;
+        -webkit-text-fill-color: #111827 !important;
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
+      }
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover, 
+      input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #111827 !important;
+        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+
+      &::part(label) {
+        color: #6b7280 !important;
+        font-weight: 500;
+      }
+
+      &.has-focus::part(label) {
+        color: #{$navy-primary} !important;
+        font-weight: 600;
+      }
+    }
+
+    .eye-button {
+      height: 38px;
+      width: 38px;
+      --padding-start: 0;
+      --padding-end: 0;
+      color: #9ca3af;
+      margin: 0;
+      cursor: pointer;
+
+      ion-icon {
+        font-size: 20px;
+      }
+
+      &:hover {
+        color: $text-dark;
+      }
+    }
+  }
+
+  // Error Messages
+  .error-container {
+    min-height: 18px;
+    padding: 4px 4px 0;
+
+    .error-message {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #dc2626;
+      font-size: 0.775rem;
+      font-weight: 500;
+
+      ion-icon {
+        font-size: 14px;
+      }
+    }
+  }
+
+  // Password Strength Meter
+  .strength-meter-wrapper {
+    margin-top: 10px;
+    padding: 0 4px;
+
+    .strength-track {
+      width: 100%;
+      height: 5px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .password-strength-bar {
+      height: 100%;
+      background: #ef4444;
+      border-radius: 4px;
+      transition: width 0.3s ease, background 0.3s ease;
+
+      &.weak { background: #ef4444; }
+      &.moderate { background: #f59e0b; }
+      &.strong { background: #10b981; }
+    }
+
+    .password-strength-text {
+      font-size: 0.775rem;
+      font-weight: 600;
+      color: $text-muted;
+      margin-top: 6px;
+    }
+  }
+
+  // Privacy Checkbox Box
+  .privacy-container {
+    margin: 1.25rem 0 1.5rem;
+
+    .privacy-card {
+      background: #fdfcfb;
+      border: 1.5px solid #d1d5db;
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #9ca3af;
+      }
+
+      .custom-checkbox {
+        --size: 20px;
+        --border-radius: 4px;
+        --checkbox-background-checked: #{$navy-primary};
+        --border-color-checked: #{$navy-primary};
+        width: 100%;
+
+        .privacy-label {
+          font-size: 0.875rem;
+          color: $text-dark;
+          line-height: 1.4;
+          margin-left: 8px;
+
+          strong {
+            color: $navy-primary;
+          }
+        }
+      }
+    }
+  }
+
+  // Action Button
+  .action-wrapper {
+    margin-top: 0.5rem;
+
+    .submit-button {
+      --background: #{$navy-primary};
+      --color: #ffffff !important;
+      color: #ffffff !important;
+      --border-radius: 6px;
+      --box-shadow: 0 4px 12px rgba(22, 45, 74, 0.25);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      height: 50px;
+      text-transform: none;
+      margin: 0;
+      transition: all 0.2s ease;
+
+      &::part(native) {
+        color: #ffffff !important;
+      }
+
+      &:hover:not([disabled]) {
+        --background: #{$navy-hover};
+        --box-shadow: 0 6px 18px rgba(22, 45, 74, 0.35);
+        transform: translateY(-1px);
+      }
+
+      &[disabled] {
+        opacity: 0.55;
+        --box-shadow: none;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // Login Redirect
+  .login-redirect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: $text-muted;
+
+    .login-link {
+      color: $navy-primary;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+
+      &:hover {
+        color: $navy-hover;
+      }
+    }
+  }
 }
 
-.password-strength-bar.strong::after {
-  background-color: #4caf50;
-  /* Verde para Muy fuerte */
+// Security Footer
+.security-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 2rem;
+  color: #9ca3af;
+  font-size: 0.775rem;
+  font-weight: 500;
+  text-align: center;
+
+  ion-icon {
+    font-size: 15px;
+    color: $navy-primary;
+  }
 }
 
-.password-strength-text {
-  margin-top: 5px;
+// Mobile Responsive
+@media (max-width: 480px) {
+  .register-wrapper {
+    padding: 1.25rem 0.75rem 5rem;
+  }
+
+  .register-card {
+    padding: 2rem 1.25rem;
+    border-radius: 10px;
+  }
+
+  .brand-header {
+    .brand-title {
+      font-size: 2rem;
+    }
+  }
+
+  .register-form .action-wrapper .submit-button {
+    height: 48px;
+  }
 }
 
-strong {
-  color: #ff0000;
-}
+

@@ -1,179 +1,262 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<!-- ENCABEZADO INSTITUCIONAL RDAM -->
+<ion-header class="ion-no-border registrar-orden-header">
+  <ion-toolbar class="header-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back"></ion-back-button>
+      <ion-back-button defaultHref="/inicio" icon="chevron-back-outline" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Registrar Pagos</ion-title>
+
+    <div class="header-brand-center">
+      <img
+        src="assets/images/Logo_RDAM_negro.png"
+        class="header-logo"
+        alt="Logo RDAM"
+      />
+    </div>
+
+    <ion-buttons slot="end" class="header-end-spacer">
+      <div style="width: 48px;"></div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-item color="secondary">
-  <div>
-    <div *ngIf="datosSaldo?.info; else sinSaldo">
-      <ion-text>
-        Tu saldo en ahorro:
-        <strong style="font-size: 20px">
-          {{ datosSaldo.info.saldo | currency }}
-        </strong>
-      </ion-text>
+<!-- CONTENIDO PRINCIPAL -->
+<ion-content class="registrar-orden-content">
+  <div class="registrar-orden-wrapper">
+
+    <!-- INTRO DE PÁGINA -->
+    <div class="page-intro-header">
+      <span class="page-kicker">OPERACIONES BANCARIAS</span>
+      <h1 class="page-title">Transferencia SPEI</h1>
+      <p class="page-description">Envía fondos en tiempo real con confirmación bancaria inmediata</p>
     </div>
-    <ng-template #sinSaldo>
-      <ion-text>
-        Tu saldo en ahorro:
-        <strong style="font-size: 20px">{{ 0 | currency }}</strong>
-      </ion-text>
-    </ng-template>
+
+    <!-- BANNER COMPACTO DE SALDO DISPONIBLE -->
+    <div class="compact-balance-strip">
+      <div class="strip-glow"></div>
+      
+      <div class="strip-left">
+        <div class="strip-icon-circle">
+          <ion-icon name="wallet-outline"></ion-icon>
+        </div>
+        <div class="strip-amount-group">
+          <span class="strip-label">Saldo Disponible en Ahorro</span>
+          <div class="strip-number-row">
+            <span class="strip-amount">
+              {{ (datosSaldo.info?.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
+            </span>
+            <span class="strip-currency">MXN</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="strip-right">
+        <span class="strip-status-pill">
+          <span class="status-dot"></span> Saldo Disponible
+        </span>
+        <span class="strip-spei-tag">
+          <ion-icon name="flash-outline"></ion-icon>
+          <span>SPEI 24/7</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- TARJETA RESUMEN DE TOTAL CON COMISIÓN (SI APLICA) -->
+    <div class="commission-summary-card" *ngIf="mostrarTotalMontos">
+      <div class="commission-icon-box">
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </div>
+      <div class="commission-details">
+        <span class="commission-label">Total a debitar (Monto + Comisión SPEI):</span>
+        <span class="commission-figure">{{ totalMontos | currency:'USD':'symbol':'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <!-- TARJETA FORMULARIO: TRANSFERENCIA SPEI -->
+    <div class="transfer-form-card">
+      <div class="card-section-header">
+        <div class="header-icon-box">
+          <ion-icon name="swap-horizontal-outline"></ion-icon>
+        </div>
+        <div>
+          <h2 class="card-section-title">Datos de la Transferencia SPEI</h2>
+          <p class="card-section-subtitle">Ingresa la cuenta destino y detalles de la operación</p>
+        </div>
+      </div>
+
+      <form [formGroup]="formOrden" class="form-body">
+
+        <!-- 1. Cuenta Beneficiario (CLABE / Tarjeta / Celular) -->
+        <div class="form-group-item">
+          <ion-item lines="none" class="custom-form-item">
+            <ion-icon name="card-outline" slot="start" class="field-icon"></ion-icon>
+            <ion-input
+              formControlName="cuentaBeneficiario"
+              label="Cuenta Beneficiario (CLABE, Tarjeta o Celular)"
+              labelPlacement="floating"
+              inputmode="numeric"
+              maxlength="21"
+              placeholder="18 dígitos CLABE, 16 tarjeta o 10 celular"
+              required
+              (ionBlur)="limpiarYVerificarCuenta()"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- 2. Banco / Institución Contraparte -->
+        <div class="form-group-item">
+          <ion-item lines="none" class="custom-form-item custom-select-item">
+            <ion-icon name="business-outline" slot="start" class="field-icon"></ion-icon>
+            <ion-select
+              formControlName="institucionContraparte"
+              placeholder="Seleccionar banco receptor"
+              label="Banco Receptor"
+              labelPlacement="floating"
+              interface="action-sheet"
+              [interfaceOptions]="customActionSheetOptions"
+              [disabled]="institucionSeleccionada"
+              class="custom-bank-select"
+            >
+              <ion-select-option
+                *ngFor="let institucion of institucionesList"
+                [value]="institucion.participante"
+              >
+                {{ institucion.institucion }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <!-- 3. Nombre del Beneficiario -->
+        <div class="form-group-item">
+          <ion-item lines="none" class="custom-form-item">
+            <ion-icon name="person-outline" slot="start" class="field-icon"></ion-icon>
+            <ion-input
+              formControlName="nombreBeneficiario"
+              label="Nombre del Beneficiario"
+              labelPlacement="floating"
+              maxlength="40"
+              placeholder="Nombre completo o razón social"
+              required
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- 4. RFC / CURP del Beneficiario -->
+        <div class="form-group-item">
+          <ion-item lines="none" class="custom-form-item">
+            <ion-icon name="id-card-outline" slot="start" class="field-icon"></ion-icon>
+            <ion-input
+              formControlName="rfcCurpBeneficiario"
+              label="RFC / CURP del Beneficiario (o ND)"
+              labelPlacement="floating"
+              minlength="2"
+              maxlength="18"
+              placeholder="RFC con homoclave o ND"
+              required
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Grid de Concepto y Referencia -->
+        <div class="form-grid-two-cols">
+          <!-- 5. Concepto de Pago -->
+          <div class="form-group-item">
+            <ion-item lines="none" class="custom-form-item">
+              <ion-icon name="document-text-outline" slot="start" class="field-icon"></ion-icon>
+              <ion-input
+                formControlName="conceptoPago"
+                label="Concepto de Pago"
+                labelPlacement="floating"
+                minlength="4"
+                maxlength="40"
+                placeholder="Motivo de la transferencia"
+                required
+              ></ion-input>
+            </ion-item>
+          </div>
+
+          <!-- 6. Referencia Numérica -->
+          <div class="form-group-item">
+            <ion-item lines="none" class="custom-form-item">
+              <ion-icon name="pricetag-outline" slot="start" class="field-icon"></ion-icon>
+              <ion-input
+                formControlName="referenciaNumerica"
+                label="Referencia Numérica"
+                labelPlacement="floating"
+                maxlength="7"
+                placeholder="7 dígitos"
+                required
+              ></ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <!-- Grid de Monto y Tipo de Pago -->
+        <div class="form-grid-two-cols">
+          <!-- 7. Monto -->
+          <div class="form-group-item">
+            <ion-item lines="none" class="custom-form-item monto-item">
+              <ion-icon name="cash-outline" slot="start" class="field-icon"></ion-icon>
+              <ion-input
+                formControlName="monto"
+                label="Monto a Transferir ($)"
+                labelPlacement="floating"
+                type="text"
+                placeholder="0.00"
+                (ionChange)="validarMonto()"
+                required
+              ></ion-input>
+            </ion-item>
+          </div>
+
+          <!-- 8. Tipo de Pago -->
+          <div class="form-group-item">
+            <ion-item lines="none" class="custom-form-item readonly-item">
+              <ion-icon name="swap-horizontal-outline" slot="start" class="field-icon"></ion-icon>
+              <ion-input
+                formControlName="tipoPago"
+                label="Tipo de Transferencia"
+                labelPlacement="floating"
+                type="text"
+                value="Transferencia SPEI (Tercero a Tercero)"
+                [disabled]="true"
+              ></ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <!-- Acciones del Formulario -->
+        <div class="form-actions-container">
+          
+          <!-- Botón Confirmar Transferencia SPEI -->
+          <button
+            *ngIf="!procesandoPago"
+            class="btn-submit-transfer"
+            (click)="registrarPago()"
+            [disabled]="!formOrden.valid"
+            type="button"
+          >
+            <ion-icon name="send-outline"></ion-icon>
+            <span>Confirmar Transferencia SPEI</span>
+          </button>
+
+          <!-- Barra de Progreso durante procesamiento -->
+          <div class="progress-state-card" *ngIf="procesandoPago">
+            <div class="progress-header">
+              <ion-spinner name="crescent" color="primary"></ion-spinner>
+              <span class="progress-label">Procesando Transferencia SPEI...</span>
+            </div>
+            <ion-progress-bar
+              [value]="progresoCarga"
+              [color]="colorProgreso"
+              class="custom-progress-bar"
+            ></ion-progress-bar>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+
   </div>
-</ion-item>
-
-<ion-item color="secondary" *ngIf="mostrarTotalMontos">
-  <div>
-    <div *ngIf="totalMontos !== null; else sinTotalMontos">
-      <ion-text>
-        Total de montos con comición:
-        <strong style="font-size: 20px"> {{ totalMontos | currency }} </strong>
-      </ion-text>
-    </div>
-    <ng-template #sinTotalMontos>
-      <ion-text>
-        Total de montos con comición:
-        <strong style="font-size: 20px">{{ 0 | currency }}</strong>
-      </ion-text>
-    </ng-template>
-  </div>
-</ion-item>
-
-<ion-content>
-  <form [formGroup]="formOrden">
-    <ion-item>
-      <ion-icon name="card-outline" slot="start"></ion-icon>
-      <ion-input
-        formControlName="cuentaBeneficiario"
-        label="Cuenta"
-        labelPlacement="floating"
-        inputmode="numeric"
-        maxlength="21"
-        required
-        (ionBlur)="limpiarYVerificarCuenta()"
-      ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="business-outline" slot="start"></ion-icon>
-      <ion-label>Banco</ion-label>
-      <ion-select
-        formControlName="institucionContraparte"
-        placeholder="Seleccionar banco"
-        [disabled]="institucionSeleccionada"
-      >
-        <ion-select-option
-          *ngFor="let institucion of institucionesList"
-          [value]="institucion.participante"
-          required
-        >
-          {{ institucion.institucion }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="person-outline" slot="start"></ion-icon>
-      <ion-input
-        formControlName="nombreBeneficiario"
-        label="Nombre Beneficiario"
-        labelPlacement="floating"
-        maxlength="40"
-        required
-      ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="id-card-outline" slot="start"></ion-icon>
-      <ion-input
-        formControlName="rfcCurpBeneficiario"
-        label="RFC Beneficiario"
-        labelPlacement="floating"
-        minlength="2"
-        maxlength="18"
-        required
-      ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="document-text-outline" slot="start"></ion-icon>
-      <ion-input
-        formControlName="conceptoPago"
-        label="Concepto de Pago"
-        labelPlacement="floating"
-        minlength="4"
-        maxlength="40"
-        required
-      ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="pricetag-outline" slot="start"></ion-icon>
-      <ion-input
-        formControlName="referenciaNumerica"
-        label="Referencia Numérica"
-        labelPlacement="floating"
-        maxlength="7"
-        required
-      ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="cash-outline" slot="start"></ion-icon>
-      <ion-input
-        formControlName="monto"
-        label="Monto"
-        labelPlacement="floating"
-        type="text"
-        (ionChange)="validarMonto()"
-        required
-      ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="card-outline" slot="start"></ion-icon>
-      <ion-input
-        formControlName="tipoPago"
-        label="Tercero a Tercero"
-        labelPlacement="floating"
-        type="text"
-        required
-        [disabled]="true"
-        [value]="1"
-      ></ion-input>
-    </ion-item>
-
-    <div>
-      <!-- Botón que se oculta cuando procesandoPago es true -->
-      <ion-card
-        *ngIf="!procesandoPago"
-        color="primary"
-        (click)="registrarPago()"
-        [class.disabled-card]="!formOrden.valid"
-        [class.clickable-card]="formOrden.valid"
-        [disabled]="!formOrden.valid"
-      >
-        <ion-card-content>
-          <ion-icon
-            name="documents-outline"
-            class="fa-xl ion-margin-end"
-          ></ion-icon>
-          <ion-text>Registrar Pago</ion-text>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card *ngIf="procesandoPago">
-        <ion-card-content class="progress-container">
-          <ion-progress-bar
-            [value]="progresoCarga"
-            [color]="colorProgreso"
-          ></ion-progress-bar>
-        </ion-card-content>
-      </ion-card>
-    </div>
-  </form>
 </ion-content>

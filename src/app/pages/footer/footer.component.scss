@@ -1,8 +1,25 @@
 .app-footer {
-  background-color: #2b3751;
-  color: white;
-  padding: 1rem;
+  background-color: #162d4a;
+  color: #cbd5e1;
+  height: 42px;
+  padding: 0 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 0.775rem;
+  font-weight: 500;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-footer {
+    padding: 0 1rem;
+    font-size: 0.725rem;
+  }
 }

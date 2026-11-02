@@ -1,13 +1,942 @@
-.saldo {
-  --border-radius: 20px;
+// =============================================================
+// MOVIMIENTOS DE AHORRO - ESTILO EDITORIAL RDAM (TEMA CLARO)
+// =============================================================
+
+$navy-primary: #162d4a;
+$navy-hover: #0e1e33;
+$navy-dark: #0f172a;
+$cream-bg: #fbf7f4;
+$card-bg: #ffffff;
+$border-light: #e2e8f0;
+$border-card: #d1d5db;
+$text-dark: #0f172a;
+$text-muted: #475569;
+$text-subtle: #64748b;
+$blue-accent: #2563eb;
+
+$emerald-text: #059669;
+$emerald-bg: #ecfdf5;
+$emerald-border: #a7f3d0;
+
+$rose-text: #dc2626;
+$rose-bg: #fef2f2;
+$rose-border: #fecaca;
+
+// -------------------------------------------------------------
+// ENCABEZADO INSTITUCIONAL
+// -------------------------------------------------------------
+.ahorro-header {
+  position: relative;
+  z-index: 50;
+  background: $cream-bg;
+  border-bottom: 1px solid rgba(22, 45, 74, 0.08);
+
+  .header-toolbar {
+    --background: #{$cream-bg};
+    --border-width: 0;
+    --padding-top: 0.5rem;
+    --padding-bottom: 0.5rem;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+  }
+
+  ion-back-button {
+    --color: #{$navy-primary};
+    font-size: 1.1rem;
+  }
+
+  .header-brand-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .header-logo {
+      height: 46px;
+      width: auto;
+      max-width: 180px;
+      object-fit: contain;
+    }
+  }
+
+  .header-end-spacer {
+    visibility: hidden;
+  }
 }
 
-.fecha-separador {
-  font-weight: bold;
-  text-align: center;
+// -------------------------------------------------------------
+// CONTENIDO PRINCIPAL
+// -------------------------------------------------------------
+.ahorro-content {
+  --background: #{$cream-bg};
+  --padding-top: 0.5rem;
+  --padding-bottom: 4rem;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  .ahorro-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1.25rem 1.25rem 5rem;
+    box-sizing: border-box;
+
+    @media (max-width: 640px) {
+      padding: 1.25rem 0.85rem 4rem;
+    }
+  }
 }
 
-ion-row.ion-align-items-center {
+// -------------------------------------------------------------
+// INTRO DE PÁGINA
+// -------------------------------------------------------------
+.page-intro-header {
+  margin-bottom: 1rem;
+
+  .page-kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #4b5563;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .page-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: $navy-primary;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+
+    @media (max-width: 640px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .page-description {
+    font-size: 0.92rem;
+    color: $text-muted;
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+// -------------------------------------------------------------
+// BANNER COMPACTO DE SALDO DISPONIBLE (SLIM & EXECUTIVE)
+// -------------------------------------------------------------
+.compact-balance-strip {
+  position: relative;
+  background: linear-gradient(135deg, #162d4a 0%, #1c3557 55%, #1e40af 100%);
+  border-radius: 14px;
+  padding: 0.9rem 1.4rem;
+  color: #ffffff;
+  overflow: hidden;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 10px 25px -6px rgba(22, 45, 74, 0.32),
+              0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 580px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.85rem 1.1rem;
+    gap: 0.75rem;
+  }
+
+  .strip-glow {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .strip-left {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .strip-icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+
+    .strip-amount-group {
+      display: flex;
+      flex-direction: column;
+
+      .strip-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 0.15rem;
+      }
+
+      .strip-number-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+
+        .strip-amount {
+          font-size: 1.75rem;
+          font-weight: 800;
+          color: #ffffff;
+          letter-spacing: -0.03em;
+          line-height: 1.1;
+
+          @media (max-width: 480px) {
+            font-size: 1.5rem;
+          }
+        }
+
+        .strip-currency {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #93c5fd;
+        }
+      }
+    }
+  }
+
+  .strip-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    @media (max-width: 580px) {
+      width: 100%;
+      justify-content: space-between;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .strip-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.95);
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 6px #10b981;
+      }
+    }
+
+    .strip-spei-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+
+      ion-icon {
+        font-size: 0.95rem;
+        color: #93c5fd;
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// SELECTOR DE PERIODO (ION-SEGMENT)
+// -------------------------------------------------------------
+.filter-segment-container {
+  margin-bottom: 1.75rem;
+
+  .custom-period-segment {
+    background: #e9ecef;
+    border-radius: 14px;
+    padding: 4px;
+    border: 1px solid rgba(22, 45, 74, 0.08);
+
+    ion-segment-button {
+      --background: transparent;
+      --background-checked: #162d4a;
+      --color: #475569;
+      --color-checked: #ffffff;
+      --indicator-color: transparent;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      letter-spacing: -0.01em;
+      min-height: 44px;
+      transition: all 0.2s ease;
+
+      &::part(indicator) {
+        display: none;
+      }
+
+      &.segment-button-checked {
+        box-shadow: 0 4px 12px rgba(22, 45, 74, 0.25);
+      }
+
+      .segment-btn-icon {
+        font-size: 1.1rem;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// TARJETA CONTENEDOR DE TRANSACCIONES
+// -------------------------------------------------------------
+.transactions-card {
+  background: $card-bg;
+  border: 1.5px solid $border-card;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(22, 45, 74, 0.05);
+  overflow: hidden;
+
+  .transactions-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.75rem;
+    border-bottom: 1px solid $border-light;
+    background: #ffffff;
+
+    @media (max-width: 640px) {
+      padding: 1.25rem 1rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .transactions-icon-box {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(22, 45, 74, 0.07);
+        color: $navy-primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        flex-shrink: 0;
+      }
+
+      .transactions-title {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: $navy-primary;
+        margin: 0 0 0.15rem 0;
+        letter-spacing: -0.02em;
+      }
+
+      .transactions-subtitle {
+        font-size: 0.82rem;
+        color: $text-subtle;
+        margin: 0;
+      }
+    }
+
+    .header-right {
+      .count-badge {
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: $navy-primary;
+        background: #f1f5f9;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        border: 1px solid #e2e8f0;
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// TABLA Y FILAS DE TRANSACCIONES
+// -------------------------------------------------------------
+.transactions-table-header {
+  display: grid;
+  grid-template-columns: 2.5fr 1.5fr 1.2fr 1.2fr;
+  padding: 0.85rem 1.75rem;
+  background: #f8fafc;
+  border-bottom: 1px solid $border-light;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+
+  @media (max-width: 640px) {
+    display: none; // En móvil usamos vista de tarjeta por fila
+  }
+
+  .th-monto {
+    text-align: right;
+  }
+
+  .th-fecha {
+    text-align: center;
+  }
+
+  .th-comprobante {
+    text-align: center;
+  }
+}
+
+.transactions-list {
+  background: #ffffff;
+
+  .transaction-row {
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr 1.2fr 1.2fr;
+    align-items: center;
+    padding: 1.1rem 1.75rem;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.15s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #fafbfd;
+    }
+
+    @media (max-width: 640px) {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+      padding: 1.15rem 1rem;
+      border-bottom: 1px solid #eef2f6;
+    }
+
+    // Columna Movimiento
+    .td-mov {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+
+      .tx-badge-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.15rem;
+        flex-shrink: 0;
+
+        &.tx-icon-deposit {
+          background: $emerald-bg;
+          color: $emerald-text;
+          border: 1px solid $emerald-border;
+        }
+
+        &.tx-icon-debit {
+          background: $rose-bg;
+          color: $rose-text;
+          border: 1px solid $rose-border;
+        }
+      }
+
+      .tx-info-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        overflow: hidden;
+
+        .tx-description {
+          font-size: 0.92rem;
+          font-weight: 700;
+          color: $text-dark;
+          line-height: 1.35;
+          word-break: break-word;
+        }
+
+        .tx-mobile-date {
+          display: none;
+          font-size: 0.78rem;
+          color: $text-subtle;
+
+          @media (max-width: 640px) {
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+    // Columna Monto
+    .td-monto {
+      text-align: right;
+
+      @media (max-width: 640px) {
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 3.25rem;
+      }
+
+      .monto-badge {
+        display: inline-block;
+        font-size: 0.96rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        padding: 0.28rem 0.65rem;
+        border-radius: 8px;
+
+        &.monto-deposit {
+          color: $emerald-text;
+          background: $emerald-bg;
+          border: 1px solid $emerald-border;
+        }
+
+        &.monto-debit {
+          color: $rose-text;
+          background: $rose-bg;
+          border: 1px solid $rose-border;
+        }
+      }
+    }
+
+    // Columna Fecha (Desktop)
+    .td-fecha {
+      text-align: center;
+
+      @media (max-width: 640px) {
+        display: none;
+      }
+
+      .tx-date-desktop {
+        font-size: 0.85rem;
+        color: $text-muted;
+        font-weight: 500;
+      }
+    }
+
+    // Columna Comprobante
+    .td-comprobante {
+      text-align: center;
+
+      @media (max-width: 640px) {
+        text-align: right;
+        padding-top: 0.35rem;
+      }
+
+      .btn-receipt {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        color: $navy-primary;
+        padding: 0.42rem 0.85rem;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s ease;
+
+        ion-icon {
+          font-size: 1.05rem;
+          color: $blue-accent;
+        }
+
+        &:hover {
+          background: #f1f5f9;
+          border-color: $navy-primary;
+        }
+
+        @media (max-width: 640px) {
+          width: 100%;
+          justify-content: center;
+          padding: 0.55rem;
+        }
+      }
+
+      .no-receipt-label {
+        font-size: 0.88rem;
+        color: #94a3b8;
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// ESTADO VACÍO
+// -------------------------------------------------------------
+.empty-state-card {
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  background: #ffffff;
+
+  .empty-icon-circle {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #94a3b8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .empty-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: $navy-primary;
+    margin: 0 0 0.4rem 0;
+  }
+
+  .empty-desc {
+    font-size: 0.9rem;
+    color: $text-muted;
+    max-width: 380px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+}
+
+// -------------------------------------------------------------
+// BARRA DE PAGINACIÓN ELEGANTE
+// -------------------------------------------------------------
+.pagination-footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.15rem 1.75rem;
+  background: #f8fafc;
+  border-top: 1px solid $border-light;
+
+  @media (max-width: 640px) {
+    padding: 1rem 0.85rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .pagination-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    color: $navy-primary;
+    padding: 0.45rem 0.95rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    ion-icon {
+      font-size: 1rem;
+    }
+
+    &:hover:not(:disabled) {
+      background: $navy-primary;
+      color: #ffffff;
+      border-color: $navy-primary;
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      border-color: #e2e8f0;
+      color: #94a3b8;
+    }
+  }
+
+  .pagination-indicator {
+    font-size: 0.85rem;
+    color: $text-muted;
+
+    .page-current {
+      color: $navy-primary;
+      font-weight: 800;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// MODAL INSTITUCIONAL: DETALLE DEL MOVIMIENTO
+// -------------------------------------------------------------
+.custom-transaction-modal {
+  --background: #ffffff;
+  --backdrop-opacity: 0.6;
+  --border-radius: 24px;
+  --max-width: 580px;
+  --width: 92%;
+  --max-height: 86vh;
+  --height: auto;
+
+  .modal-wrapper-container {
+    background: #ffffff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .modal-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.35rem 1.75rem;
+    border-bottom: 1px solid $border-light;
+    background: #ffffff;
+
+    .modal-title-box {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+
+      .modal-header-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(22, 45, 74, 0.08);
+        color: $navy-primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+      }
+
+      .modal-title-text {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: $navy-primary;
+        margin: 0 0 0.15rem 0;
+        letter-spacing: -0.02em;
+      }
+
+      .modal-subtitle-text {
+        font-size: 0.78rem;
+        color: $text-subtle;
+        display: block;
+      }
+    }
+
+    .modal-close-button {
+      background: #f1f5f9;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $text-muted;
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: all 0.15s ease;
+
+      &:hover {
+        background: #e2e8f0;
+        color: $text-dark;
+      }
+    }
+  }
+
+  .modal-scroll-content {
+    padding: 1.5rem 1.75rem 2rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    @media (max-width: 640px) {
+      padding: 1.25rem 1.25rem 1.75rem;
+    }
+  }
+
+  // Hero Monto dentro del modal
+  .modal-amount-hero {
+    background: linear-gradient(135deg, #162d4a 0%, #1e3a5f 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+
+    .modal-amount-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.75);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .modal-amount-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0 0 0.5rem 0;
+      color: #ffffff;
+    }
+
+    .modal-date-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.9);
+
+      ion-icon {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  // Grid de Detalles Clave
+  .modal-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+    margin-bottom: 1.75rem;
+
+    @media (max-width: 520px) {
+      grid-template-columns: 1fr;
+    }
+
+    .detail-cell {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+
+      &.full-width {
+        grid-column: 1 / -1;
+      }
+
+      &.highlight-cell {
+        background: #f0f7ff;
+        border-color: #bfdbfe;
+      }
+
+      .detail-cell-header {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.74rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #64748b;
+        margin-bottom: 0.35rem;
+
+        ion-icon {
+          font-size: 0.95rem;
+          color: $navy-primary;
+        }
+      }
+
+      .detail-cell-value {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: $text-dark;
+        word-break: break-all;
+        line-height: 1.35;
+
+        &.mono-font {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+          letter-spacing: -0.01em;
+          color: $navy-primary;
+        }
+      }
+    }
+  }
+
+  // Loading State
+  .modal-loading-state {
+    text-align: center;
+    padding: 1.25rem 0;
+
+    ion-progress-bar {
+      --progress-background: #{$navy-primary};
+      --background: #e2e8f0;
+      height: 6px;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+    }
+
+    .loading-state-text {
+      font-size: 0.85rem;
+      color: $text-muted;
+      font-weight: 600;
+    }
+  }
+
+  // Botón Generar Comprobante
+  .modal-action-wrapper {
+    .btn-primary-comprobante {
+      width: 100%;
+      height: 52px;
+      border-radius: 14px;
+      background: $navy-primary;
+      color: #ffffff;
+      border: none;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(22, 45, 74, 0.28);
+      transition: all 0.2s ease;
+
+      ion-icon {
+        font-size: 1.3rem;
+      }
+
+      &:hover {
+        background: $navy-hover;
+        box-shadow: 0 10px 24px rgba(22, 45, 74, 0.36);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(1px);
+      }
+    }
+  }
 }

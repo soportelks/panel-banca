@@ -1,61 +1,90 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back"></ion-back-button>
+      <ion-back-button defaultHref="/login" icon="chevron-back-outline" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Confirmar Código</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle class="ion-text-center">
-        Ingresa el código que te hemos <br />
-        enviado al correo electronico
-      </ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-input
-            [(ngModel)]="otpCode"
-            label="Código"
-            type="number"
-            labelPlacement="floating"
-            color="primary"
-          ></ion-input>
-        </ion-row>
-        <ion-row class="ion-justify-content-center ion-margin-top">
-          <p style="font-size: 24px; color: black">{{ formattedTime }}</p>
-        </ion-row>
-        <ion-row class="ion-justify-content-end ion-margin-top">
-          <a (click)="resendOtp()">Reenviar código</a>
-        </ion-row>
-        <ion-row class="ion-justify-content-center ion-margin-top">
-          <ion-text class="ion-text-center">
-            <p>
-              El código enviado tiene una vigencia <br />
-              de 2 minutos.
-            </p>
-          </ion-text>
-        </ion-row>
-        <ion-row class="ion-justify-content-center ion-margin-top">
-          <ion-row class="ion-justify-content-center ion-margin-top">
-            <ion-button
-              shape="round"
-              size="large"
-              color="danger"
-              (click)="cancelAndReturn()"
-            >
-              Cancelar
-            </ion-button>
-            <ion-button shape="round" size="large" (click)="verifyOtp()">
-              Continuar
-            </ion-button>
-          </ion-row>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+<ion-content class="confirm-content">
+  <div class="confirm-wrapper">
+    <div class="confirm-card">
+      
+      <!-- Logo RDAM -->
+      <div class="brand-header">
+        <div class="brand-logo-wrapper">
+          <img
+            src="assets/images/Logo_RDAM_negro.png"
+            class="brand-logo"
+            alt="Logo RDAM"
+          />
+        </div>
+        <h1 class="brand-title">Confirmar Código OTP</h1>
+        <p class="brand-subtitle">
+          Ingresa el código de seguridad que enviamos a tu correo electrónico para validar tu identidad.
+        </p>
+      </div>
+
+      <!-- Temporizador Badge -->
+      <div class="timer-badge-container">
+        <div class="timer-badge">
+          <span class="timer-icon">⏱️</span>
+          <span>Vigencia: <strong>{{ formattedTime }}</strong></span>
+        </div>
+      </div>
+
+      <!-- Formulario OTP -->
+      <div class="otp-form-body">
+        
+        <!-- Campo de Entrada del Código -->
+        <div class="otp-input-box">
+          <ion-item lines="none" class="custom-otp-item">
+            <ion-input
+              [(ngModel)]="otpCode"
+              type="number"
+              inputmode="numeric"
+              placeholder="• • • • • •"
+              class="centered-otp-input"
+              maxlength="6"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Enlace Reenviar Código -->
+        <div class="resend-wrapper">
+          <span>¿No recibiste el código?</span>
+          <a (click)="resendOtp()" class="resend-link">Reenviar código</a>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="action-buttons-group">
+          <ion-button
+            expand="block"
+            size="large"
+            class="btn-verify"
+            (click)="verifyOtp()"
+          >
+            Continuar
+          </ion-button>
+
+          <ion-button
+            expand="block"
+            fill="clear"
+            class="btn-cancel"
+            (click)="cancelAndReturn()"
+          >
+            Cancelar
+          </ion-button>
+        </div>
+
+      </div>
+
+      <!-- Pie de Seguridad -->
+      <div class="security-footer">
+        <ion-icon name="shield-checkmark"></ion-icon>
+        <span>Validación cifrada de 2 factores</span>
+      </div>
+
+    </div>
+  </div>
 </ion-content>

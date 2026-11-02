@@ -40,14 +40,19 @@ export class DispersionMasivaPagosPage implements OnInit {
   mostrarBotonProcesar: boolean = true;
   isProcessing: boolean = false;
   isResultadoOpen: boolean = false;
+  folioCopiado: boolean = false;
   resultadoDispersion: {
+    codigo: string;
+    mensaje: string;
     duplicado: boolean;
     exitosos: number;
     fallidos: number;
     total: number;
     monto: string;
+    montoRaw: number;
     folio: string;
     fecha: string;
+    fechaRaw: string;
     causas: string[];
     causasRestantes: number;
   } | null = null;
@@ -443,7 +448,10 @@ export class DispersionMasivaPagosPage implements OnInit {
       const idempotencyKey = this.idempotencyKey || this.generarIdempotencyKey();
       this.idempotencyKey = idempotencyKey;
 
-      loading = await this.presentLoading("Procesando dispersión...");
+      loading = await this.presentLoading(
+        "Procesando dispersión...",
+        "Por favor, ten paciencia. Esta operación puede tardar unos momentos según la cantidad de pagos del lote y la demanda de la red SPEI. No cierres ni recargues la página."
+      );
 
       const pagosLimpios = this.csvData.map(pago => ({
         conceptoPago: pago.conceptoPago,
@@ -477,28 +485,41 @@ export class DispersionMasivaPagosPage implements OnInit {
         }
       };
 
-      const respuesta = await lastValueFrom(
+      let respuesta: any = await lastValueFrom(
         this.dispersionesMasivasSrv.envioPagosMasivos(payload)
       );
+
+      console.log('Respuesta de envío de pagos masivos:', respuesta);
+
+      if (typeof respuesta === 'string') {
+        try {
+          respuesta = JSON.parse(respuesta);
+        } catch (e) {
+          console.error('Error al parsear respuesta JSON de dispersión:', e);
+        }
+      }
 
       await loading.dismiss();
       loading = null;
 
-      if (respuesta.codigo === "0") {
+      const codigoStr = String(respuesta?.codigo ?? '');
+      const estadoStr = String(respuesta?.estado ?? '');
+
+      if (codigoStr === "0" || (respuesta && Number(respuesta.exitosos) > 0) || (respuesta && Number(respuesta.totalOrdenes) > 0)) {
         this.abrirResultadoDispersion(respuesta);
         this.clearTableData();
         this.mostrarTotalMontos = false;
         this.totalMontos = 0;
         this.searchSaldoCliente();
-      } else if (respuesta.estado === "EN_PROCESO") {
+      } else if (estadoStr === "EN_PROCESO") {
         await this.presentAlertDetalle(
           "Dispersión en proceso",
-          respuesta.mensaje || "Este lote ya está en proceso. No se generaron órdenes nuevas."
+          respuesta?.mensaje || "Este lote ya está en proceso. No se generaron órdenes nuevas."
         );
       } else {
         await this.presentAlertDetalle(
           "Dispersión no realizada",
-          respuesta.mensaje || "No fue posible procesar la dispersión. No se generaron órdenes nuevas."
+          respuesta?.mensaje || "No fue posible procesar la dispersión. No se generaron órdenes nuevas."
         );
       }
 
@@ -517,19 +538,32 @@ export class DispersionMasivaPagosPage implements OnInit {
   }
 
   abrirResultadoDispersion(respuesta: any) {
+    if (typeof respuesta === 'string') {
+      try {
+        respuesta = JSON.parse(respuesta);
+      } catch (e) {
+        console.error('Error al parsear respuesta en abrirResultadoDispersion:', e);
+      }
+    }
+
     const exitosos = Number(respuesta?.exitosos ?? 0);
     const fallidos = Number(respuesta?.fallidos ?? 0);
     const total = Number(respuesta?.totalOrdenes ?? (exitosos + fallidos));
     const causas: string[] = Array.isArray(respuesta?.causasFallos) ? respuesta.causasFallos : [];
+    const montoRaw = Number(respuesta?.montoTotal ?? this.totalMontos);
 
     this.resultadoDispersion = {
+      codigo: String(respuesta?.codigo ?? '0'),
+      mensaje: respuesta?.mensaje || 'Procesamiento completado',
       duplicado: respuesta?.duplicado === true,
       exitosos,
       fallidos,
       total,
-      monto: this.formatearMoneda(respuesta?.montoTotal ?? this.totalMontos),
+      monto: this.formatearMoneda(montoRaw),
+      montoRaw,
       folio: respuesta?.idempotencyKey || this.idempotencyKey || "No disponible",
       fecha: this.formatearFechaOperacion(respuesta?.fechaOperacion),
+      fechaRaw: String(respuesta?.fechaOperacion ?? ''),
       causas: causas.slice(0, 5),
       causasRestantes: Math.max(causas.length - 5, 0)
     };
@@ -538,6 +572,28 @@ export class DispersionMasivaPagosPage implements OnInit {
 
   cerrarResultadoDispersion() {
     this.isResultadoOpen = false;
+    this.resultadoDispersion = null;
+  }
+
+  nuevaDispersion() {
+    this.resultadoDispersion = null;
+    this.isResultadoOpen = false;
+    this.clearTableData();
+  }
+
+  async copiarFolio(folio: string) {
+    if (!folio || folio === 'No disponible') return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(folio);
+        this.folioCopiado = true;
+        setTimeout(() => {
+          this.folioCopiado = false;
+        }, 2500);
+      }
+    } catch (e) {
+      console.warn('No se pudo copiar folio:', e);
+    }
   }
 
   get resultadoTitulo(): string {
@@ -587,10 +643,16 @@ export class DispersionMasivaPagosPage implements OnInit {
   }
 
 
-  async presentLoading(mensaje: string) {
+  async presentLoading(mensaje: string, subtitulo?: string) {
+    const textoCompleto = subtitulo
+      ? `${mensaje}\n\n${subtitulo}`
+      : mensaje;
+
     const loading = await this.loadingCtrl.create({
-      message: mensaje,
+      message: textoCompleto,
       spinner: "crescent",
+      cssClass: "custom-loading-dispersion",
+      backdropDismiss: false
     });
     await loading.present();
     return loading;
@@ -931,6 +993,7 @@ export class DispersionMasivaPagosPage implements OnInit {
     this.alertInstance = await this.alertCtrl.create({
       header: 'Ingresar Codigo de verificación',
       backdropDismiss: false,
+      cssClass: 'otp-custom-alert',
       message: `
      
         Tiempo restante: ${this.timeLeft} segundos
@@ -942,7 +1005,7 @@ export class DispersionMasivaPagosPage implements OnInit {
         {
           name: 'otpCode',
           type: 'number',
-          placeholder: 'Introduce el código de verificación'
+          placeholder: 'Código de 6 dígitos'
         }
       ],
       buttons: [

@@ -53,6 +53,7 @@ const routes: Routes = [
   },
   {
     path: 'inicio',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/inicio/inicio.module').then((m) => m.InicioPageModule),
   },
@@ -147,6 +148,10 @@ const routes: Routes = [
     path: 'traspaso',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/traspaso/traspaso.module').then(m => m.TraspasoPageModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
   },
 ];
 

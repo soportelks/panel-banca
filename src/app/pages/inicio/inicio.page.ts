@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Inject, Renderer2 } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TesoreriaService } from 'src/app/services/tesoreria.service';
@@ -27,14 +28,23 @@ export class InicioPage implements AfterViewInit {
     info: { saldo: 0 },
     mensaje: '',
   };
+  mostrarSaldo: boolean = true;
 
   constructor(
     @Inject(Router) private router: Router,
     private authService: AuthServiceService,
     private teso: TesoreriaService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private navCtrl: NavController
   ) {
     this.detectTheme();
+
+    const storedMostrarSaldo = localStorage.getItem('mostrarSaldo');
+    if (storedMostrarSaldo !== null) {
+      this.mostrarSaldo = storedMostrarSaldo === 'true';
+    } else {
+      this.mostrarSaldo = true;
+    }
 
     this.datosSaldo = {
       codigo: '',
@@ -56,6 +66,15 @@ export class InicioPage implements AfterViewInit {
     });
   }
 
+
+  ionViewWillEnter() {
+    const token = localStorage.getItem('token');
+    const datosCliente = localStorage.getItem('datosCliente');
+    if (!token || !datosCliente) {
+      this.limpiarSesionLocal();
+      return;
+    }
+  }
 
   async ngAfterViewInit() {
     console.log('ngAfterViewInit');
@@ -141,11 +160,34 @@ export class InicioPage implements AfterViewInit {
   }
 
   private limpiarSesionLocal() {
+    const prefMostrarSaldo = localStorage.getItem('mostrarSaldo');
     localStorage.clear();
+    if (prefMostrarSaldo !== null) {
+      localStorage.setItem('mostrarSaldo', prefMostrarSaldo);
+    }
     this.clearCookies();
-    this.router.navigate(['/home']);
+    this.navCtrl.navigateRoot(['/login'], { replaceUrl: true });
   }
 
+  toggleMostrarSaldo() {
+    this.mostrarSaldo = !this.mostrarSaldo;
+    localStorage.setItem('mostrarSaldo', String(this.mostrarSaldo));
+  }
+
+
+  clabeCopiada: boolean = false;
+
+  copiarTexto(texto: string) {
+    if (!texto) return;
+    navigator.clipboard.writeText(texto).then(() => {
+      this.clabeCopiada = true;
+      setTimeout(() => {
+        this.clabeCopiada = false;
+      }, 2500);
+    }).catch(err => {
+      console.error('Error al copiar: ', err);
+    });
+  }
 
   onNotificationClick() {
     this.isModalOpen = true;

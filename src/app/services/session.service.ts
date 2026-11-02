@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 export class SessionService {
   private channel = new BroadcastChannel('sesion_channel');
 
-  constructor(private router: Router) {
+  constructor(private navCtrl: NavController) {
     this.channel.onmessage = (event) => {
       if (event.data === 'cerrar_sesion') {
         this.forzarCierreSesion();
@@ -20,9 +20,10 @@ export class SessionService {
   }
 
   forzarCierreSesion() {
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('datosCliente');
     this.clearCookies();
-    this.router.navigate(['/home']);
+    this.navCtrl.navigateRoot(['/login'], { replaceUrl: true });
   }
 
   private clearCookies() {

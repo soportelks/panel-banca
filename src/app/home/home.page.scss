@@ -1,10 +1,713 @@
-ion-img {
-  margin-left: auto;
-  margin-right: auto;
-}
+// HubSpot Style Landing Page with AZUL MARINO Theme
 
-@media (min-width: 1200px) {
-  ion-img {
-    width: 30%;
+$navy-primary: #162d4a;
+$navy-hover: #0e1e33;
+$navy-light: #1e3a8a;
+$cream-bg: #fbf7f4;
+$cream-card: #ffffff;
+$border-light: #e5e7eb;
+$text-dark: #111827;
+$text-muted: #4b5563;
+
+// HEADER ESTILO HUBSPOT
+.hubspot-header {
+  position: relative;
+  z-index: 100;
+  background: $cream-bg;
+  border-bottom: 1px solid rgba(22, 45, 74, 0.08);
+
+  .header-toolbar {
+    --background: #{$cream-bg};
+    --border-width: 0;
+    --padding-top: 0.6rem;
+    --padding-bottom: 0.6rem;
+    --padding-start: 2rem;
+    --padding-end: 2rem;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .logo-box {
+    .brand-logo {
+      height: 54px;
+      width: auto;
+      max-width: 220px;
+      object-fit: contain;
+    }
+  }
+
+  // Navigation Links
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+
+    .nav-item {
+      font-size: 0.925rem;
+      font-weight: 600;
+      color: $text-dark;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: color 0.15s ease;
+
+      ion-icon {
+        font-size: 14px;
+        color: $text-muted;
+      }
+
+      &:hover {
+        color: $navy-primary;
+        ion-icon {
+          color: $navy-primary;
+        }
+      }
+    }
+  }
+
+  // Header CTAs
+  .header-ctas {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+
+    .btn-navy-solid {
+      --background: #{$navy-primary};
+      --color: #ffffff !important;
+      color: #ffffff !important;
+      --border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      height: 38px;
+      margin: 0;
+      --box-shadow: 0 2px 8px rgba(22, 45, 74, 0.18);
+      text-transform: none;
+
+      &::part(native) {
+        color: #ffffff !important;
+      }
+
+      &:hover {
+        --background: #{$navy-hover};
+      }
+    }
+
+    .btn-navy-outline {
+      --border-color: #{$navy-primary};
+      --border-width: 1.5px;
+      --border-radius: 6px;
+      --color: #{$navy-primary};
+      font-weight: 600;
+      font-size: 0.875rem;
+      height: 38px;
+      margin: 0;
+      text-transform: none;
+      background: transparent;
+
+      &:hover {
+        --background: rgba(22, 45, 74, 0.05);
+      }
+    }
   }
 }
+
+// CONTENIDO PRINCIPAL
+.hubspot-content {
+  --background: #{$cream-bg};
+  --padding-top: 1rem;
+
+  .page-wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 5rem;
+  }
+}
+
+
+// -------------------------------------------------------------
+// HERO SPLIT SECTION (MOCKUP IZQ, CONTENIDO DER)
+// -------------------------------------------------------------
+.hubspot-hero-section {
+  margin-bottom: 5rem;
+
+  .hero-split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  // Columna Izquierda: Mockup Visual
+  .visual-column {
+    position: relative;
+
+    .mockup-frame {
+      background: #ffffff;
+      border: 1.5px solid #d1d5db;
+      border-radius: 14px;
+      box-shadow: 0 20px 40px -10px rgba(22, 45, 74, 0.12);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+      }
+
+      .window-header {
+        background: $navy-primary;
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .dots-group {
+          display: flex;
+          gap: 6px;
+
+          .w-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+
+            &.red { background: #ef4444; }
+            &.yellow { background: #f59e0b; }
+            &.green { background: #10b981; }
+          }
+        }
+
+        .window-title-bar {
+          color: rgba(255, 255, 255, 0.85);
+          font-size: 0.775rem;
+          font-family: monospace;
+          letter-spacing: 0.3px;
+        }
+      }
+
+      .window-body {
+        padding: 1.5rem;
+        background: #fdfcfb;
+      }
+
+      .account-summary-card {
+        background: #ffffff;
+        border: 1px solid $border-light;
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+
+        .account-badge {
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+          color: $navy-primary;
+          margin-bottom: 0.35rem;
+        }
+
+        .balance-label {
+          font-size: 0.85rem;
+          color: $text-muted;
+        }
+
+        .balance-amount {
+          font-size: 2rem;
+          font-weight: 800;
+          color: $text-dark;
+          margin: 0.25rem 0 0.5rem;
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+          .cents {
+            font-size: 1.25rem;
+            color: $text-muted;
+          }
+
+          .currency {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: $navy-primary;
+            margin-left: 4px;
+          }
+        }
+
+        .account-meta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-top: 0.75rem;
+          border-top: 1px solid $border-light;
+          font-size: 0.825rem;
+          color: $text-muted;
+
+          .meta-tag {
+            background: #ecfdf5;
+            color: #065f46;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+          }
+        }
+      }
+
+      .sub-mockup-card {
+        background: #ffffff;
+        border: 1px solid $border-light;
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 1rem;
+
+        .card-icon-avatar {
+          width: 38px;
+          height: 38px;
+          border-radius: 8px;
+          background: #eff6ff;
+          color: $navy-light;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          flex-shrink: 0;
+        }
+
+        .card-details {
+          flex-grow: 1;
+
+          .card-name {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: $text-dark;
+          }
+          .card-rendimiento {
+            font-size: 0.775rem;
+            color: #059669;
+            font-weight: 600;
+          }
+        }
+
+        .card-pill {
+          background: rgba(22, 45, 74, 0.08);
+          color: $navy-primary;
+          padding: 3px 8px;
+          border-radius: 4px;
+          font-size: 0.725rem;
+          font-weight: 700;
+        }
+      }
+
+      .quick-services-preview {
+        display: flex;
+        gap: 8px;
+
+        .preview-item {
+          flex: 1;
+          background: #ffffff;
+          border: 1px solid $border-light;
+          border-radius: 8px;
+          padding: 0.65rem 0.5rem;
+          text-align: center;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: $text-dark;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+
+          ion-icon {
+            font-size: 18px;
+            color: $navy-primary;
+          }
+        }
+      }
+    }
+  }
+
+  // Columna Derecha: Contenido Editorial
+  .content-column {
+    .editorial-title {
+      font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+      font-size: 3.15rem;
+      font-weight: 500;
+      color: $text-dark;
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+      margin: 0 0 1.5rem;
+    }
+
+    .editorial-desc {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: $text-muted;
+      margin: 0 0 2rem;
+      font-weight: 400;
+    }
+
+    // Botones de Acción
+    .hero-buttons-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+
+      .btn-navy-primary {
+        --background: #{$navy-primary};
+        --color: #ffffff !important;
+        color: #ffffff !important;
+        --border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        height: 50px;
+        text-transform: none;
+        letter-spacing: 0.2px;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+
+        &::part(native) {
+          color: #ffffff !important;
+        }
+
+        &:hover {
+          --background: #{$navy-hover};
+        }
+      }
+
+      .btn-navy-secondary {
+        --border-color: #{$navy-primary};
+        --border-width: 1.5px;
+        --border-radius: 6px;
+        --color: #{$navy-primary};
+        font-weight: 600;
+        font-size: 1rem;
+        height: 50px;
+        text-transform: none;
+        background: transparent;
+
+        &:hover {
+          --background: rgba(22, 45, 74, 0.05);
+        }
+      }
+    }
+
+    // Checklist estilo HubSpot
+    .checklist-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+
+        .check-icon {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          background: $navy-primary;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+
+        .check-text {
+          font-size: 0.975rem;
+          color: $text-dark;
+          line-height: 1.45;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// SERVICIOS HUBSPOT SECTION
+// -------------------------------------------------------------
+.services-hubspot-section {
+  padding-top: 2rem;
+  margin-bottom: 4rem;
+
+  .section-title-wrap {
+    margin-bottom: 2.5rem;
+
+    .section-editorial-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 2.35rem;
+      font-weight: 500;
+      color: $text-dark;
+      margin: 0 0 0.5rem;
+    }
+
+    .section-editorial-desc {
+      font-size: 1.05rem;
+      color: $text-muted;
+      margin: 0;
+    }
+  }
+
+  .services-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+
+    .hubspot-card {
+      background: #ffffff;
+      border: 1px solid $border-light;
+      border-radius: 12px;
+      padding: 2.25rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(22, 45, 74, 0.04);
+      transition: all 0.25s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(22, 45, 74, 0.08);
+        border-color: #cbd5e1;
+      }
+
+      .card-icon-box {
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+        background: rgba(22, 45, 74, 0.07);
+        color: $navy-primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin-bottom: 1.25rem;
+      }
+
+      .card-title {
+        font-family: 'DM Serif Display', Georgia, serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: $text-dark;
+        margin: 0 0 0.75rem;
+      }
+
+      .card-description {
+        font-size: 0.95rem;
+        color: $text-muted;
+        line-height: 1.55;
+        margin: 0 0 1.5rem;
+        flex-grow: 1;
+      }
+
+      .card-footer-link {
+        padding-top: 1rem;
+        border-top: 1px solid $border-light;
+
+        a {
+          color: $navy-primary;
+          font-weight: 700;
+          font-size: 0.925rem;
+          text-decoration: none;
+          transition: opacity 0.15s ease;
+
+          &:hover {
+            text-decoration: underline;
+            opacity: 0.85;
+          }
+        }
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// CALLOUT INSTITUCIONAL
+// -------------------------------------------------------------
+.institution-callout {
+  margin-top: 2rem;
+
+  .callout-box {
+    background: #ffffff;
+    border: 1.5px solid #d1d5db;
+    border-radius: 14px;
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    box-shadow: 0 8px 24px rgba(22, 45, 74, 0.06);
+
+    .callout-text {
+      h3 {
+        font-family: 'DM Serif Display', Georgia, serif;
+        font-size: 1.65rem;
+        color: $text-dark;
+        margin: 0 0 0.4rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+        color: $text-muted;
+        margin: 0;
+        line-height: 1.5;
+      }
+    }
+
+    .callout-btn {
+      flex-shrink: 0;
+
+      .btn-navy-solid {
+        --background: #{$navy-primary};
+        --color: #ffffff;
+        --border-radius: 6px;
+        font-weight: 600;
+        height: 46px;
+        font-size: 0.95rem;
+        text-transform: none;
+
+        &:hover {
+          --background: #{$navy-hover};
+        }
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// RESPONSIVE MOBILE & TABLET
+// -------------------------------------------------------------
+@media (max-width: 1024px) {
+  .hubspot-hero-section .hero-split-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+
+    .visual-column {
+      order: 2;
+    }
+    .content-column {
+      order: 1;
+
+      .editorial-title {
+        font-size: 2.6rem;
+      }
+    }
+  }
+
+  .services-hubspot-section .services-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hubspot-header {
+    .header-toolbar {
+      --padding-start: 1.25rem;
+      --padding-end: 1.25rem;
+      --padding-top: 0.5rem;
+      --padding-bottom: 0.5rem;
+    }
+
+    .logo-box {
+      flex-shrink: 0;
+
+      .brand-logo {
+        height: 42px;
+        max-width: 160px;
+      }
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .header-ctas {
+      gap: 0.75rem;
+      flex-shrink: 0;
+
+      .btn-navy-solid,
+      .btn-navy-outline {
+        height: 36px;
+        font-size: 0.825rem;
+        --padding-start: 0.85rem;
+        --padding-end: 0.85rem;
+        margin: 0;
+      }
+    }
+  }
+
+  .hubspot-content .page-wrapper {
+    padding: 1rem 1.25rem 4rem;
+  }
+
+  .hubspot-hero-section {
+    .content-column {
+      .editorial-title {
+        font-size: 2.15rem;
+      }
+
+      .hero-buttons-row {
+        flex-direction: column;
+        gap: 0.75rem;
+
+        .btn-navy-primary, .btn-navy-secondary {
+          width: 100%;
+          height: 48px;
+        }
+      }
+    }
+  }
+
+  .services-hubspot-section .services-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .institution-callout .callout-box {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hubspot-header {
+    .header-toolbar {
+      --padding-start: 0.75rem;
+      --padding-end: 0.75rem;
+    }
+
+    .logo-box {
+      .brand-logo {
+        height: 35px;
+        max-width: 125px;
+      }
+    }
+
+    .header-ctas {
+      gap: 0.5rem;
+
+      .btn-navy-solid,
+      .btn-navy-outline {
+        height: 34px;
+        font-size: 0.785rem;
+        --padding-start: 0.65rem;
+        --padding-end: 0.65rem;
+        letter-spacing: -0.1px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+

@@ -65,6 +65,12 @@ export class RegistrarOrdenPage implements AfterViewInit {
   mostrarTotalMontos: boolean = false;
   datosComisiones: any = null;
 
+  customActionSheetOptions: any = {
+    header: 'Selecciona el Banco Receptor',
+    subHeader: 'Instituciones financieras participantes en SPEI',
+    cssClass: 'custom-bank-action-sheet'
+  };
+
   constructor(
     private formBuilder: FormBuilder,
     private dispersionesMasivasSrv: DispersionesMasivasService,
@@ -531,6 +537,7 @@ export class RegistrarOrdenPage implements AfterViewInit {
     this.alertInstance = await this.alertCtrl.create({
       header: 'Ingresar Codigo de verificación',
       backdropDismiss: false,
+      cssClass: 'otp-custom-alert',
       message: `
      
         Tiempo restante: ${this.timeLeft} segundos
@@ -542,7 +549,7 @@ export class RegistrarOrdenPage implements AfterViewInit {
         {
           name: 'otpCode',
           type: 'number',
-          placeholder: 'Introduce el código de verificación'
+          placeholder: 'Código de 6 dígitos'
         }
       ],
       buttons: [

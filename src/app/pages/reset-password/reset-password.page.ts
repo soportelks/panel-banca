@@ -21,18 +21,36 @@ export class ResetPasswordPage implements AfterViewInit {
   mostrarNuevaContrasena: boolean = false;
   mostrarConfirmarContrasena: boolean = false;
 
+  copiadoClabe: boolean = false;
+  copiadoClave: boolean = false;
+
   constructor(private router: Router, private alertCtrl: AlertController, private utils: UtilsService, private auth: AuthServiceService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation) {
       const state = navigation.extras.state;
       this.datosCliente = state?.['datosCliente'];
     }
+
+    if (!this.datosCliente) {
+      const stored = localStorage.getItem('datosCliente');
+      if (stored) {
+        this.datosCliente = JSON.parse(stored);
+      }
+    }
   }
 
   ngAfterViewInit(): void { }
 
-  copiarTexto(texto: string) {
+  copiarTexto(texto: string, tipo?: string) {
+    if (!texto) return;
     navigator.clipboard.writeText(texto).then(() => {
+      if (tipo === 'clabe') {
+        this.copiadoClabe = true;
+        setTimeout(() => this.copiadoClabe = false, 2500);
+      } else if (tipo === 'clave') {
+        this.copiadoClave = true;
+        setTimeout(() => this.copiadoClave = false, 2500);
+      }
     }).catch(err => {
       console.error('Error al copiar: ', err);
     });
