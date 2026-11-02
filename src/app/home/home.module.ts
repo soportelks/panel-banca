@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
+import { ThemeToggleComponent } from '../components/theme-toggle/theme-toggle.component';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
+  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule, ThemeToggleComponent],
   declarations: [HomePage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -14,9 +14,6 @@
       </div>
       <div class="profile-info">
         <h3 class="profile-name">{{ datosCliente?.nombre_prospecto || 'Socio RDAM' }}</h3>
-        <span class="profile-badge">
-          <span class="status-indicator"></span> Socio Activo
-        </span>
       </div>
     </div>
   </ion-header>
@@ -119,6 +116,7 @@
 
     <!-- Botón Notificaciones -->
     <ion-buttons slot="end">
+      <app-theme-toggle class="header-theme-toggle"></app-theme-toggle>
       <button class="header-notif-button" (click)="onNotificationClick()" aria-label="Notificaciones">
         <ion-icon name="notifications-outline"></ion-icon>
         <span class="notif-active-dot"></span>
@@ -138,10 +136,6 @@
         <h1 class="welcome-name">
           Hola, {{ (datosCliente?.nombre_prospecto ? datosCliente.nombre_prospecto : 'Bienvenido') }}
         </h1>
-      </div>
-      <div class="spei-live-badge">
-        <span class="pulse-indicator"></span>
-        <span>SPEI 24/7 Conectado</span>
       </div>
     </div>
 

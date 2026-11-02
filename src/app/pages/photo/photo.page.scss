@@ -7,6 +7,6 @@ p, ion-button{
 }
 
 canvas {
-  border: 3px solid rgb(187, 178, 178);
-  background-color: white;
+  border: 3px solid var(--app-border-strong);
+  background-color: var(--app-surface);
 }

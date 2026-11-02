@@ -4,6 +4,7 @@ import { AlertController, ModalController, NavController } from '@ionic/angular'
 import { register } from 'swiper/element/bundle';
 import { filter } from 'rxjs/operators';
 import { AuthServiceService } from './services/auth-service.service';
+import { ThemeService } from './services/theme.service';
 
 
 register();
@@ -37,7 +38,8 @@ export class AppComponent implements OnDestroy {
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private authService: AuthServiceService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private themeService: ThemeService
   ) {
     this.resetInactivityTimer();
     this.iniciarVerificacionToken();

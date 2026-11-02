@@ -2,18 +2,18 @@
 // DISPERSIÓN MASIVA DE PAGOS - ESTILO EDITORIAL RDAM (TEMA CLARO)
 // =============================================================
 
-$navy-primary: #162d4a;
-$navy-hover: #0e1e33;
-$cream-bg: #fbf7f4;
-$card-bg: #ffffff;
-$border-light: #e5e7eb;
-$border-card: #d1d5db;
-$text-dark: #0f172a;
-$text-muted: #475569;
-$text-subtle: #64748b;
-$blue-accent: #2563eb;
+$navy-primary: var(--app-navy);
+$navy-hover: var(--app-navy-hover);
+$cream-bg: var(--app-bg);
+$card-bg: var(--app-surface);
+$border-light: var(--app-border);
+$border-card: var(--app-border-strong);
+$text-dark: var(--app-text);
+$text-muted: var(--app-text-muted);
+$text-subtle: var(--app-text-subtle);
+$blue-accent: var(--app-blue);
 $indigo-accent: #4f46e5;
-$emerald-primary: #059669;
+$emerald-primary: var(--app-success-text);
 
 // -------------------------------------------------------------
 // ENCABEZADO INSTITUCIONAL
@@ -272,7 +272,7 @@ $emerald-primary: #059669;
 // ÁREA DE CARGA DE ARCHIVOS (DROPZONE)
 // -------------------------------------------------------------
 .upload-dropzone-card {
-  background: #ffffff;
+  background: var(--app-surface);
   border: 2px dashed #93c5fd;
   border-radius: 18px;
   padding: 3rem 2rem;
@@ -286,7 +286,7 @@ $emerald-primary: #059669;
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: #eff6ff;
+    background: var(--app-accent-soft);
     color: $blue-accent;
     display: inline-flex;
     align-items: center;
@@ -341,7 +341,7 @@ $emerald-primary: #059669;
 
   &:hover {
     border-color: $blue-accent;
-    background: #f8fbff;
+    background: var(--app-surface-2);
     transform: translateY(-2px);
     box-shadow: 0 14px 35px rgba(22, 45, 74, 0.08);
 
@@ -355,7 +355,7 @@ $emerald-primary: #059669;
 // BARRA DE ACCIONES (CUANDO HAY DATOS)
 // -------------------------------------------------------------
 .actions-bar-card {
-  background: #ffffff;
+  background: var(--app-surface);
   border: 1.5px solid $border-card;
   border-radius: 16px;
   padding: 1rem 1.4rem;
@@ -378,7 +378,7 @@ $emerald-primary: #059669;
       align-items: center;
       gap: 0.45rem;
       padding: 0.4rem 0.85rem;
-      background: #eff6ff;
+      background: var(--app-accent-soft);
       border: 1px solid #bfdbfe;
       border-radius: 8px;
       font-size: 0.85rem;
@@ -411,10 +411,10 @@ $emerald-primary: #059669;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: #fef2f2;
-      border: 1.5px solid #fecaca;
+      background: var(--app-danger-soft);
+      border: 1.5px solid var(--app-danger-border);
       border-radius: 10px;
-      color: #b91c1c;
+      color: var(--app-danger-text);
       padding: 0.65rem 1.15rem;
       font-size: 0.88rem;
       font-weight: 700;
@@ -426,9 +426,9 @@ $emerald-primary: #059669;
       }
 
       &:hover:not(:disabled) {
-        background: #fee2e2;
-        border-color: #fca5a5;
-        color: #991b1b;
+        background: var(--app-danger-border);
+        border-color: var(--app-danger-border);
+        color: var(--app-danger-text);
       }
 
       &:disabled {
@@ -469,8 +469,8 @@ $emerald-primary: #059669;
       }
 
       &:disabled {
-        background: #e2e8f0;
-        color: #94a3b8;
+        background: var(--app-border);
+        color: var(--app-text-subtle);
         cursor: not-allowed;
         box-shadow: none;
       }
@@ -481,7 +481,7 @@ $emerald-primary: #059669;
     width: 100%;
     margin-top: 1rem;
     padding: 1rem 1.25rem;
-    background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+    background: linear-gradient(135deg, #eff6ff 0%, var(--app-success-soft) 100%);
     border: 1.5px solid #bfdbfe;
     border-radius: 12px;
     display: flex;
@@ -492,7 +492,7 @@ $emerald-primary: #059669;
       width: 40px;
       height: 40px;
       border-radius: 10px;
-      background: #ffffff;
+      background: var(--app-surface);
       border: 1px solid #93c5fd;
       display: flex;
       align-items: center;
@@ -519,7 +519,7 @@ $emerald-primary: #059669;
 
       .notice-text {
         font-size: 0.83rem;
-        color: #475569;
+        color: var(--app-text-muted);
         margin: 0;
         line-height: 1.45;
       }
@@ -555,7 +555,7 @@ $emerald-primary: #059669;
         width: 40px;
         height: 40px;
         border-radius: 10px;
-        background: #eff6ff;
+        background: var(--app-accent-soft);
         border: 1px solid #bfdbfe;
         color: $blue-accent;
         display: flex;
@@ -590,10 +590,10 @@ $emerald-primary: #059669;
         align-items: center;
         gap: 0.3rem;
         padding: 0.4rem 0.85rem;
-        background: #f8fafc;
-        border: 1.5px solid #cbd5e1;
+        background: var(--app-surface-2);
+        border: 1.5px solid var(--app-border-strong);
         border-radius: 8px;
-        color: #334155;
+        color: var(--app-text);
         font-size: 0.82rem;
         font-weight: 700;
         cursor: pointer;
@@ -604,7 +604,7 @@ $emerald-primary: #059669;
         }
 
         &:hover:not(:disabled) {
-          background: #eff6ff;
+          background: var(--app-accent-soft);
           border-color: #93c5fd;
           color: $blue-accent;
         }
@@ -618,7 +618,7 @@ $emerald-primary: #059669;
       .page-indicator {
         font-size: 0.82rem;
         font-weight: 600;
-        color: #64748b;
+        color: var(--app-text-subtle);
         padding: 0 0.25rem;
       }
     }
@@ -632,7 +632,7 @@ $emerald-primary: #059669;
       height: 7px;
     }
     &::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: var(--app-border-strong);
       border-radius: 4px;
     }
   }
@@ -664,17 +664,17 @@ $emerald-primary: #059669;
       td {
         padding: 0.85rem 1.15rem;
         font-size: 0.86rem;
-        color: #1e293b;
+        color: var(--app-text);
         font-weight: 500;
 
         .amount-cell {
-          color: #047857;
+          color: var(--app-success-text);
           font-weight: 800;
         }
       }
 
       &:hover {
-        background: #f8fafc;
+        background: var(--app-surface-2);
       }
 
       &:last-child {
@@ -697,7 +697,7 @@ ion-modal.custom-dispersion-modal {
   --box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.35);
 
   .result-modal-container {
-    background: #ffffff;
+    background: var(--app-surface);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -712,8 +712,8 @@ ion-modal.custom-dispersion-modal {
     align-items: center;
     justify-content: space-between;
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid #e2e8f0;
-    background: #f8fafc;
+    border-bottom: 1px solid var(--app-border);
+    background: var(--app-surface-2);
 
     .result-header-left {
       display: flex;
@@ -724,18 +724,18 @@ ion-modal.custom-dispersion-modal {
         width: 42px;
         height: 42px;
         border-radius: 12px;
-        background: #ecfdf5;
-        border: 1px solid #a7f3d0;
-        color: #059669;
+        background: var(--app-success-soft);
+        border: 1px solid var(--app-success-border);
+        color: var(--app-success-text);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.5rem;
 
         &.has-errors {
-          background: #fef2f2;
-          border-color: #fecaca;
-          color: #dc2626;
+          background: var(--app-danger-soft);
+          border-color: var(--app-danger-border);
+          color: var(--app-danger-text);
         }
       }
 
@@ -757,19 +757,19 @@ ion-modal.custom-dispersion-modal {
       width: 36px;
       height: 36px;
       border-radius: 8px;
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
+      background: var(--app-surface);
+      border: 1px solid var(--app-border-strong);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      color: #64748b;
+      color: var(--app-text-subtle);
       font-size: 1.2rem;
       transition: all 0.2s ease;
 
       &:hover {
-        background: #f1f5f9;
-        color: #0f172a;
+        background: var(--app-surface-3);
+        color: var(--app-text);
       }
     }
   }
@@ -792,8 +792,8 @@ ion-modal.custom-dispersion-modal {
       margin-bottom: 1.25rem;
 
       .stat-card {
-        background: #f8fafc;
-        border: 1.5px solid #e2e8f0;
+        background: var(--app-surface-2);
+        border: 1.5px solid var(--app-border);
         border-radius: 12px;
         padding: 0.85rem 0.5rem;
         text-align: center;
@@ -809,41 +809,41 @@ ion-modal.custom-dispersion-modal {
         .stat-name {
           font-size: 0.72rem;
           font-weight: 700;
-          color: #64748b;
+          color: var(--app-text-subtle);
           text-transform: uppercase;
           letter-spacing: 0.04em;
           margin-top: 0.3rem;
         }
 
         &.stat-success {
-          background: #ecfdf5;
-          border-color: #a7f3d0;
+          background: var(--app-success-soft);
+          border-color: var(--app-success-border);
 
           .stat-number {
-            color: #059669;
+            color: var(--app-success-text);
           }
           .stat-name {
-            color: #047857;
+            color: var(--app-success-text);
           }
         }
 
         &.stat-danger {
-          background: #fef2f2;
-          border-color: #fecaca;
+          background: var(--app-danger-soft);
+          border-color: var(--app-danger-border);
 
           .stat-number {
-            color: #dc2626;
+            color: var(--app-danger-text);
           }
           .stat-name {
-            color: #b91c1c;
+            color: var(--app-danger-text);
           }
         }
       }
     }
 
     .result-meta-box {
-      background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
+      background: var(--app-surface-2);
+      border: 1.5px solid var(--app-border);
       border-radius: 12px;
       padding: 1rem 1.25rem;
       margin-bottom: 1.25rem;
@@ -866,13 +866,13 @@ ion-modal.custom-dispersion-modal {
 
         .meta-label {
           font-size: 0.84rem;
-          color: #64748b;
+          color: var(--app-text-subtle);
           font-weight: 500;
         }
 
         .meta-amount {
           font-size: 1.15rem;
-          color: #047857;
+          color: var(--app-success-text);
           font-weight: 800;
         }
 
@@ -882,8 +882,8 @@ ion-modal.custom-dispersion-modal {
           gap: 0.45rem;
 
           .meta-folio-pill {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
+            background: var(--app-surface);
+            border: 1px solid var(--app-border-strong);
             border-radius: 6px;
             padding: 0.2rem 0.55rem;
             font-family: monospace;
@@ -893,7 +893,7 @@ ion-modal.custom-dispersion-modal {
           }
 
           .btn-copy-mini {
-            background: #eff6ff;
+            background: var(--app-accent-soft);
             border: 1px solid #bfdbfe;
             border-radius: 6px;
             color: #1d4ed8;
@@ -913,7 +913,7 @@ ion-modal.custom-dispersion-modal {
         .meta-value {
           font-size: 0.88rem;
           font-weight: 600;
-          color: #1e293b;
+          color: var(--app-text);
         }
 
         .meta-status-badge {
@@ -923,26 +923,26 @@ ion-modal.custom-dispersion-modal {
           border-radius: 6px;
 
           &.badge-success {
-            background: #dcfce7;
+            background: var(--app-success-soft);
             color: #15803d;
           }
 
           &.badge-warning {
-            background: #fef9c3;
+            background: var(--app-warning-soft);
             color: #a16207;
           }
 
           &.badge-danger {
-            background: #fee2e2;
-            color: #b91c1c;
+            background: var(--app-danger-border);
+            color: var(--app-danger-text);
           }
         }
       }
     }
 
     .result-incidents-box {
-      background: #fffbeb;
-      border: 1.5px solid #fde68a;
+      background: var(--app-warning-soft);
+      border: 1.5px solid var(--app-warning-border);
       border-radius: 12px;
       padding: 0.9rem 1.15rem;
       margin-bottom: 1rem;
@@ -979,7 +979,7 @@ ion-modal.custom-dispersion-modal {
 
     .result-footer-note {
       font-size: 0.78rem;
-      color: #94a3b8;
+      color: var(--app-text-subtle);
       text-align: center;
       margin: 0;
     }
@@ -987,8 +987,8 @@ ion-modal.custom-dispersion-modal {
 
   .result-modal-footer {
     padding: 1rem 1.5rem;
-    border-top: 1px solid #e2e8f0;
-    background: #f8fafc;
+    border-top: 1px solid var(--app-border);
+    background: var(--app-surface-2);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -997,10 +997,10 @@ ion-modal.custom-dispersion-modal {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--app-surface);
+      border: 1.5px solid var(--app-border-strong);
       border-radius: 10px;
-      color: #334155;
+      color: var(--app-text);
       padding: 0.7rem 1.15rem;
       font-size: 0.88rem;
       font-weight: 700;
@@ -1012,8 +1012,8 @@ ion-modal.custom-dispersion-modal {
       }
 
       &:hover {
-        background: #f1f5f9;
-        border-color: #94a3b8;
+        background: var(--app-surface-3);
+        border-color: var(--app-text-subtle);
       }
     }
 

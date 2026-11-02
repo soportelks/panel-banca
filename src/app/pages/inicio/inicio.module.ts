@@ -8,13 +8,15 @@ import { InicioPageRoutingModule } from './inicio-routing.module';
 
 import { InicioPage } from './inicio.page';
 import { FooterComponent } from '../footer/footer.component';
+import { ThemeToggleComponent } from '../../components/theme-toggle/theme-toggle.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    InicioPageRoutingModule
+    InicioPageRoutingModule,
+    ThemeToggleComponent
   ],
   declarations: [InicioPage]
 })
