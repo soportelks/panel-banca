@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
-import { AlertController, IonicSafeString } from '@ionic/angular';
+import { AlertController, IonicSafeString, NavController } from '@ionic/angular';
 import { OtpServiceService } from 'src/app/services/otp-service.service';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 
@@ -56,7 +56,8 @@ export class LoginPage {
     private router: Router,
     private alertController: AlertController,
     private otpService: OtpServiceService,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    private navCtrl: NavController
   ) {
     this.isPasswordVisible = false;
 
@@ -117,7 +118,7 @@ export class LoginPage {
             this.cerrarSesion();
             return;
           }
-          this.router.navigate(['/inicio']);
+          this.navCtrl.navigateRoot(['/inicio'], { replaceUrl: true });
 
         } else {
           const alert = await this.alertController.create({
@@ -331,7 +332,7 @@ export class LoginPage {
 
   private limpiarSesionLocal() {
     localStorage.clear();
-    this.router.navigate(['/home']);
+    this.navCtrl.navigateRoot(['/login'], { replaceUrl: true });
   }
 
   clearCookies() {

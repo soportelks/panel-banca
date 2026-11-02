@@ -1,7 +1,8 @@
 import { Component, HostListener, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { NavigationEnd, Router } from '@angular/router';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
+import { filter } from 'rxjs/operators';
 import { AuthServiceService } from './services/auth-service.service';
 
 
@@ -16,15 +17,58 @@ export class AppComponent implements OnDestroy {
   private inactivityTimeout: any;
   private readonly TIMEOUT_DURATION = 5 * 60 * 1000;
   private tokenCheckInterval: any;
+  private readonly publicRoutes = [
+    '',
+    '/',
+    '/home',
+    '/login',
+    '/register',
+    '/phone-code',
+    '/photo',
+    '/datos-alta',
+    '/validacion',
+    '/recover-passw',
+    '/confirm-code',
+    '/changue-passwd'
+  ];
 
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private authService: AuthServiceService  // Inyecta el servicio de autenticación
+    private authService: AuthServiceService,
+    private navCtrl: NavController
   ) {
     this.resetInactivityTimer();
     this.iniciarVerificacionToken();
+    this.iniciarMonitoreoNavegacion();
+  }
+
+  @HostListener('window:popstate')
+  @HostListener('window:pageshow', ['$event'])
+  handleBrowserNavigation(event?: any) {
+    this.validarRutaProtegida();
+  }
+
+  private iniciarMonitoreoNavegacion() {
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.validarRutaProtegida();
+      });
+  }
+
+  private validarRutaProtegida() {
+    const rawUrl = (this.router.url || window.location.pathname || '').split('?')[0].replace(/\/$/, '') || '/';
+    const isPublic = this.publicRoutes.includes(rawUrl);
+
+    if (!isPublic) {
+      const token = localStorage.getItem('token');
+      const datosCliente = localStorage.getItem('datosCliente');
+      if (!token || !datosCliente || this.tokenExpirado(token)) {
+        this.limpiarSesionLocal();
+      }
+    }
   }
 
   // Escucha eventos de interacción para resetear el temporizador
@@ -97,9 +141,10 @@ export class AppComponent implements OnDestroy {
   }
 
   private limpiarSesionLocal() {
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('datosCliente');
     this.clearCookies();
-    this.router.navigate(['/home']);
+    this.navCtrl.navigateRoot(['/login'], { replaceUrl: true });
   }
 
   async closeAllModals() {
