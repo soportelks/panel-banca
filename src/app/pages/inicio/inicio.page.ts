@@ -27,6 +27,7 @@ export class InicioPage implements AfterViewInit {
     info: { saldo: 0 },
     mensaje: '',
   };
+  mostrarSaldo: boolean = true;
 
   constructor(
     @Inject(Router) private router: Router,
@@ -35,6 +36,13 @@ export class InicioPage implements AfterViewInit {
     private sessionService: SessionService
   ) {
     this.detectTheme();
+
+    const storedMostrarSaldo = localStorage.getItem('mostrarSaldo');
+    if (storedMostrarSaldo !== null) {
+      this.mostrarSaldo = storedMostrarSaldo === 'true';
+    } else {
+      this.mostrarSaldo = true;
+    }
 
     this.datosSaldo = {
       codigo: '',
@@ -141,11 +149,34 @@ export class InicioPage implements AfterViewInit {
   }
 
   private limpiarSesionLocal() {
+    const prefMostrarSaldo = localStorage.getItem('mostrarSaldo');
     localStorage.clear();
+    if (prefMostrarSaldo !== null) {
+      localStorage.setItem('mostrarSaldo', prefMostrarSaldo);
+    }
     this.clearCookies();
     this.router.navigate(['/home']);
   }
 
+  toggleMostrarSaldo() {
+    this.mostrarSaldo = !this.mostrarSaldo;
+    localStorage.setItem('mostrarSaldo', String(this.mostrarSaldo));
+  }
+
+
+  clabeCopiada: boolean = false;
+
+  copiarTexto(texto: string) {
+    if (!texto) return;
+    navigator.clipboard.writeText(texto).then(() => {
+      this.clabeCopiada = true;
+      setTimeout(() => {
+        this.clabeCopiada = false;
+      }, 2500);
+    }).catch(err => {
+      console.error('Error al copiar: ', err);
+    });
+  }
 
   onNotificationClick() {
     this.isModalOpen = true;

@@ -11,14 +11,13 @@ $text-muted: #4b5563;
 
 // HEADER ESTILO HUBSPOT
 .hubspot-header {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 100;
   background: $cream-bg;
   border-bottom: 1px solid rgba(22, 45, 74, 0.08);
 
   .header-toolbar {
-    --background: transparent;
+    --background: #{$cream-bg};
     --border-width: 0;
     --padding-top: 0.6rem;
     --padding-bottom: 0.6rem;
@@ -124,6 +123,7 @@ $text-muted: #4b5563;
 // CONTENIDO PRINCIPAL
 .hubspot-content {
   --background: #{$cream-bg};
+  --padding-top: 1rem;
 
   .page-wrapper {
     max-width: 1240px;

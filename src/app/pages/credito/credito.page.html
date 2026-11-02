@@ -1,74 +1,183 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<!-- ENCABEZADO INSTITUCIONAL RDAM -->
+<ion-header class="ion-no-border credito-header">
+  <ion-toolbar class="header-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back"></ion-back-button>
+      <ion-back-button defaultHref="/inicio" icon="chevron-back-outline" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Creditos</ion-title>
+
+    <div class="header-brand-center">
+      <img
+        src="assets/images/Logo_RDAM_negro.png"
+        class="header-logo"
+        alt="Logo RDAM"
+      />
+    </div>
+
+    <ion-buttons slot="end" class="header-end-spacer">
+      <div style="width: 48px;"></div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Creditos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<!-- CONTENIDO PRINCIPAL -->
+<ion-content class="credito-content">
+  <div class="credito-wrapper">
 
-  <ion-card color="primary">
-    <ion-card-header>
-      <ion-card-title>
-         {{nombreCliente}}
-      </ion-card-title>
+    <!-- INTRO DE PÁGINA -->
+    <div class="page-intro-header">
+      <span class="page-kicker">LÍNEAS DE FINANCIAMIENTO</span>
+      <h1 class="page-title">Mis Créditos</h1>
+      <p class="page-description">Consulta tus financiamientos contratados, saldos restantes y calendario de pagos</p>
+    </div>
 
-      <ion-card-subtitle>
-        Estos son tus creditos
-      </ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
+    <!-- TARJETA HERO DEL TITULAR / CRÉDITO -->
+    <div class="credit-hero-card">
+      <div class="hero-card-glow"></div>
+      <div class="hero-card-content">
+        <div class="hero-header-row">
+          <div class="credit-status-badge">
+            <span class="status-pulse-dot"></span> Socio Acreditado
+          </div>
+          <span class="credit-org-tag">Crédito RDAM</span>
+        </div>
 
-<ion-row>
-  <ion-col >
-    <ion-card *ngFor="let credito of creditosCliente">
-      <ion-card-header>
-        <ion-card-title>
-          <strong>Cr&eacute;dito: </strong>{{credito.tipo_credito}}
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-row>
-          <ion-col><ion-text><strong>Estado: </strong>{{credito.estado_credito}}</ion-text></ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-text><strong>Fecha de último pago: </strong>{{credito.fecha_ultimo_pago}}</ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-text><strong>Fecha de vencimiento: </strong>{{credito.fecha_vencimiento}}</ion-text>
-          </ion-col>
-          <ion-col>
-            <ion-text><strong>Fecha de entrega: </strong>{{credito.fecha_entrega}}</ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col><ion-text><strong>Monto del cr&eacute;dito: </strong>${{credito.monto_credito}}</ion-text></ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-text><strong>Saldo del cr&eacute;dito: </strong>${{credito.saldo_credito}}</ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row style="text-align: right;">
-          <ion-col>
-            <ion-button (click)="sendDataToComponent('calcular-pago',credito)" size="small">Calcular pago</ion-button>
-            <!--ion-text class="btn-pagos" (click)="sendDataToComponent('calcular-pago',credito)">Calcular pago</ion-text-->
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
-  </ion-col>
-</ion-row>
+        <div class="hero-main-user">
+          <span class="user-greeting-kicker">Titular del Financiamiento</span>
+          <h2 class="user-full-name">
+            {{ nombreCliente || 'Socio RDAM' }}
+          </h2>
+          <p class="hero-tagline">
+            Supervisa tus obligaciones crediticias y proyecta amortizaciones en tiempo real.
+          </p>
+        </div>
 
+        <div class="hero-footer-features">
+          <div class="feature-item">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Tasa Fija Garantizada</span>
+          </div>
+          <div class="feature-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Pagos Puntuales</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- SECCIÓN DE CRÉDITOS ACTIVOS -->
+    <div class="credits-section">
+      <div class="section-title-bar">
+        <div class="title-left">
+          <div class="title-icon-box">
+            <ion-icon name="card-outline"></ion-icon>
+          </div>
+          <div>
+            <h2 class="section-title">Créditos Contratados</h2>
+            <p class="section-subtitle">Detalle de líneas crediticias vigentes</p>
+          </div>
+        </div>
+
+        <div class="title-right" *ngIf="creditosCliente?.length">
+          <span class="count-badge">
+            {{ creditosCliente.length }} {{ creditosCliente.length === 1 ? 'crédito' : 'créditos' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- LISTADO DE TARJETAS DE CRÉDITO -->
+      <div class="credit-cards-grid" *ngIf="creditosCliente && creditosCliente.length > 0">
+        <div class="credit-item-card" *ngFor="let credito of creditosCliente">
+          
+          <!-- Encabezado de la Tarjeta del Crédito -->
+          <div class="card-top-bar">
+            <div class="credit-type-info">
+              <div class="credit-type-icon">
+                <ion-icon name="cash-outline"></ion-icon>
+              </div>
+              <div>
+                <span class="credit-type-kicker">Tipo de Financiamiento</span>
+                <h3 class="credit-type-name">{{ credito.tipo_credito }}</h3>
+              </div>
+            </div>
+
+            <div class="credit-status-pill">
+              <span class="status-dot"></span>
+              <span>{{ credito.estado_credito }}</span>
+            </div>
+          </div>
+
+          <!-- Métricas Financieras (Monto vs Saldo) -->
+          <div class="financial-metrics-row">
+            <div class="metric-cell authorized-metric">
+              <span class="metric-label">Monto del Crédito</span>
+              <span class="metric-value">
+                {{ credito.monto_credito | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+            </div>
+
+            <div class="metric-cell balance-metric">
+              <span class="metric-label">Saldo Restante</span>
+              <span class="metric-value highlight-balance">
+                {{ credito.saldo_credito | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Cuadrícula de Fechas y Plazos -->
+          <div class="credit-dates-grid">
+            <div class="date-cell">
+              <div class="date-cell-header">
+                <ion-icon name="calendar-number-outline"></ion-icon>
+                <span>Fecha de Entrega</span>
+              </div>
+              <span class="date-cell-value">{{ credito.fecha_entrega || '—' }}</span>
+            </div>
+
+            <div class="date-cell">
+              <div class="date-cell-header">
+                <ion-icon name="alarm-outline"></ion-icon>
+                <span>Vencimiento</span>
+              </div>
+              <span class="date-cell-value">{{ credito.fecha_vencimiento || '—' }}</span>
+            </div>
+
+            <div class="date-cell full-mobile">
+              <div class="date-cell-header">
+                <ion-icon name="time-outline"></ion-icon>
+                <span>Último Pago</span>
+              </div>
+              <span class="date-cell-value">{{ credito.fecha_ultimo_pago || 'Sin Pagos' }}</span>
+            </div>
+          </div>
+
+          <!-- Botón de Acción Amortización / Calcular Pago -->
+          <div class="card-action-bar">
+            <button
+              class="btn-calc-payment"
+              (click)="sendDataToComponent('calcular-pago', credito)"
+              type="button"
+            >
+              <ion-icon name="calculator-outline"></ion-icon>
+              <span>Calcular Tabla de Pagos</span>
+              <ion-icon name="chevron-forward-outline" class="btn-arrow"></ion-icon>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ESTADO VACÍO -->
+      <div class="empty-state-card" *ngIf="!creditosCliente || creditosCliente.length === 0">
+        <div class="empty-icon-circle">
+          <ion-icon name="card-outline"></ion-icon>
+        </div>
+        <h3 class="empty-title">Sin créditos registrados</h3>
+        <p class="empty-desc">
+          Actualmente no cuentas con contratos de crédito vigentes asignados a tu cuenta.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
 </ion-content>

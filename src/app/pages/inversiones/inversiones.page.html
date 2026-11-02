@@ -1,41 +1,150 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<!-- ENCABEZADO INSTITUCIONAL RDAM -->
+<ion-header class="ion-no-border inversiones-header">
+  <ion-toolbar class="header-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back"></ion-back-button>
+      <ion-back-button defaultHref="/inicio" icon="chevron-back-outline" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Inversiones</ion-title>
+
+    <div class="header-brand-center">
+      <img
+        src="assets/images/Logo_RDAM_negro.png"
+        class="header-logo"
+        alt="Logo RDAM"
+      />
+    </div>
+
+    <ion-buttons slot="end" class="header-end-spacer">
+      <div style="width: 48px;"></div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <!-- Saldo -->
-  <ion-item color="secondary" class="interes">
+<!-- CONTENIDO PRINCIPAL -->
+<ion-content class="inversiones-content">
+  <div class="inversiones-wrapper">
 
-      <div *ngIf="interesesResponse.info; else sinSaldo">
-      <ion-text>Tu saldo en inversion: <strong style="font-size: 20px;">{{interesesResponse.info[0].sum |
-          currency}}</strong></ion-text>
+    <!-- INTRO DE PÁGINA -->
+    <div class="page-intro-header">
+      <span class="page-kicker">PATRIMONIO & RENDIMIENTO</span>
+      <h1 class="page-title">Mis Inversiones</h1>
+      <p class="page-description">Consulta tus pagarés vigentes, saldo acumulado y fechas de vencimiento</p>
     </div>
-    <ng-template #sinSaldo>
-      <ion-text>Tu saldo en inversion: <strong style="font-size: 20px;">{{0 |
-          currency}}</strong></ion-text>
-    </ng-template>
-  </ion-item>
 
-  <ion-item class="ion-margin-top" color="primary">
-    <ion-label>Inversion</ion-label>
-    <ion-label class="ion-text-center">Monto</ion-label>
-    <ion-label class="ion-text-center">Vencimiento</ion-label>
-  </ion-item>
-  <div *ngIf="inversionesResponse">
-    <ion-item color="light" *ngFor="let item of inversionesResponse.info">
-      <ion-label class="ion-text-wrap">
-        {{item.num_pagare.substring(0, 4)}}{{item.num_pagare.substring(item.num_pagare.length - 7)}}</ion-label>
-      <ion-label class="ion-text-center"><strong>{{item.monto | currency}}</strong></ion-label>
-      <ion-label class="ion-text-center">{{item.fecha_vencimiento}}</ion-label>
-    </ion-item>
-    <ion-item color="light" *ngIf="!inversionesResponse.info">
-      <ion-label class="ion-text-center">{{inversionesResponse.mensaje}}</ion-label>
-    </ion-item>
+    <!-- TARJETA HERO DE RENDIMIENTO / SALDO INVERSIÓN -->
+    <div class="investment-hero-card">
+      <div class="hero-card-glow"></div>
+      <div class="hero-card-content">
+        <div class="hero-header-row">
+          <div class="investment-badge">
+            <span class="status-pulse-dot"></span> Capital en Inversión
+          </div>
+          <span class="account-tag">Pagaré RDAM</span>
+        </div>
+
+        <div class="hero-main-amount">
+          <span class="amount-kicker">Saldo Total Acumulado</span>
+          <h2 class="amount-figure">
+            {{ (interesesResponse?.info?.[0]?.sum ?? 0) | currency:'USD':'symbol':'1.2-2' }}
+          </h2>
+        </div>
+
+        <div class="hero-footer-features">
+          <div class="feature-item">
+            <ion-icon name="trending-up-outline"></ion-icon>
+            <span>Rendimiento Garantizado</span>
+          </div>
+          <div class="feature-item">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Fondos Asegurados</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA CONTENEDOR DE PAGARÉS -->
+    <div class="investments-container-card">
+      <div class="container-card-header">
+        <div class="header-left">
+          <div class="header-icon-box">
+            <ion-icon name="briefcase-outline"></ion-icon>
+          </div>
+          <div>
+            <h2 class="container-title">Pagarés e Inversiones Registradas</h2>
+            <p class="container-subtitle">Listado de títulos de inversión activos</p>
+          </div>
+        </div>
+        <div class="header-right" *ngIf="inversionesResponse?.info?.length">
+          <span class="count-badge">
+            {{ inversionesResponse.info.length }} {{ inversionesResponse.info.length === 1 ? 'pagaré' : 'pagarés' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- TABLA ENCABEZADO (DESKTOP/TABLET) -->
+      <div class="investments-table-header" *ngIf="inversionesResponse?.info && inversionesResponse.info.length > 0">
+        <div class="th-col th-pagare">No. de Pagaré</div>
+        <div class="th-col th-monto">Monto Invertido</div>
+        <div class="th-col th-vencimiento">Fecha de Vencimiento</div>
+        <div class="th-col th-status">Estatus</div>
+      </div>
+
+      <!-- LISTA DE INVERSIONES -->
+      <div class="investments-list" *ngIf="inversionesResponse?.info && inversionesResponse.info.length > 0">
+        <div class="investment-row" *ngFor="let item of inversionesResponse.info">
+          
+          <!-- Columna Pagaré -->
+          <div class="td-col td-pagare">
+            <div class="pagare-icon-circle">
+              <ion-icon name="document-text-outline"></ion-icon>
+            </div>
+            <div class="pagare-details">
+              <span class="pagare-label">Pagaré No.</span>
+              <span class="pagare-code mono-font">
+                {{ item.num_pagare && item.num_pagare.length > 7 ? (item.num_pagare.substring(0, 4) + '...' + item.num_pagare.substring(item.num_pagare.length - 7)) : (item.num_pagare || '—') }}
+              </span>
+              <span class="mobile-vencimiento-tag">
+                Vence: {{ item.fecha_vencimiento }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Columna Monto -->
+          <div class="td-col td-monto">
+            <span class="investment-amount-badge">
+              {{ item.monto | currency:'USD':'symbol':'1.2-2' }}
+            </span>
+          </div>
+
+          <!-- Columna Fecha Vencimiento (Desktop) -->
+          <div class="td-col td-vencimiento">
+            <div class="date-chip">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>{{ item.fecha_vencimiento }}</span>
+            </div>
+          </div>
+
+          <!-- Columna Estatus -->
+          <div class="td-col td-status">
+            <span class="status-pill active-status">
+              <span class="status-dot"></span> Activo
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ESTADO VACÍO -->
+      <div class="empty-state-card" *ngIf="!inversionesResponse?.info || inversionesResponse?.info?.length === 0">
+        <div class="empty-icon-circle">
+          <ion-icon name="trending-up-outline"></ion-icon>
+        </div>
+        <h3 class="empty-title">Sin inversiones activas</h3>
+        <p class="empty-desc">
+          {{ inversionesResponse?.mensaje || 'Actualmente no cuentas con pagarés de inversión vigentes registrados en tu cuenta.' }}
+        </p>
+      </div>
+
+    </div>
+
   </div>
-  
 </ion-content>

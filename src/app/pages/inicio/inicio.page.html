@@ -1,304 +1,372 @@
-<ion-menu side="start" contentId="main">
-  <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
+<!-- MENÚ LATERAL INSTITUCIONAL RDAM -->
+<ion-menu side="start" contentId="main" class="custom-side-menu">
+  <ion-header class="ion-no-border menu-header">
+    <div class="menu-brand-box">
+      <img
+        src="assets/images/Logo_RDAM_negro.png"
+        class="menu-logo"
+        alt="Logo RDAM"
+      />
+    </div>
+    <div class="menu-user-profile">
+      <div class="avatar-ring">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+      <div class="profile-info">
+        <h3 class="profile-name">{{ datosCliente?.nombre_prospecto || 'Socio RDAM' }}</h3>
+        <span class="profile-badge">
+          <span class="status-indicator"></span> Socio Activo
+        </span>
+      </div>
+    </div>
   </ion-header>
-  <ion-content class="ion-padding">
+
+  <ion-content class="menu-content">
     <ion-menu-toggle auto-hide="false">
-      <ion-button expand="block" (click)="sendDataToComponent('ahorro')">
-        Movimientos
-      </ion-button>
-      <ion-button expand="block" (click)="sendDataToComponent('inversiones')">
-        Inversión
-      </ion-button>
-      <ion-button expand="block" (click)="sendDataToComponent('credito')">
-        Crédito
-      </ion-button>
-      <ion-button
-        expand="block"
-        (click)="sendDataToComponent('dispersion-masiva-pagos')"
-      >
-        Dispersión Masiva de Pagos
-      </ion-button>
-      <ion-button
-        expand="block"
-        (click)="sendDataToComponent('registrar-orden')"
-      >
-        Registro Pagos
-      </ion-button>
-      <ion-button expand="block" color="danger" (click)="cerrarSesion()">
-        Cerrar Sesión
-      </ion-button>
+      <div class="menu-section-label">SERVICIOS FINANCIEROS</div>
+      <div class="menu-nav-list">
+        
+        <button class="menu-nav-item" (click)="sendDataToComponent('ahorro')">
+          <div class="item-icon-box item-blue">
+            <ion-icon name="receipt-outline"></ion-icon>
+          </div>
+          <span class="item-text">Movimientos</span>
+          <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
+        </button>
+
+        <button class="menu-nav-item" (click)="sendDataToComponent('inversiones')">
+          <div class="item-icon-box item-emerald">
+            <ion-icon name="trending-up-outline"></ion-icon>
+          </div>
+          <span class="item-text">Inversión</span>
+          <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
+        </button>
+
+        <button class="menu-nav-item" (click)="sendDataToComponent('credito')">
+          <div class="item-icon-box item-amber">
+            <ion-icon name="card-outline"></ion-icon>
+          </div>
+          <span class="item-text">Crédito</span>
+          <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
+        </button>
+
+        <div class="menu-section-label ion-margin-top">OPERACIONES</div>
+
+        <button class="menu-nav-item" (click)="sendDataToComponent('dispersion-masiva-pagos')">
+          <div class="item-icon-box item-indigo">
+            <ion-icon name="documents-outline"></ion-icon>
+          </div>
+          <span class="item-text">Dispersión Masiva de Pagos</span>
+          <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
+        </button>
+
+        <button class="menu-nav-item" (click)="sendDataToComponent('registrar-orden')">
+          <div class="item-icon-box item-teal">
+            <ion-icon name="swap-horizontal-outline"></ion-icon>
+          </div>
+          <span class="item-text">Registro de Pagos</span>
+          <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
+        </button>
+
+        <button class="menu-nav-item" (click)="sendDataToComponent('traspaso')">
+          <div class="item-icon-box item-purple">
+            <ion-icon name="repeat-outline"></ion-icon>
+          </div>
+          <span class="item-text">Traspaso</span>
+          <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
+        </button>
+
+        <div class="menu-section-label ion-margin-top">MI CUENTA</div>
+
+        <button class="menu-nav-item" (click)="sendDataToComponent('reset-pass')">
+          <div class="item-icon-box item-slate">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </div>
+          <span class="item-text">Datos de la Cuenta</span>
+          <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
+        </button>
+
+      </div>
     </ion-menu-toggle>
   </ion-content>
+
+  <!-- Botón Cerrar Sesión fijo al final del menú -->
+  <ion-footer class="ion-no-border menu-footer">
+    <button class="btn-logout" (click)="cerrarSesion()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <span>Cerrar Sesión</span>
+    </button>
+  </ion-footer>
 </ion-menu>
 
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<!-- ENCABEZADO PRINCIPAL DE LA BANCA -->
+<ion-header class="ion-no-border inicio-header">
+  <ion-toolbar class="inicio-toolbar">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button class="header-menu-button" autoHide="false">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-menu-button>
     </ion-buttons>
 
-    <!-- Logo central -->
-    <ion-img
-      style="width: 180px; height: 65px; display: block; margin: auto"
-      [src]="isDarkMode ? '../../assets/images/Logo_RDAM_blanco.png' : '../../assets/images/Logo_RDAM_negro.png'"
-    >
-    </ion-img>
+    <!-- Logo Central RDAM -->
+    <div class="header-logo-container">
+      <img
+        src="assets/images/Logo_RDAM_negro.png"
+        class="header-brand-logo"
+        alt="Banca Digital RDAM"
+      />
+    </div>
 
-    <!-- Botón de notificación al final -->
+    <!-- Botón Notificaciones -->
     <ion-buttons slot="end">
-      <ion-button (click)="onNotificationClick()">
+      <button class="header-notif-button" (click)="onNotificationClick()" aria-label="Notificaciones">
         <ion-icon name="notifications-outline"></ion-icon>
-      </ion-button>
+        <span class="notif-active-dot"></span>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <!-- Menu -->
-  <div id="main"></div>
-  <ion-item color="secondary">
-    <div>
-      <ion-text>{{datosCliente.nombre_prospecto}} </ion-text>
-    </div>
-  </ion-item>
-  <br />
-
-  <!-- Saldo -->
-  <ion-item color="secondary">
-    <!--ion-avatar slot="end">
-      <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="">
-    </ion-avatar-->
-
-    <div>
-      <div *ngIf="datosSaldo.info; else sinSaldo">
-        <ion-text
-          >Tu saldo en ahorro:
-          <strong style="font-size: 20px"
-            >{{datosSaldo.info.saldo | currency}}</strong
-          ></ion-text
-        >
+<!-- CONTENIDO PRINCIPAL DEL DASHBOARD -->
+<ion-content class="inicio-content" id="main">
+  <div class="inicio-layout-wrapper">
+    
+    <!-- Barra Superior de Saludo & Estatus -->
+    <div class="welcome-header-bar">
+      <div class="welcome-text-group">
+        <span class="welcome-kicker">Portal Financiero</span>
+        <h1 class="welcome-name">
+          Hola, {{ (datosCliente?.nombre_prospecto ? datosCliente.nombre_prospecto : 'Bienvenido') }}
+        </h1>
       </div>
-      <ng-template #sinSaldo>
-        <ion-text
-          >Tu saldo en ahorro:
-          <strong style="font-size: 20px">{{0 | currency}}</strong></ion-text
-        >
-      </ng-template>
+      <div class="spei-live-badge">
+        <span class="pulse-indicator"></span>
+        <span>SPEI 24/7 Conectado</span>
+      </div>
     </div>
 
-    <!--<ion-icon
-      class="ion-margin-start"
-      name="arrow-back-outline"
-      size="large"
-      color="dark"
-    ></ion-icon>-->
-  </ion-item>
+    <!-- TARJETÓN PRINCIPAL DE SALDO (AZUL MARINO EDITORIAL) -->
+    <div class="main-financial-card">
+      <div class="card-glow-bg"></div>
+      
+      <!-- Fila Superior de la Tarjeta -->
+      <div class="card-header-row">
+        <div class="institution-tag">
+          <ion-icon name="shield-checkmark"></ion-icon>
+          <span>Multiplicando Oportunidades</span>
+        </div>
+      </div>
 
-  <!-- Iconos -->
-  <ion-item class="ion-margin-top iconos" color="primary">
-    <ion-grid>
-      <ion-row class="ion-justify-content-center ion-text-center">
-        <ion-col size="2" size-sm="1">
-          <ion-icon
-            name="cash-outline"
-            style="background-color: aliceblue"
-            color="primary"
-            (click)="sendDataToComponent('ahorro')"
-          ></ion-icon>
-          <br />
-          <ion-text>Movimientos</ion-text>
-        </ion-col>
-        <ion-col size="2" size-sm="1">
-          <ion-icon
-            name="bar-chart-outline"
-            style="background-color: aliceblue"
-            color="primary"
-            (click)="sendDataToComponent('inversiones')"
-          ></ion-icon>
-          <br />
-          <ion-text>Inversión</ion-text>
-        </ion-col>
-        <ion-col size="2" size-sm="1">
-          <ion-icon
-            name="card-outline"
-            style="background-color: aliceblue"
-            color="primary"
-            (click)="sendDataToComponent('credito')"
-          ></ion-icon>
-          <br />
-          <ion-text>Credito</ion-text>
-        </ion-col>
-        <ion-col size="2" size-sm="1">
-          <ion-icon
-            name="settings-outline"
-            style="background-color: aliceblue"
-            color="primary"
-            (click)="sendDataToComponent('reset-pass')"
-          ></ion-icon>
-          <br />
-          <ion-text>Configuración</ion-text>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
+      <!-- Saldo Principal -->
+      <div class="card-balance-section">
+        <div class="balance-label-row">
+          <span class="balance-title">Tu saldo disponible en ahorro</span>
+          <button
+            class="toggle-saldo-btn"
+            (click)="toggleMostrarSaldo()"
+            type="button"
+            [title]="mostrarSaldo ? 'Ocultar saldo' : 'Mostrar saldo'"
+            [attr.aria-label]="mostrarSaldo ? 'Ocultar saldo' : 'Mostrar saldo'"
+          >
+            <ion-icon [name]="mostrarSaldo ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+            <span class="toggle-saldo-text">{{ mostrarSaldo ? 'Ocultar' : 'Mostrar' }}</span>
+          </button>
+        </div>
 
-  <!-- Que hacer hoy -->
-  <ion-item class="ion-margin-top" color="primary">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-text>
-            <h4 style="font-weight: bold">Operaciones</h4>
-          </ion-text>
-        </ion-col>
-      </ion-row>
-      <!-- <ion-row>
-        <ion-col>
-          <ion-card
-            color="light"
-            (click)="sendDataToComponent('calculadora-inversiones')"
-          >
-            <ion-card-content color="light" shape="round">
-              <i
-                class="fa-solid fa-hand-holding-dollar fa-xl ion-margin-end"
-              ></i>
-              <ion-text>Invertir</ion-text>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row> -->
-      <!--<ion-row>
-        <ion-col>
-          <ion-card color="light">
-            <ion-card-content color="light" shape="round">
-              <i class="fa-solid fa-piggy-bank fa-xl ion-margin-end"></i>
-              <ion-text>Depositar</ion-text>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>-->
-      <!-- <ion-row>
-        <ion-col>
-          <ion-card color="light" (click)="sendDataToComponent('recargas')">
-            <ion-card-content color="light" shape="round">
-              <i class="fa-solid fa-mobile-screen fa-xl ion-margin-end"></i>
-              <ion-text>Recargas</ion-text>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card
-            color="light"
-            (click)="sendDataToComponent('pago-servicios')"
-          >
-            <ion-card-content>
-              <i class="fa-solid fa-receipt fa-xl ion-margin-end"></i>
-              <ion-text>Paga tus servicios</ion-text>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row> -->
-      <ion-row>
-        <ion-col>
-          <ion-card
-            color="light"
-            (click)="sendDataToComponent('dispersion-masiva-pagos')"
-          >
-            <ion-card-content>
-              <ion-icon
-                name="documents-outline"
-                class="fa-xl ion-margin-end"
-              ></ion-icon>
-              <ion-text>Dispersión Masiva de Pagos</ion-text>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-      <ion-row
-        ><ion-col>
-          <ion-card
-            color="light"
-            (click)="sendDataToComponent('registrar-orden')"
-          >
-            <ion-card-content>
-              <ion-icon
-                name="swap-horizontal-outline"
-                class="fa-xl ion-margin-end"
-              ></ion-icon>
-              <ion-text>Registrar Pagos</ion-text>
-            </ion-card-content>
-          </ion-card></ion-col
-        ></ion-row
-      >
-      <ion-row>
-        <ion-col>
-          <ion-card color="light" (click)="sendDataToComponent('traspaso')">
-            <ion-card-content>
-              <ion-icon
-                name="repeat-outline"
-                class="fa-xl ion-margin-end"
-              ></ion-icon>
-              <ion-text>Traspaso</ion-text>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
+        <div class="balance-display-row">
+          <span class="currency-symbol">$</span>
+          <ng-container *ngIf="mostrarSaldo; else saldoOculto">
+            <span class="balance-digits" *ngIf="datosSaldo?.info; else saldoCero">
+              {{ (datosSaldo.info.saldo ?? 0) | number:'1.2-2' }}
+            </span>
+            <ng-template #saldoCero>
+              <span class="balance-digits">0.00</span>
+            </ng-template>
+          </ng-container>
+          <ng-template #saldoOculto>
+            <span class="balance-digits masked-digits">••••••</span>
+          </ng-template>
+          <span class="currency-code">MXN</span>
+        </div>
+      </div>
 
-  <!--<ion-item class="ion-margin-top" color="primary">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-text>
-            <h4 style="font-weight: bold">¿Qué mas?</h4>
-          </ion-text>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card color="light">
-            <ion-card-content>
-              <i class="fa-solid fa-gift ion-margin-end"></i>
-              <ion-text>Tengo un código promocional</ion-text>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card color="light">
-            <ion-card-content>
-              <i class="fa-solid fa-user-group ion-margin-end"></i>
-              <ion-text>Invita a un amigo y gana</ion-text>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>-->
+      <!-- Fila Inferior de la Tarjeta -->
+      <div class="card-footer-row">
+        <div class="rate-indicator">
+          <ion-icon name="trending-up-outline"></ion-icon>
+          <span>Esquema de ahorro con rendimiento activo</span>
+        </div>
+        <button class="card-action-link" (click)="sendDataToComponent('ahorro')">
+          <span>Ver Movimientos</span>
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- ACCESOS RÁPIDOS EN GRID (4 Columnas) -->
+    <div class="section-container">
+      <div class="section-title-wrap">
+        <h2 class="section-main-title">Accesos Rápidos</h2>
+      </div>
+
+      <div class="quick-tiles-grid">
+        
+        <div class="quick-tile-card" (click)="sendDataToComponent('ahorro')">
+          <div class="tile-icon-circle circle-blue">
+            <ion-icon name="receipt-outline"></ion-icon>
+          </div>
+          <span class="tile-name">Movimientos</span>
+        </div>
+
+        <div class="quick-tile-card" (click)="sendDataToComponent('inversiones')">
+          <div class="tile-icon-circle circle-emerald">
+            <ion-icon name="trending-up-outline"></ion-icon>
+          </div>
+          <span class="tile-name">Inversión</span>
+        </div>
+
+        <div class="quick-tile-card" (click)="sendDataToComponent('credito')">
+          <div class="tile-icon-circle circle-amber">
+            <ion-icon name="card-outline"></ion-icon>
+          </div>
+          <span class="tile-name">Crédito</span>
+        </div>
+
+        <div class="quick-tile-card" (click)="sendDataToComponent('reset-pass')">
+          <div class="tile-icon-circle circle-slate">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </div>
+          <span class="tile-name">Datos de Cuenta</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TARJETA INFORMATIVA: DATOS DE LA CUENTA (Nombre, Correo, Cuenta CLABE) -->
+    <div class="section-container account-summary-section">
+      <div class="section-title-wrap">
+        <h2 class="section-main-title">Datos de la Cuenta</h2>
+        <p class="section-subtitle">Tu información registrada para transferencias SPEI y contacto</p>
+      </div>
+
+      <div class="account-card-box">
+        <div class="account-fields-grid">
+          
+
+          <div class="account-field-cell clabe-cell">
+            <span class="cell-label">Cuenta CLABE Interbancaria (SPEI)</span>
+            <div class="clabe-action-bar">
+              <span class="clabe-code">{{ datosCliente?.clabe || 'No disponible' }}</span>
+              <button
+                class="copy-clabe-btn"
+                *ngIf="datosCliente?.clabe"
+                (click)="copiarTexto(datosCliente.clabe)"
+                type="button"
+              >
+                <ion-icon [name]="clabeCopiada ? 'checkmark-outline' : 'copy-outline'"></ion-icon>
+                <span>{{ clabeCopiada ? '¡Copiada!' : 'Copiar' }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="account-manage-row">
+          <button class="btn-goto-config" (click)="sendDataToComponent('reset-pass')">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Ver perfil completo y cambiar contraseña</span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPERACIONES FRECUENTES (Tarjetas Horizontales Estilo Banca Premium) -->
+    <div class="section-container operations-wrapper">
+      <div class="section-title-wrap">
+        <h2 class="section-main-title">Operaciones Financieras</h2>
+        <p class="section-subtitle">Realiza dispersiones, pagos y transferencias en segundos</p>
+      </div>
+
+      <div class="operations-list-cards">
+        
+        <!-- Dispersión Masiva de Pagos -->
+        <div class="operation-item-card" (click)="sendDataToComponent('dispersion-masiva-pagos')">
+          <div class="op-lead-icon op-icon-indigo">
+            <ion-icon name="documents-outline"></ion-icon>
+          </div>
+          <div class="op-details">
+            <h3 class="op-headline">Dispersión Masiva de Pagos</h3>
+            <p class="op-subtext">Carga y efectúa pagos múltiples a proveedores o nómina</p>
+          </div>
+          <div class="op-trailing">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Registrar Pagos -->
+        <div class="operation-item-card" (click)="sendDataToComponent('registrar-orden')">
+          <div class="op-lead-icon op-icon-teal">
+            <ion-icon name="swap-horizontal-outline"></ion-icon>
+          </div>
+          <div class="op-details">
+            <h3 class="op-headline">Registrar Pagos</h3>
+            <p class="op-subtext">Captura y concilia tus órdenes de pago bancarias</p>
+          </div>
+          <div class="op-trailing">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Traspaso de Fondos -->
+        <div class="operation-item-card" (click)="sendDataToComponent('traspaso')">
+          <div class="op-lead-icon op-icon-purple">
+            <ion-icon name="repeat-outline"></ion-icon>
+          </div>
+          <div class="op-details">
+            <h3 class="op-headline">Traspaso de Fondos</h3>
+            <p class="op-subtext">Transfiere saldo de forma segura entre cuentas registradas</p>
+          </div>
+          <div class="op-trailing">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </ion-content>
 
+<!-- MODAL DE NOTIFICACIONES (TEMA CLARO INSTITUCIONAL) -->
 <ion-modal
   #modal
   [isOpen]="isModalOpen"
   [presentingElement]="presentingElement"
+  (didDismiss)="closeModal()"
+  class="notifications-custom-modal"
 >
   <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Notificaciones</ion-title>
+    <ion-header class="ion-no-border modal-header">
+      <ion-toolbar class="modal-toolbar">
+        <ion-title class="modal-title">Notificaciones</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="closeModal()">Cerrar</ion-button>
+          <button class="modal-close-btn" (click)="closeModal()">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="ion-padding"> </ion-content>
+    <ion-content class="modal-content ion-padding">
+      <div class="empty-notif-box">
+        <div class="empty-icon-ring">
+          <ion-icon name="notifications-off-outline"></ion-icon>
+        </div>
+        <h3 class="empty-title">Sin notificaciones pendientes</h3>
+        <p class="empty-desc">
+          Aquí recibirás avisos sobre tus transferencias SPEI, rendimientos generados y movimientos de cuenta.
+        </p>
+      </div>
+    </ion-content>
   </ng-template>
 </ion-modal>
