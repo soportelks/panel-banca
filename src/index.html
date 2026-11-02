@@ -6,6 +6,25 @@
 
     <base href="/" />
 
+    <!-- Aplica el tema antes de renderizar para evitar destello -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('app-theme');
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+          document.documentElement.classList.toggle('dark', theme === 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Configuraciones principales -->
     <meta name="color-scheme" content="light dark" />
     <meta

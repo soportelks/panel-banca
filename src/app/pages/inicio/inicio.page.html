@@ -14,9 +14,6 @@
       </div>
       <div class="profile-info">
         <h3 class="profile-name">{{ datosCliente?.nombre_prospecto || 'Socio RDAM' }}</h3>
-        <span class="profile-badge">
-          <span class="status-indicator"></span> Socio Activo
-        </span>
       </div>
     </div>
   </ion-header>
@@ -119,6 +116,7 @@
 
     <!-- Botón Notificaciones -->
     <ion-buttons slot="end">
+      <app-theme-toggle class="header-theme-toggle"></app-theme-toggle>
       <button class="header-notif-button" (click)="onNotificationClick()" aria-label="Notificaciones">
         <ion-icon name="notifications-outline"></ion-icon>
         <span class="notif-active-dot"></span>
@@ -139,10 +137,6 @@
           Hola, {{ (datosCliente?.nombre_prospecto ? datosCliente.nombre_prospecto : 'Bienvenido') }}
         </h1>
       </div>
-      <div class="spei-live-badge">
-        <span class="pulse-indicator"></span>
-        <span>SPEI 24/7 Conectado</span>
-      </div>
     </div>
 
     <!-- BANNER COMPACTO DE SALDO DISPONIBLE (SLIM & EXECUTIVE) -->
@@ -156,9 +150,6 @@
         <div class="strip-amount-group">
           <div class="strip-label-row">
             <span class="strip-label">Saldo Disponible en Ahorro</span>
-            <span class="strip-badge-live">
-              <span class="live-dot"></span> Multiplicando Oportunidades
-            </span>
           </div>
           <div class="strip-number-row">
             <ng-container *ngIf="mostrarSaldo; else saldoOculto">
