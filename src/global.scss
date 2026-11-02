@@ -339,6 +339,130 @@ ion-modal.custom-transaction-modal {
   }
 }
 
+/* Modal Institucional de Resultado de Dispersión Masiva */
+.custom-dispersion-modal,
+ion-modal.custom-dispersion-modal {
+  --background: #ffffff !important;
+  --backdrop-opacity: 0.6 !important;
+  --border-radius: 24px !important;
+  --max-width: 560px !important;
+  --width: 92% !important;
+  --height: min(600px, 86vh) !important;
+  --max-height: 86vh !important;
+  --box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.35) !important;
+
+  &::part(content) {
+    border-radius: 24px !important;
+    background: #ffffff !important;
+    box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.35) !important;
+    overflow: hidden !important;
+    max-height: 86vh !important;
+  }
+
+  .modal-wrapper {
+    border-radius: 24px !important;
+    background: #ffffff !important;
+    overflow: hidden !important;
+    box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.35) !important;
+  }
+
+  .result-modal-container {
+    background: #ffffff !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  .result-modal-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 1.25rem 1.5rem !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    background: #f8fafc !important;
+    flex-shrink: 0 !important;
+  }
+
+  .result-modal-body {
+    padding: 1.5rem !important;
+    overflow-y: auto !important;
+    flex: 1 1 auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .result-modal-footer {
+    padding: 1rem 1.5rem !important;
+    border-top: 1px solid #e2e8f0 !important;
+    background: #f8fafc !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+  }
+
+  @media (max-width: 640px) {
+    --border-radius: 24px 24px 0 0 !important;
+    --width: 100% !important;
+    --max-width: 100% !important;
+    --height: auto !important;
+    --max-height: 90vh !important;
+    align-items: flex-end !important;
+
+    &::part(content),
+    .modal-wrapper {
+      border-radius: 24px 24px 0 0 !important;
+    }
+  }
+}
+
+/* Loading Institucional de Dispersión Masiva */
+ion-loading.custom-loading-dispersion {
+  --background: #ffffff !important;
+  --backdrop-opacity: 0.65 !important;
+  --spinner-color: #2563eb !important;
+
+  .loading-wrapper {
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 1.85rem 1.75rem !important;
+    max-width: 440px !important;
+    width: 90% !important;
+    box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.35) !important;
+    border: 1px solid #e2e8f0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  ion-spinner {
+    width: 44px !important;
+    height: 44px !important;
+    color: #2563eb !important;
+    margin-bottom: 1.15rem !important;
+  }
+
+  .loading-content {
+    color: #475569 !important;
+    font-size: 0.88rem !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    padding: 0 !important;
+    white-space: pre-line !important;
+    text-align: center !important;
+
+    &::first-line {
+      font-size: 1.18rem !important;
+      font-weight: 800 !important;
+      color: #162d4a !important;
+      letter-spacing: -0.01em !important;
+      line-height: 2 !important;
+    }
+  }
+}
+
 /* ==========================================================================
    ION-ACTION-SHEET & SELECT OVERLAYS (TEMA CLARO EDITORIAL RDAM)
    ========================================================================== */
