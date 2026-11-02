@@ -70,37 +70,117 @@ ion-alert {
     text-align: center !important;
   }
 
+  /* Input fields en todos los modales de alerta (OTP, códigos y texto) */
+  .alert-input-group {
+    padding: 0.5rem 0 1.25rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    .alert-input {
+      background: #f8fafc !important;
+      border: 2px solid #cbd5e1 !important;
+      border-radius: 12px !important;
+      padding: 0.85rem 1rem !important;
+      text-align: center !important;
+      font-size: 1.5rem !important;
+      font-weight: 800 !important;
+      letter-spacing: 6px !important;
+      color: #0f172a !important;
+      -webkit-text-fill-color: #0f172a !important;
+      caret-color: #2563eb !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto !important;
+      box-sizing: border-box !important;
+      transition: all 0.2s ease !important;
+
+      &:focus {
+        border-color: #2563eb !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18) !important;
+        outline: none !important;
+      }
+
+      &::placeholder {
+        color: #94a3b8 !important;
+        font-size: 0.88rem !important;
+        font-weight: 500 !important;
+        letter-spacing: normal !important;
+        -webkit-text-fill-color: #94a3b8 !important;
+      }
+
+      &[type="number"]::-webkit-inner-spin-button,
+      &[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0 !important;
+      }
+
+      &[type="number"] {
+        -moz-appearance: textfield !important;
+      }
+    }
+  }
+
   .alert-button-group {
     padding: 0.85rem 0 0 !important;
+    margin: 0 !important;
     gap: 0.75rem !important;
     display: flex !important;
     flex-direction: row !important;
-    justify-content: space-between !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .alert-button {
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     font-weight: 700 !important;
     font-size: 0.95rem !important;
     height: 48px !important;
     min-height: 48px !important;
-    padding: 0 0.85rem !important;
+    padding: 0 1rem !important;
     text-transform: none !important;
     margin: 0 !important;
-    letter-spacing: 0.2px !important;
-    flex: 1 1 0px !important;
-    width: 50% !important;
+    letter-spacing: 0.01em !important;
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
     box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+
+    .alert-button-inner {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0 auto !important;
+      letter-spacing: 0.01em !important;
+    }
 
     &.alert-button-role-cancel {
       color: #475569 !important;
       background: #f1f5f9 !important;
       border: 1.5px solid #cbd5e1 !important;
 
+      .alert-button-inner {
+        color: #475569 !important;
+      }
+
       &:hover {
         background: #e2e8f0 !important;
         color: #0f172a !important;
+
+        .alert-button-inner {
+          color: #0f172a !important;
+        }
       }
     }
 
@@ -109,6 +189,10 @@ ion-alert {
       color: #ffffff !important;
       border: 1.5px solid transparent !important;
       box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28) !important;
+
+      .alert-button-inner {
+        color: #ffffff !important;
+      }
 
       &:hover {
         background: #1d4ed8 !important;
@@ -137,27 +221,43 @@ ion-alert.otp-custom-alert {
     .alert-input {
       background: #f8fafc !important;
       border: 2px solid #cbd5e1 !important;
-      border-radius: 10px !important;
+      border-radius: 12px !important;
       padding: 0.85rem 1rem !important;
       text-align: center !important;
-      font-size: 1.75rem !important;
+      font-size: 1.6rem !important;
       font-weight: 800 !important;
-      letter-spacing: 8px !important;
+      letter-spacing: 6px !important;
       color: #162d4a !important;
+      -webkit-text-fill-color: #162d4a !important;
+      caret-color: #2563eb !important;
       width: 100% !important;
-      max-width: 260px !important;
+      max-width: 100% !important;
       margin: 0 auto !important;
       transition: all 0.2s ease !important;
 
       &:focus {
-        border-color: #162d4a !important;
+        border-color: #2563eb !important;
         background: #ffffff !important;
-        box-shadow: 0 0 0 4px rgba(22, 45, 74, 0.14) !important;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18) !important;
+        outline: none !important;
       }
 
       &::placeholder {
         color: #94a3b8 !important;
-        letter-spacing: 6px !important;
+        font-size: 0.88rem !important;
+        font-weight: 500 !important;
+        letter-spacing: normal !important;
+        -webkit-text-fill-color: #94a3b8 !important;
+      }
+
+      &[type="number"]::-webkit-inner-spin-button,
+      &[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0 !important;
+      }
+
+      &[type="number"] {
+        -moz-appearance: textfield !important;
       }
     }
   }
@@ -240,13 +340,290 @@ ion-modal.custom-transaction-modal {
 }
 
 /* ==========================================================================
+   ION-ACTION-SHEET & SELECT OVERLAYS (TEMA CLARO EDITORIAL RDAM)
+   ========================================================================== */
+
+ion-action-sheet {
+  --background: #ffffff !important;
+  --color: #162d4a !important;
+  --backdrop-opacity: 0.55 !important;
+  --button-background-selected: #eff6ff !important;
+  --button-color-selected: #1d4ed8 !important;
+
+  .action-sheet-wrapper {
+    background: #ffffff !important;
+    border-radius: 20px 20px 0 0 !important;
+    box-shadow: 0 -10px 40px rgba(22, 45, 74, 0.2) !important;
+    max-height: 80vh !important;
+    overflow: hidden !important;
+
+    @media (min-width: 768px) {
+      border-radius: 20px !important;
+      max-width: 520px !important;
+      margin: auto !important;
+      box-shadow: 0 25px 65px -10px rgba(22, 45, 74, 0.3),
+                  0 0 0 1px rgba(22, 45, 74, 0.08) !important;
+    }
+  }
+
+  .action-sheet-container {
+    background: #ffffff !important;
+    padding: 0 !important;
+  }
+
+  .action-sheet-group {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0.35rem 0 !important;
+    border-radius: 0 !important;
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+
+    /* Barra de desplazamiento suave */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #f8fafc;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    &.action-sheet-group-cancel {
+      max-height: none !important;
+      overflow: visible !important;
+      padding: 0.75rem 1rem !important;
+      background: #f8fafc !important;
+      border-top: 1px solid #e2e8f0 !important;
+
+      .action-sheet-button {
+        background: #f1f5f9 !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 10px !important;
+        color: #475569 !important;
+        font-weight: 700 !important;
+        height: 48px !important;
+        min-height: 48px !important;
+        justify-content: center !important;
+        text-align: center !important;
+
+        .action-sheet-button-inner {
+          justify-content: center !important;
+          color: #475569 !important;
+          font-weight: 700 !important;
+        }
+
+        &:hover {
+          background: #e2e8f0 !important;
+          color: #0f172a !important;
+        }
+      }
+    }
+  }
+
+  .action-sheet-title {
+    background: #ffffff !important;
+    color: #162d4a !important;
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    padding: 1.25rem 1.5rem 0.4rem !important;
+    text-align: left !important;
+    border-bottom: none !important;
+  }
+
+  .action-sheet-sub-title {
+    background: #ffffff !important;
+    color: #64748b !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    padding: 0 1.5rem 1rem !important;
+    text-align: left !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+  }
+
+  .action-sheet-button {
+    background: #ffffff !important;
+    color: #162d4a !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    padding: 0.9rem 1.5rem !important;
+    min-height: 50px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    transition: all 0.15s ease !important;
+    text-align: left !important;
+    cursor: pointer !important;
+
+    .action-sheet-button-inner {
+      color: #162d4a !important;
+      font-size: 0.95rem !important;
+      font-weight: 600 !important;
+      justify-content: flex-start !important;
+      text-align: left !important;
+      width: 100% !important;
+      letter-spacing: 0.01em !important;
+    }
+
+    &:hover,
+    &.ion-focused,
+    &.action-sheet-selected {
+      background: #eff6ff !important;
+      color: #1d4ed8 !important;
+
+      .action-sheet-button-inner {
+        color: #1d4ed8 !important;
+        font-weight: 700 !important;
+        padding-left: 0.35rem !important;
+        transition: padding 0.15s ease !important;
+      }
+    }
+
+    &:active {
+      background: #dbeafe !important;
+    }
+  }
+}
+
+/* Popovers y listas de selección */
+ion-popover {
+  --background: #ffffff !important;
+  --color: #162d4a !important;
+  --backdrop-opacity: 0.5 !important;
+
+  &::part(content) {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 50px -10px rgba(22, 45, 74, 0.3),
+                0 0 0 1px rgba(22, 45, 74, 0.08) !important;
+    border: 1px solid #e2e8f0 !important;
+    overflow: hidden !important;
+    max-height: 420px !important;
+  }
+
+  ion-select-popover {
+    background: #ffffff !important;
+
+    ion-list {
+      background: #ffffff !important;
+      padding: 0 !important;
+    }
+
+    ion-item {
+      --background: #ffffff !important;
+      --background-hover: #eff6ff !important;
+      --background-focused: #eff6ff !important;
+      --color: #162d4a !important;
+      --border-color: #f1f5f9 !important;
+      font-size: 0.95rem !important;
+      font-weight: 600 !important;
+      min-height: 48px !important;
+      transition: all 0.15s ease !important;
+
+      ion-radio {
+        --color: #94a3b8 !important;
+        --color-checked: #2563eb !important;
+        color: #162d4a !important;
+        font-weight: 600 !important;
+
+        &::part(label) {
+          color: #162d4a !important;
+        }
+      }
+
+      &:hover {
+        --color: #1d4ed8 !important;
+        --background: #eff6ff !important;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   GLOBAL LOADING STYLES (ION-LOADING - TEMA CLARO EDITORIAL)
+   ========================================================================== */
+
+ion-loading,
+ion-loading.custom-loading {
+  --backdrop-opacity: 0.55;
+  --background: #ffffff !important;
+  --spinner-color: #162d4a !important;
+  --color: #162d4a !important;
+  --border-radius: 18px !important;
+  --box-shadow: 0 20px 50px -10px rgba(22, 45, 74, 0.28), 0 0 0 1.5px rgba(22, 45, 74, 0.08) !important;
+  color: #162d4a !important;
+
+  .loading-wrapper {
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    padding: 1.35rem 1.75rem !important;
+    box-shadow: 0 20px 50px -10px rgba(22, 45, 74, 0.28),
+                0 0 0 1.5px rgba(22, 45, 74, 0.08) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1.15rem !important;
+    max-width: 360px !important;
+
+    ion-spinner {
+      color: #162d4a !important;
+      width: 28px !important;
+      height: 28px !important;
+      flex-shrink: 0 !important;
+      --color: #162d4a !important;
+    }
+
+    .loading-content {
+      color: #162d4a !important;
+      font-size: 0.95rem !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+      line-height: 1.4 !important;
+    }
+  }
+}
+
+/* ==========================================================================
    GLOBAL HEADER & CONTENT SEPARATION (PREVENCIÓN DE TRASLAPE DE NAVBAR)
    ========================================================================== */
 
+.ion-page,
+ion-app ion-router-outlet > * {
+  display: flex !important;
+  flex-direction: column !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
 ion-header:not(.modal-header) {
+  display: block !important;
   position: relative !important;
   flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
   z-index: 50 !important;
+  box-shadow: 0 1px 3px rgba(22, 45, 74, 0.05) !important;
+}
+
+ion-content:not(.modal-content):not(.menu-content) {
+  display: block !important;
+  position: relative !important;
+  flex: 1 1 0% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  width: 100% !important;
+  top: auto !important;
+  bottom: auto !important;
+  --offset-top: 0px !important;
 }
 
 /* ==========================================================================

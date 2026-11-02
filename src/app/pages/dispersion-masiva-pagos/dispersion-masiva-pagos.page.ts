@@ -931,6 +931,7 @@ export class DispersionMasivaPagosPage implements OnInit {
     this.alertInstance = await this.alertCtrl.create({
       header: 'Ingresar Codigo de verificación',
       backdropDismiss: false,
+      cssClass: 'otp-custom-alert',
       message: `
      
         Tiempo restante: ${this.timeLeft} segundos
@@ -942,7 +943,7 @@ export class DispersionMasivaPagosPage implements OnInit {
         {
           name: 'otpCode',
           type: 'number',
-          placeholder: 'Introduce el código de verificación'
+          placeholder: 'Código de 6 dígitos'
         }
       ],
       buttons: [

@@ -45,6 +45,12 @@ export class TraspasoPage implements OnInit {
     cveCliente: "01",
   };
 
+  customSelectOptions: any = {
+    header: 'Selecciona el Tipo de Traspaso',
+    subHeader: 'Subcuentas de ahorro e inversión',
+    cssClass: 'custom-bank-action-sheet'
+  };
+
   constructor(
     private formBuilder: FormBuilder,
     private spei: SpeiService,

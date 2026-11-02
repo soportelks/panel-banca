@@ -1,21 +1,522 @@
-ion-item {
-  --border-color: var(--ion-color-secondary);
-  --border-style: solid;
-  --border-width: 2px;
-  --border-radius: 20px;
-  margin: 10px;
+// =============================================================
+// TRANSFERENCIA SPEI - ESTILO EDITORIAL RDAM (TEMA CLARO)
+// =============================================================
+
+$navy-primary: #162d4a;
+$navy-hover: #0e1e33;
+$cream-bg: #fbf7f4;
+$card-bg: #ffffff;
+$border-light: #e5e7eb;
+$border-card: #d1d5db;
+$text-dark: #0f172a;
+$text-muted: #475569;
+$text-subtle: #64748b;
+$blue-accent: #2563eb;
+
+// -------------------------------------------------------------
+// ENCABEZADO INSTITUCIONAL
+// -------------------------------------------------------------
+.registrar-orden-header {
+  position: relative;
+  z-index: 50;
+  background: $cream-bg;
+  border-bottom: 1px solid rgba(22, 45, 74, 0.08);
+
+  .header-toolbar {
+    --background: #{$cream-bg};
+    --border-width: 0;
+    --padding-top: 0.5rem;
+    --padding-bottom: 0.5rem;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+  }
+
+  ion-back-button {
+    --color: #{$navy-primary};
+    font-size: 1.1rem;
+  }
+
+  .header-brand-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .header-logo {
+      height: 46px;
+      width: auto;
+      max-width: 180px;
+      object-fit: contain;
+    }
+  }
+
+  .header-end-spacer {
+    visibility: hidden;
+  }
 }
 
-.boton-redondeado::part(native) {
-  border-radius: 20px !important;
+// -------------------------------------------------------------
+// CONTENIDO PRINCIPAL
+// -------------------------------------------------------------
+.registrar-orden-content {
+  --background: #{$cream-bg};
+  --padding-top: 0.5rem;
+  --padding-bottom: 4rem;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  .registrar-orden-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1.25rem 1.25rem 5rem;
+    box-sizing: border-box;
+
+    @media (max-width: 640px) {
+      padding: 1rem 0.85rem 4rem;
+    }
+  }
 }
 
-.clickable-card {
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+// -------------------------------------------------------------
+// INTRO DE PÁGINA
+// -------------------------------------------------------------
+.page-intro-header {
+  margin-bottom: 1rem;
+
+  .page-kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #4b5563;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .page-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: $navy-primary;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+
+    @media (max-width: 640px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .page-description {
+    font-size: 0.92rem;
+    color: $text-muted;
+    margin: 0;
+    line-height: 1.4;
+  }
 }
 
-.clickable-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+// -------------------------------------------------------------
+// BANNER COMPACTO DE SALDO DISPONIBLE (SLIM & EXECUTIVE)
+// -------------------------------------------------------------
+.compact-balance-strip {
+  position: relative;
+  background: linear-gradient(135deg, #162d4a 0%, #1c3557 55%, #1e40af 100%);
+  border-radius: 14px;
+  padding: 0.9rem 1.4rem;
+  color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 10px 25px -6px rgba(22, 45, 74, 0.32),
+              0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 580px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.85rem 1.1rem;
+    gap: 0.75rem;
+  }
+
+  .strip-glow {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .strip-left {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .strip-icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+
+    .strip-amount-group {
+      display: flex;
+      flex-direction: column;
+
+      .strip-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 0.15rem;
+      }
+
+      .strip-number-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+
+        .strip-amount {
+          font-size: 1.75rem;
+          font-weight: 800;
+          color: #ffffff;
+          letter-spacing: -0.03em;
+          line-height: 1.1;
+
+          @media (max-width: 480px) {
+            font-size: 1.5rem;
+          }
+        }
+
+        .strip-currency {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #93c5fd;
+        }
+      }
+    }
+  }
+
+  .strip-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    @media (max-width: 580px) {
+      width: 100%;
+      justify-content: space-between;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .strip-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.95);
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 6px #10b981;
+      }
+    }
+
+    .strip-spei-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+
+      ion-icon {
+        font-size: 0.95rem;
+        color: #93c5fd;
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// TARJETA RESUMEN DE TOTAL CON COMISIÓN
+// -------------------------------------------------------------
+.commission-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #eff6ff;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.5rem;
+
+  .commission-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #ffffff;
+    color: $blue-accent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.12);
+  }
+
+  .commission-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    .commission-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #1e40af;
+    }
+
+    .commission-figure {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: $navy-primary;
+      letter-spacing: -0.02em;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// TARJETA FORMULARIO: TRANSFERENCIA SPEI
+// -------------------------------------------------------------
+.transfer-form-card {
+  background: $card-bg;
+  border: 1.5px solid $border-card;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(22, 45, 74, 0.05);
+  padding: 2rem 2.25rem 2.5rem;
+
+  @media (max-width: 640px) {
+    padding: 1.4rem 1.25rem 2rem;
+    border-radius: 16px;
+  }
+
+  .card-section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid $border-light;
+
+    .header-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #eff6ff;
+      color: $navy-primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .card-section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: $text-dark;
+      margin: 0 0 2px;
+      letter-spacing: -0.02em;
+
+      @media (max-width: 640px) {
+        font-size: 1.15rem;
+      }
+    }
+
+    .card-section-subtitle {
+      font-size: 0.82rem;
+      color: $text-muted;
+      margin: 0;
+    }
+  }
+
+  .form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+
+    .form-group-item {
+      width: 100%;
+    }
+
+    .form-grid-two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+
+      @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+        gap: 1.1rem;
+      }
+    }
+
+    // Input item estilizado
+    .custom-form-item {
+      --background: #f8fafc;
+      --border-color: #cbd5e1;
+      --border-radius: 12px;
+      --border-width: 1.5px;
+      --border-style: solid;
+      --padding-start: 1rem;
+      --padding-end: 0.85rem;
+      --inner-padding-end: 0;
+      --highlight-color-focused: #{$navy-primary};
+      transition: all 0.2s ease;
+      min-height: 56px;
+
+      &:focus-within {
+        --border-color: #{$navy-primary};
+        --background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(22, 45, 74, 0.08);
+      }
+
+      .field-icon {
+        font-size: 1.25rem;
+        color: $navy-primary;
+        margin-right: 0.75rem;
+      }
+
+      ion-input {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #111827 !important;
+        --color: #111827 !important;
+
+        &::part(native) {
+          color: #111827 !important;
+        }
+      }
+
+      &.custom-select-item {
+        ion-select {
+          font-size: 0.95rem;
+          font-weight: 600;
+          color: #111827;
+          width: 100%;
+        }
+      }
+
+      &.monto-item {
+        ion-input {
+          font-size: 1.15rem;
+          font-weight: 800;
+          color: $navy-primary !important;
+        }
+      }
+
+      &.readonly-item {
+        --background: #f1f5f9;
+        opacity: 0.85;
+      }
+    }
+
+    // Acciones del Formulario
+    .form-actions-container {
+      margin-top: 1rem;
+
+      .btn-submit-transfer {
+        width: 100%;
+        height: 52px;
+        border-radius: 14px;
+        background: $navy-primary;
+        color: #ffffff;
+        border: none;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(22, 45, 74, 0.25);
+        transition: all 0.2s ease;
+
+        ion-icon {
+          font-size: 1.3rem;
+        }
+
+        &:hover:not(:disabled) {
+          background: $navy-hover;
+          box-shadow: 0 10px 24px rgba(22, 45, 74, 0.35);
+          transform: translateY(-1px);
+        }
+
+        &:active:not(:disabled) {
+          transform: translateY(1px);
+        }
+
+        &:disabled {
+          opacity: 0.45;
+          cursor: not-allowed;
+          box-shadow: none;
+          background: #94a3b8;
+        }
+      }
+
+      // Estado de Carga / Procesamiento
+      .progress-state-card {
+        background: #f8fafc;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 14px;
+        padding: 1.5rem;
+        text-align: center;
+
+        .progress-header {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          margin-bottom: 1rem;
+
+          .progress-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: $navy-primary;
+          }
+        }
+
+        .custom-progress-bar {
+          height: 8px;
+          border-radius: 4px;
+          --background: #e2e8f0;
+          --progress-background: #{$navy-primary};
+        }
+      }
+    }
+  }
 }

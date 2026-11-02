@@ -74,6 +74,7 @@ export class AhorroPage implements AfterViewInit {
     const loading = await this.loadingCtrl.create({
       message: 'Cargando movimientos...',
       spinner: 'crescent',
+      cssClass: 'custom-loading',
     });
     await loading.present();
 

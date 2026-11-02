@@ -63,7 +63,7 @@ $emerald-border: #a7f3d0;
 // -------------------------------------------------------------
 .inversiones-content {
   --background: #{$cream-bg};
-  --padding-top: 1.5rem;
+  --padding-top: 0.5rem;
   --padding-bottom: 4rem;
   --padding-start: 0;
   --padding-end: 0;
@@ -118,121 +118,143 @@ $emerald-border: #a7f3d0;
 }
 
 // -------------------------------------------------------------
-// TARJETA HERO DE RENDIMIENTO / SALDO INVERSIÓN
+// BANNER COMPACTO DE RENDIMIENTO / SALDO INVERSIÓN (SLIM & EXECUTIVE)
 // -------------------------------------------------------------
-.investment-hero-card {
+.compact-balance-strip {
   position: relative;
-  background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #162d4a 100%);
-  border-radius: 20px;
-  padding: 1.75rem 2rem;
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 55%, #162d4a 100%);
+  border-radius: 14px;
+  padding: 0.9rem 1.4rem;
   color: #ffffff;
   overflow: hidden;
-  box-shadow: 0 16px 36px -10px rgba(6, 78, 59, 0.4),
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 10px 25px -6px rgba(6, 78, 59, 0.35),
               0 0 0 1px rgba(255, 255, 255, 0.12) inset;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.25rem;
 
-  @media (max-width: 640px) {
-    padding: 1.4rem 1.25rem;
-    border-radius: 16px;
+  @media (max-width: 580px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.85rem 1.1rem;
+    gap: 0.75rem;
   }
 
-  .hero-card-glow {
+  .strip-glow {
     position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 240px;
-    height: 240px;
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.3) 0%, transparent 70%);
     pointer-events: none;
   }
 
-  .hero-card-content {
+  .strip-left {
     position: relative;
     z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .strip-icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #a7f3d0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+
+    .strip-amount-group {
+      display: flex;
+      flex-direction: column;
+
+      .strip-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 0.15rem;
+      }
+
+      .strip-number-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+
+        .strip-amount {
+          font-size: 1.75rem;
+          font-weight: 800;
+          color: #ffffff;
+          letter-spacing: -0.03em;
+          line-height: 1.1;
+
+          @media (max-width: 480px) {
+            font-size: 1.5rem;
+          }
+        }
+
+        .strip-currency {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #a7f3d0;
+        }
+      }
+    }
   }
 
-  .hero-header-row {
+  .strip-right {
+    position: relative;
+    z-index: 2;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.25rem;
+    gap: 0.75rem;
 
-    .investment-badge {
+    @media (max-width: 580px) {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .strip-status-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(8px);
       padding: 0.32rem 0.8rem;
-      border-radius: 999px;
-      color: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #ffffff;
 
-      .status-pulse-dot {
+      .status-dot {
         width: 7px;
         height: 7px;
         border-radius: 50%;
         background: #34d399;
-        box-shadow: 0 0 8px #34d399;
+        box-shadow: 0 0 6px rgba(52, 211, 153, 0.8);
       }
     }
 
-    .account-tag {
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.75);
-      letter-spacing: 0.05em;
-    }
-  }
-
-  .hero-main-amount {
-    margin-bottom: 1.4rem;
-
-    .amount-kicker {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.75);
-      margin-bottom: 0.3rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .amount-figure {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: -0.04em;
-      margin: 0;
-      line-height: 1.1;
-
-      @media (max-width: 640px) {
-        font-size: 2rem;
-      }
-    }
-  }
-
-  .hero-footer-features {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-
-    .feature-item {
-      display: flex;
+    .strip-spei-tag {
+      display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.9);
-      font-weight: 500;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
 
       ion-icon {
-        font-size: 1.05rem;
+        font-size: 0.95rem;
         color: #a7f3d0;
       }
     }

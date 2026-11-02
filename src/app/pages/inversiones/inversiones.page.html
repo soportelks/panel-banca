@@ -30,34 +30,33 @@
       <p class="page-description">Consulta tus pagarés vigentes, saldo acumulado y fechas de vencimiento</p>
     </div>
 
-    <!-- TARJETA HERO DE RENDIMIENTO / SALDO INVERSIÓN -->
-    <div class="investment-hero-card">
-      <div class="hero-card-glow"></div>
-      <div class="hero-card-content">
-        <div class="hero-header-row">
-          <div class="investment-badge">
-            <span class="status-pulse-dot"></span> Capital en Inversión
-          </div>
-          <span class="account-tag">Pagaré RDAM</span>
+    <!-- BANNER COMPACTO DE RENDIMIENTO / SALDO INVERSIÓN -->
+    <div class="compact-balance-strip">
+      <div class="strip-glow"></div>
+      
+      <div class="strip-left">
+        <div class="strip-icon-circle">
+          <ion-icon name="trending-up-outline"></ion-icon>
         </div>
+        <div class="strip-amount-group">
+          <span class="strip-label">Capital Total en Inversión</span>
+          <div class="strip-number-row">
+            <span class="strip-amount">
+              {{ (interesesResponse.info && interesesResponse.info[0]?.sum ? interesesResponse.info[0].sum : 0) | currency:'USD':'symbol':'1.2-2' }}
+            </span>
+            <span class="strip-currency">MXN</span>
+          </div>
+        </div>
+      </div>
 
-        <div class="hero-main-amount">
-          <span class="amount-kicker">Saldo Total Acumulado</span>
-          <h2 class="amount-figure">
-            {{ (interesesResponse?.info?.[0]?.sum ?? 0) | currency:'USD':'symbol':'1.2-2' }}
-          </h2>
-        </div>
-
-        <div class="hero-footer-features">
-          <div class="feature-item">
-            <ion-icon name="trending-up-outline"></ion-icon>
-            <span>Rendimiento Garantizado</span>
-          </div>
-          <div class="feature-item">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-            <span>Fondos Asegurados</span>
-          </div>
-        </div>
+      <div class="strip-right">
+        <span class="strip-status-pill">
+          <span class="status-dot"></span> Pagaré RDAM
+        </span>
+        <span class="strip-spei-tag">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          <span>Rendimiento Activo</span>
+        </span>
       </div>
     </div>
 
@@ -73,7 +72,7 @@
             <p class="container-subtitle">Listado de títulos de inversión activos</p>
           </div>
         </div>
-        <div class="header-right" *ngIf="inversionesResponse?.info?.length">
+        <div class="header-right" *ngIf="inversionesResponse.info?.length">
           <span class="count-badge">
             {{ inversionesResponse.info.length }} {{ inversionesResponse.info.length === 1 ? 'pagaré' : 'pagarés' }}
           </span>
@@ -81,7 +80,7 @@
       </div>
 
       <!-- TABLA ENCABEZADO (DESKTOP/TABLET) -->
-      <div class="investments-table-header" *ngIf="inversionesResponse?.info && inversionesResponse.info.length > 0">
+      <div class="investments-table-header" *ngIf="inversionesResponse.info && inversionesResponse.info.length > 0">
         <div class="th-col th-pagare">No. de Pagaré</div>
         <div class="th-col th-monto">Monto Invertido</div>
         <div class="th-col th-vencimiento">Fecha de Vencimiento</div>
@@ -89,7 +88,7 @@
       </div>
 
       <!-- LISTA DE INVERSIONES -->
-      <div class="investments-list" *ngIf="inversionesResponse?.info && inversionesResponse.info.length > 0">
+      <div class="investments-list" *ngIf="inversionesResponse.info && inversionesResponse.info.length > 0">
         <div class="investment-row" *ngFor="let item of inversionesResponse.info">
           
           <!-- Columna Pagaré -->
@@ -134,13 +133,13 @@
       </div>
 
       <!-- ESTADO VACÍO -->
-      <div class="empty-state-card" *ngIf="!inversionesResponse?.info || inversionesResponse?.info?.length === 0">
+      <div class="empty-state-card" *ngIf="!inversionesResponse.info || inversionesResponse.info.length === 0">
         <div class="empty-icon-circle">
           <ion-icon name="trending-up-outline"></ion-icon>
         </div>
         <h3 class="empty-title">Sin inversiones activas</h3>
         <p class="empty-desc">
-          {{ inversionesResponse?.mensaje || 'Actualmente no cuentas con pagarés de inversión vigentes registrados en tu cuenta.' }}
+          {{ inversionesResponse.mensaje || 'Actualmente no cuentas con pagarés de inversión vigentes registrados en tu cuenta.' }}
         </p>
       </div>
 

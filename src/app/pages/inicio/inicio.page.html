@@ -64,7 +64,7 @@
           <div class="item-icon-box item-teal">
             <ion-icon name="swap-horizontal-outline"></ion-icon>
           </div>
-          <span class="item-text">Registro de Pagos</span>
+          <span class="item-text">Transferencia SPEI</span>
           <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
         </button>
 
@@ -145,60 +145,55 @@
       </div>
     </div>
 
-    <!-- TARJETÓN PRINCIPAL DE SALDO (AZUL MARINO EDITORIAL) -->
-    <div class="main-financial-card">
-      <div class="card-glow-bg"></div>
-      
-      <!-- Fila Superior de la Tarjeta -->
-      <div class="card-header-row">
-        <div class="institution-tag">
-          <ion-icon name="shield-checkmark"></ion-icon>
-          <span>Multiplicando Oportunidades</span>
-        </div>
-      </div>
+    <!-- BANNER COMPACTO DE SALDO DISPONIBLE (SLIM & EXECUTIVE) -->
+    <div class="compact-balance-strip">
+      <div class="strip-glow"></div>
 
-      <!-- Saldo Principal -->
-      <div class="card-balance-section">
-        <div class="balance-label-row">
-          <span class="balance-title">Tu saldo disponible en ahorro</span>
-          <button
-            class="toggle-saldo-btn"
-            (click)="toggleMostrarSaldo()"
-            type="button"
-            [title]="mostrarSaldo ? 'Ocultar saldo' : 'Mostrar saldo'"
-            [attr.aria-label]="mostrarSaldo ? 'Ocultar saldo' : 'Mostrar saldo'"
-          >
-            <ion-icon [name]="mostrarSaldo ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
-            <span class="toggle-saldo-text">{{ mostrarSaldo ? 'Ocultar' : 'Mostrar' }}</span>
-          </button>
+      <div class="strip-left">
+        <div class="strip-icon-circle">
+          <ion-icon name="wallet-outline"></ion-icon>
         </div>
-
-        <div class="balance-display-row">
-          <span class="currency-symbol">$</span>
-          <ng-container *ngIf="mostrarSaldo; else saldoOculto">
-            <span class="balance-digits" *ngIf="datosSaldo?.info; else saldoCero">
-              {{ (datosSaldo.info.saldo ?? 0) | number:'1.2-2' }}
+        <div class="strip-amount-group">
+          <div class="strip-label-row">
+            <span class="strip-label">Saldo Disponible en Ahorro</span>
+            <span class="strip-badge-live">
+              <span class="live-dot"></span> Multiplicando Oportunidades
             </span>
-            <ng-template #saldoCero>
-              <span class="balance-digits">0.00</span>
+          </div>
+          <div class="strip-number-row">
+            <ng-container *ngIf="mostrarSaldo; else saldoOculto">
+              <span class="strip-amount" *ngIf="datosSaldo?.info; else saldoCero">
+                {{ (datosSaldo.info.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+              <ng-template #saldoCero>
+                <span class="strip-amount">$0.00</span>
+              </ng-template>
+            </ng-container>
+            <ng-template #saldoOculto>
+              <span class="strip-amount masked">••••••</span>
             </ng-template>
-          </ng-container>
-          <ng-template #saldoOculto>
-            <span class="balance-digits masked-digits">••••••</span>
-          </ng-template>
-          <span class="currency-code">MXN</span>
+            <span class="strip-currency">MXN</span>
+
+            <!-- Botón Ojito para Ocultar/Mostrar Saldo -->
+            <button
+              class="strip-eye-btn"
+              (click)="toggleMostrarSaldo()"
+              type="button"
+              [title]="mostrarSaldo ? 'Ocultar saldo' : 'Mostrar saldo'"
+              [attr.aria-label]="mostrarSaldo ? 'Ocultar saldo' : 'Mostrar saldo'"
+            >
+              <ion-icon [name]="mostrarSaldo ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+              <span class="eye-text">{{ mostrarSaldo ? 'Ocultar' : 'Mostrar' }}</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Fila Inferior de la Tarjeta -->
-      <div class="card-footer-row">
-        <div class="rate-indicator">
-          <ion-icon name="trending-up-outline"></ion-icon>
-          <span>Esquema de ahorro con rendimiento activo</span>
-        </div>
-        <button class="card-action-link" (click)="sendDataToComponent('ahorro')">
+      <div class="strip-right">
+        <button class="strip-action-btn" (click)="sendDataToComponent('ahorro')" type="button">
+          <ion-icon name="receipt-outline"></ion-icon>
           <span>Ver Movimientos</span>
-          <ion-icon name="arrow-forward-outline"></ion-icon>
+          <ion-icon name="arrow-forward-outline" class="action-chevron"></ion-icon>
         </button>
       </div>
     </div>
@@ -303,14 +298,14 @@
           </div>
         </div>
 
-        <!-- Registrar Pagos -->
+        <!-- Transferencia SPEI -->
         <div class="operation-item-card" (click)="sendDataToComponent('registrar-orden')">
           <div class="op-lead-icon op-icon-teal">
             <ion-icon name="swap-horizontal-outline"></ion-icon>
           </div>
           <div class="op-details">
-            <h3 class="op-headline">Registrar Pagos</h3>
-            <p class="op-subtext">Captura y concilia tus órdenes de pago bancarias</p>
+            <h3 class="op-headline">Transferencia SPEI</h3>
+            <p class="op-subtext">Envía dinero en tiempo real a cualquier cuenta o banco</p>
           </div>
           <div class="op-trailing">
             <ion-icon name="chevron-forward-outline"></ion-icon>

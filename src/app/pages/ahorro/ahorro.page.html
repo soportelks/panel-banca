@@ -30,34 +30,33 @@
       <p class="page-description">Historial oficial de operaciones, depósitos y transferencias SPEI</p>
     </div>
 
-    <!-- TARJETA HERO DE SALDO -->
-    <div class="balance-hero-card">
-      <div class="balance-card-glow"></div>
-      <div class="balance-card-content">
-        <div class="balance-header-row">
-          <div class="balance-badge">
-            <span class="status-indicator-dot"></span> Saldo Disponible
-          </div>
-          <span class="account-type-badge">Ahorro RDAM</span>
+    <!-- BANNER COMPACTO DE SALDO DISPONIBLE -->
+    <div class="compact-balance-strip">
+      <div class="strip-glow"></div>
+      
+      <div class="strip-left">
+        <div class="strip-icon-circle">
+          <ion-icon name="wallet-outline"></ion-icon>
         </div>
+        <div class="strip-amount-group">
+          <span class="strip-label">Saldo Disponible en Ahorro</span>
+          <div class="strip-number-row">
+            <span class="strip-amount">
+              {{ (datosSaldo.info.saldo !== undefined ? datosSaldo.info.saldo : (datosSaldo.info[0]?.saldo ?? 0)) | currency:'USD':'symbol':'1.2-2' }}
+            </span>
+            <span class="strip-currency">MXN</span>
+          </div>
+        </div>
+      </div>
 
-        <div class="balance-main">
-          <span class="balance-currency-label">Saldo Total en Cuenta</span>
-          <h2 class="balance-figure">
-            {{ (datosSaldo?.info?.saldo !== undefined ? datosSaldo.info.saldo : (datosSaldo?.info?.[0]?.saldo ?? 0)) | currency:'USD':'symbol':'1.2-2' }}
-          </h2>
-        </div>
-
-        <div class="balance-footer-row">
-          <div class="balance-feature">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-            <span>Fondos Protegidos</span>
-          </div>
-          <div class="balance-feature">
-            <ion-icon name="flash-outline"></ion-icon>
-            <span>SPEI 24/7</span>
-          </div>
-        </div>
+      <div class="strip-right">
+        <span class="strip-status-pill">
+          <span class="status-dot"></span> Saldo Disponible
+        </span>
+        <span class="strip-spei-tag">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          <span>Fondos Protegidos</span>
+        </span>
       </div>
     </div>
 

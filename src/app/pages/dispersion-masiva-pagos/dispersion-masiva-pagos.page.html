@@ -1,237 +1,311 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<!-- ENCABEZADO INSTITUCIONAL RDAM -->
+<ion-header class="ion-no-border dispersion-header">
+  <ion-toolbar class="header-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back"></ion-back-button>
+      <ion-back-button defaultHref="/inicio" icon="chevron-back-outline" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Disperción Masiva</ion-title>
+
+    <div class="header-brand-center">
+      <img
+        src="assets/images/Logo_RDAM_negro.png"
+        class="header-logo"
+        alt="Logo RDAM"
+      />
+    </div>
+
+    <ion-buttons slot="end" class="header-end-spacer">
+      <div style="width: 48px;"></div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-header collapse="condense"></ion-header>
+<!-- CONTENIDO PRINCIPAL -->
+<ion-content class="dispersion-content">
+  <div class="dispersion-wrapper">
 
-  <ion-item color="secondary">
-    <div>
-      <div *ngIf="datosSaldo?.info; else sinSaldo">
-        <ion-text>
-          Tu saldo en ahorro:
-          <strong style="font-size: 20px">
-            {{ datosSaldo.info.saldo | currency }}
-          </strong>
-        </ion-text>
-      </div>
-      <ng-template #sinSaldo>
-        <ion-text>
-          Tu saldo en ahorro:
-          <strong style="font-size: 20px">{{ 0 | currency }}</strong>
-        </ion-text>
-      </ng-template>
+    <!-- INTRO DE PÁGINA -->
+    <div class="page-intro-header">
+      <span class="page-kicker">PAGOS CORPORATIVOS & NÓMINA</span>
+      <h1 class="page-title">Dispersión Masiva de Pagos</h1>
+      <p class="page-description">Carga lotes de transferencias en formato Excel (.xlsx) para procesar pagos masivos vía SPEI con confirmación bancaria</p>
     </div>
-  </ion-item>
 
-  <ion-item color="secondary" *ngIf="mostrarTotalMontos">
-    <div>
-      <div *ngIf="totalMontos !== null; else sinTotalMontos">
-        <ion-text>
-          Total de montos procesados:
-          <strong style="font-size: 20px">
-            {{ totalMontos | currency }}
-          </strong>
-        </ion-text>
+    <!-- BANNER DE SALDO DISPONIBLE -->
+    <div [class.dual-balance-grid]="mostrarTotalMontos" [class.single-balance-container]="!mostrarTotalMontos">
+      
+      <!-- Tarjeta 1: Saldo en Ahorro -->
+      <div class="compact-balance-strip strip-navy">
+        <div class="strip-glow"></div>
+        <div class="strip-left">
+          <div class="strip-icon-circle">
+            <ion-icon name="wallet-outline"></ion-icon>
+          </div>
+          <div class="strip-amount-group">
+            <span class="strip-label">Saldo Disponible en Ahorro</span>
+            <div class="strip-number-row">
+              <span class="strip-amount">
+                {{ (datosSaldo?.info?.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+              <span class="strip-currency">MXN</span>
+            </div>
+          </div>
+        </div>
+        <div class="strip-right">
+          <span class="strip-status-pill">
+            <span class="status-dot"></span> Cuenta Origen
+          </span>
+        </div>
       </div>
-      <ng-template #sinTotalMontos>
-        <ion-text>
-          Total de montos procesados:
-          <strong style="font-size: 20px">{{ 0 | currency }}</strong>
-        </ion-text>
-      </ng-template>
-    </div>
-  </ion-item>
 
-  <div class="csv-button-container" color="secondary">
-    <input
-      type="file"
-      (change)="onFileSelect($event)"
-      accept=".xlsx"
-      hidden
-      #fileInput
-    />
-    <ion-button
-      color="secondary"
-      class="disperse-button"
-      *ngIf="csvData.length < 1"
-      fill="solid"
-      [disabled]="isProcessing"
-      (click)="fileInput.click()"
-    >
-      Cargar Pagos
-    </ion-button>
-    <ion-button
-      color="secondary"
-      class="disperse-button"
-      fill="solid"
-      [disabled]="isProcessing || csvData.length === 0"
-      (click)="procesarPagos()"
-      [disabled]="isProcessing || csvData.length === 0"
-      *ngIf="mostrarBotonProcesar && csvData.length > 0"
-    >
-      <ion-spinner *ngIf="isProcessing" name="crescent"></ion-spinner>
-      <ion-icon *ngIf="!isProcessing" name="paper-plane-outline"></ion-icon>
-      {{ isProcessing ? 'Procesando...' : 'Enviar CSV' }}
-      <ion-spinner name="crescent" *ngIf="isProcessing"></ion-spinner>
-      <ion-icon name="paper-plane-outline" *ngIf="!isProcessing"></ion-icon>
-      {{ isProcessing ? ' Procesando nómina...' : ' Enviar CSV' }}
-    </ion-button>
-    <ion-button
-      color="secondary"
-      class="disperse-button"
-      *ngIf="csvData.length > 0"
-      fill="solid"
-      [disabled]="isProcessing"
-      (click)="clearTableData()"
-    >
-      <ion-icon name="trash-outline"></ion-icon>
-      Limpiar CSV
-    </ion-button>
+      <!-- Tarjeta 2: Total a Dispersar (si hay archivo cargado) -->
+      <div class="compact-balance-strip strip-indigo" *ngIf="mostrarTotalMontos">
+        <div class="strip-glow"></div>
+        <div class="strip-left">
+          <div class="strip-icon-circle">
+            <ion-icon name="calculator-outline"></ion-icon>
+          </div>
+          <div class="strip-amount-group">
+            <span class="strip-label">Total a Dispersar (Lote)</span>
+            <div class="strip-number-row">
+              <span class="strip-amount">
+                {{ totalMontos | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+              <span class="strip-currency">MXN</span>
+            </div>
+          </div>
+        </div>
+        <div class="strip-right">
+          <span class="strip-status-pill badge-records">
+            {{ csvData.length }} Órdenes
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ÁREA DE CARGA DE ARCHIVO: CUANDO NO HAY ARCHIVO -->
+    <div class="upload-dropzone-card" *ngIf="csvData.length === 0" (click)="fileInput.click()">
+      <input
+        type="file"
+        (change)="onFileSelect($event)"
+        accept=".xlsx"
+        hidden
+        #fileInput
+      />
+      <div class="upload-icon-circle">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+      </div>
+      <h3 class="upload-title">Cargar Archivo de Dispersión</h3>
+      <p class="upload-subtitle">Selecciona una plantilla de pagos en formato Excel (.xlsx) para previsualizar y autorizar la dispersión</p>
+      
+      <button class="btn-select-file" type="button" [disabled]="isProcessing">
+        <ion-icon name="document-attach-outline"></ion-icon>
+        <span>Seleccionar Archivo .xlsx</span>
+      </button>
+    </div>
+
+    <!-- BARRA DE ACCIONES: CUANDO HAY ARCHIVO CARGADO -->
+    <div class="actions-bar-card" *ngIf="csvData.length > 0">
+      <input
+        type="file"
+        (change)="onFileSelect($event)"
+        accept=".xlsx"
+        hidden
+        #fileInput
+      />
+      <div class="actions-summary">
+        <div class="records-counter-badge">
+          <ion-icon name="layers-outline"></ion-icon>
+          <span><strong>{{ csvData.length }}</strong> transferencias listas</span>
+        </div>
+        <div class="total-amount-pill" *ngIf="mostrarTotalMontos">
+          <span>Importe total: <strong>{{ totalMontos | currency:'USD':'symbol':'1.2-2' }} MXN</strong></span>
+        </div>
+      </div>
+
+      <div class="actions-buttons-group">
+        <button
+          class="btn-clear-file"
+          (click)="clearTableData()"
+          [disabled]="isProcessing"
+          type="button"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+          <span>Cambiar Archivo</span>
+        </button>
+
+        <button
+          *ngIf="mostrarBotonProcesar"
+          class="btn-process-dispersion"
+          (click)="procesarPagos()"
+          [disabled]="isProcessing || csvData.length === 0"
+          type="button"
+        >
+          <ion-spinner *ngIf="isProcessing" name="crescent" class="btn-spinner"></ion-spinner>
+          <ion-icon *ngIf="!isProcessing" name="paper-plane-outline"></ion-icon>
+          <span>{{ isProcessing ? 'Procesando Dispersión...' : 'Confirmar y Dispersar Pagos' }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TABLA EDITORIAL DE PREVISUALIZACIÓN -->
+    <div class="table-card-container" *ngIf="csvData.length > 0">
+      <div class="table-card-header">
+        <div class="header-left">
+          <div class="table-icon-circle">
+            <ion-icon name="receipt-outline"></ion-icon>
+          </div>
+          <div>
+            <h3 class="table-title">Detalle de Órdenes a Procesar</h3>
+            <p class="table-subtitle">Previsualización de los pagos incluidos en el lote</p>
+          </div>
+        </div>
+
+        <div class="table-pagination-nav">
+          <button
+            class="btn-page-nav"
+            [disabled]="currentPage <= 1"
+            (click)="changePage(currentPage - 1)"
+            type="button"
+          >
+            <ion-icon name="chevron-back-outline"></ion-icon>
+            <span>Anterior</span>
+          </button>
+          <span class="page-indicator">Página {{ currentPage }} de {{ totalPages }}</span>
+          <button
+            class="btn-page-nav"
+            [disabled]="currentPage >= totalPages"
+            (click)="changePage(currentPage + 1)"
+            type="button"
+          >
+            <span>Siguiente</span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="table-scroll-wrapper">
+        <table class="editorial-data-table">
+          <thead>
+            <tr>
+              <th *ngFor="let header of headersConfig">{{ header.title }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of paginatedData">
+              <td *ngFor="let header of headersConfig">
+                <ng-container *ngIf="header.key === 'MONTO'; else defaultCell">
+                  <strong class="amount-cell">{{ row[header.key] | currency:'USD':'symbol':'1.2-2' }}</strong>
+                </ng-container>
+                <ng-template #defaultCell>
+                  {{ row[header.key] }}
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
-
-  <!-- Tabla Responsiva -->
-  <ion-card *ngIf="csvData.length > 0">
-    <ion-card-header>
-      <ion-card-title>Datos del CSV</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="table-container">
-        <ion-grid>
-          <ion-row>
-            <ion-col *ngFor="let header of headersConfig" class="header-col">
-              {{ header.title }}
-            </ion-col>
-          </ion-row>
-          <ion-row *ngFor="let row of paginatedData">
-            <ion-col *ngFor="let header of headersConfig">
-              {{ row[header.key] }}
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </ion-card-content>
-    <!-- Paginación -->
-    <div class="pagination-container">
-      <ion-button *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)">
-        Anterior
-      </ion-button>
-      <span>Página {{ currentPage }} de {{ totalPages }}</span>
-      <ion-button
-        *ngIf="currentPage < totalPages"
-        (click)="changePage(currentPage + 1)"
-      >
-        Siguiente
-      </ion-button>
-    </div>
-  </ion-card>
-
-  <!-- Mensaje si no hay datos cargados -->
-  <ion-card *ngIf="csvData.length === 0">
-    <ion-card-header>
-      <ion-card-title>No hay datos cargados</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>
-        Por favor, carga un archivo CSV para empezar con la dispersión de pagos.
-      </p>
-    </ion-card-content>
-  </ion-card>
 </ion-content>
 
+<!-- MODAL DE RESULTADO DE DISPERSIÓN -->
 <ion-modal
   [isOpen]="isResultadoOpen"
   (didDismiss)="cerrarResultadoDispersion()"
-  class="dispersion-result-modal"
+  class="custom-dispersion-modal"
 >
   <ng-template>
-    <ion-header>
-      <ion-toolbar color="secondary">
-        <ion-title>{{ resultadoTitulo }}</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="cerrarResultadoDispersion()">Cerrar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-
-    <div class="result-modal-body">
-      <div *ngIf="resultadoDispersion" class="result-content">
-        <p class="result-subtitle">{{ resultadoSubtitulo }}</p>
-        <p class="result-message">{{ resultadoMensaje }}</p>
-
-        <div class="result-stats">
-          <div class="result-stat">
-            <div class="result-stat-value">{{ resultadoDispersion.total }}</div>
-            <div class="result-stat-label">Órdenes</div>
+    <div class="result-modal-container">
+      
+      <div class="result-modal-header">
+        <div class="result-header-left">
+          <div class="result-icon-circle" [class.has-errors]="resultadoDispersion && resultadoDispersion.fallidos > 0">
+            <ion-icon [name]="(resultadoDispersion && resultadoDispersion.fallidos > 0) ? 'alert-circle-outline' : 'checkmark-done-circle-outline'"></ion-icon>
           </div>
-          <div class="result-stat success">
-            <div class="result-stat-value">{{ resultadoDispersion.exitosos }}</div>
-            <div class="result-stat-label">Exitosas</div>
+          <div>
+            <h2 class="result-title">{{ resultadoTitulo }}</h2>
+            <p class="result-subtitle">{{ resultadoSubtitulo }}</p>
           </div>
-          <div class="result-stat" [class.danger]="resultadoDispersion.fallidos > 0">
-            <div class="result-stat-value">{{ resultadoDispersion.fallidos }}</div>
-            <div class="result-stat-label">Fallidas</div>
+        </div>
+        <button class="result-close-btn" (click)="cerrarResultadoDispersion()" type="button" aria-label="Cerrar">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="result-modal-body" *ngIf="resultadoDispersion">
+        <p class="result-main-message">{{ resultadoMensaje }}</p>
+
+        <!-- Estadísticas del Lote -->
+        <div class="result-stats-grid">
+          <div class="stat-card">
+            <span class="stat-number">{{ resultadoDispersion.total }}</span>
+            <span class="stat-name">Total Órdenes</span>
+          </div>
+          <div class="stat-card stat-success">
+            <span class="stat-number">{{ resultadoDispersion.exitosos }}</span>
+            <span class="stat-name">Exitosas</span>
+          </div>
+          <div class="stat-card" [class.stat-danger]="resultadoDispersion.fallidos > 0">
+            <span class="stat-number">{{ resultadoDispersion.fallidos }}</span>
+            <span class="stat-name">Fallidas</span>
           </div>
         </div>
 
-        <div class="result-amount">
-          <span>Monto total</span>
-          <strong>{{ resultadoDispersion.monto }}</strong>
-        </div>
-
-        <div class="result-details">
-          <div class="result-folio-block">
-            <span class="result-detail-label">Folio del lote</span>
-            <span class="result-folio">{{ resultadoDispersion.folio }}</span>
+        <!-- Metadatos de la Operación -->
+        <div class="result-meta-box">
+          <div class="meta-row">
+            <span class="meta-label">Monto Total Procesado</span>
+            <strong class="meta-amount">{{ resultadoDispersion.monto }}</strong>
           </div>
-          <div class="result-detail-row">
-            <span class="result-detail-label">Fecha de operación</span>
-            <span class="result-detail-value">{{ resultadoDispersion.fecha }}</span>
+          <div class="meta-row">
+            <span class="meta-label">Folio del Lote</span>
+            <span class="meta-folio-pill">{{ resultadoDispersion.folio }}</span>
           </div>
-          <div class="result-detail-row">
-            <span class="result-detail-label">Estado</span>
-            <span class="result-detail-value">
+          <div class="meta-row">
+            <span class="meta-label">Fecha de Operación</span>
+            <span class="meta-value">{{ resultadoDispersion.fecha }}</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Estado de la Dispersión</span>
+            <span
+              class="meta-status-badge"
+              [class.badge-warning]="resultadoDispersion.duplicado"
+              [class.badge-danger]="resultadoDispersion.fallidos > 0"
+              [class.badge-success]="resultadoDispersion.fallidos === 0 && !resultadoDispersion.duplicado"
+            >
               {{ resultadoDispersion.duplicado
                 ? 'Procesado previamente'
-                : (resultadoDispersion.fallidos > 0 ? 'Con incidencias' : 'Completado') }}
+                : (resultadoDispersion.fallidos > 0 ? 'Con incidencias' : 'Completado con éxito') }}
             </span>
           </div>
         </div>
 
-        <div class="result-errors" *ngIf="resultadoDispersion.fallidos > 0">
-          <h3>Motivos de rechazo</h3>
-          <ul>
+        <!-- Incidencias si existen -->
+        <div class="result-incidents-box" *ngIf="resultadoDispersion.fallidos > 0">
+          <h4 class="incidents-title">
+            <ion-icon name="warning-outline"></ion-icon>
+            <span>Motivos de rechazo reportados:</span>
+          </h4>
+          <ul class="incidents-list">
             <li *ngFor="let causa of resultadoDispersion.causas">{{ causa }}</li>
-            <li *ngIf="resultadoDispersion.causas.length === 0">
-              No especificado por el proveedor.
-            </li>
+            <li *ngIf="resultadoDispersion.causas.length === 0">No especificado por el proveedor bancario.</li>
           </ul>
-          <p *ngIf="resultadoDispersion.causasRestantes > 0" class="result-errors-more">
-            Y {{ resultadoDispersion.causasRestantes }} motivo(s) más.
+          <p *ngIf="resultadoDispersion.causasRestantes > 0" class="incidents-more">
+            Y {{ resultadoDispersion.causasRestantes }} incidencia(s) adicional(es).
           </p>
         </div>
 
-        <p class="result-footer-note">
-          Conserva el folio del lote para cualquier aclaración.
-        </p>
+        <p class="result-footer-note">Conserva el folio del lote para cualquier aclaración bancaria.</p>
       </div>
-    </div>
 
-    <ion-footer>
-      <ion-toolbar>
-        <ion-button
-          expand="block"
-          color="secondary"
-          (click)="cerrarResultadoDispersion()"
-        >
+      <div class="result-modal-footer">
+        <button class="btn-modal-accept" (click)="cerrarResultadoDispersion()" type="button">
           Aceptar
-        </ion-button>
-      </ion-toolbar>
-    </ion-footer>
+        </button>
+      </div>
+
+    </div>
   </ng-template>
 </ion-modal>
