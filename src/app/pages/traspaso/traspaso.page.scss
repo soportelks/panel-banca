@@ -2,16 +2,16 @@
 // TRASPASOS - ESTILO EDITORIAL RDAM (TEMA CLARO)
 // =============================================================
 
-$navy-primary: #162d4a;
-$navy-hover: #0e1e33;
-$cream-bg: #fbf7f4;
-$card-bg: #ffffff;
-$border-light: #e5e7eb;
-$border-card: #d1d5db;
-$text-dark: #0f172a;
-$text-muted: #475569;
-$text-subtle: #64748b;
-$blue-accent: #2563eb;
+$navy-primary: var(--app-navy);
+$navy-hover: var(--app-navy-hover);
+$cream-bg: var(--app-bg);
+$card-bg: var(--app-surface);
+$border-light: var(--app-border);
+$border-card: var(--app-border-strong);
+$text-dark: var(--app-text);
+$text-muted: var(--app-text-muted);
+$text-subtle: var(--app-text-subtle);
+$blue-accent: var(--app-blue);
 $emerald-primary: #064e3b;
 
 // -------------------------------------------------------------
@@ -228,10 +228,10 @@ $emerald-primary: #064e3b;
 
   &.strip-emerald {
     .strip-icon-circle {
-      color: #a7f3d0;
+      color: var(--app-success-border);
     }
     .strip-number-row .strip-currency {
-      color: #a7f3d0;
+      color: var(--app-success-border);
     }
   }
 
@@ -272,15 +272,15 @@ $emerald-primary: #064e3b;
   margin-bottom: 1.25rem;
 
   .custom-editorial-segment {
-    background: #e2e8f0;
+    background: var(--app-border);
     padding: 4px;
     border-radius: 14px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--app-border-strong);
 
     .segment-btn {
       --background: transparent;
       --background-checked: #{$navy-primary};
-      --color: #475569;
+      --color: var(--app-text-muted);
       --color-checked: #ffffff;
       --indicator-color: transparent;
       border-radius: 10px;
@@ -318,13 +318,13 @@ $emerald-primary: #064e3b;
     gap: 1rem;
     padding: 1.25rem 1.5rem;
     border-bottom: 1px solid $border-light;
-    background: #ffffff;
+    background: var(--app-surface);
 
     .header-icon-box {
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: #eff6ff;
+      background: var(--app-accent-soft);
       color: $blue-accent;
       display: flex;
       align-items: center;
@@ -370,32 +370,32 @@ $emerald-primary: #064e3b;
 }
 
 .custom-form-item {
-  --background: #ffffff;
+  --background: var(--app-surface);
   --border-radius: 12px;
   --padding-start: 1rem;
   --padding-end: 1rem;
   --padding-top: 0.4rem;
   --padding-bottom: 0.4rem;
   --highlight-height: 0;
-  border: 1.5px solid #cbd5e1;
+  border: 1.5px solid var(--app-border-strong);
   border-radius: 12px;
   transition: all 0.2s ease;
-  background: #ffffff;
+  background: var(--app-surface);
 
   .field-icon {
     font-size: 1.35rem;
-    color: #64748b;
+    color: var(--app-text-subtle);
     margin-right: 0.85rem;
     transition: color 0.2s ease;
   }
 
   &:hover {
-    border-color: #94a3b8;
+    border-color: var(--app-text-subtle);
   }
 
   &.item-has-focus {
     border-color: $blue-accent;
-    background: #ffffff;
+    background: var(--app-surface);
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 
     .field-icon {
@@ -405,15 +405,15 @@ $emerald-primary: #064e3b;
 
   ion-input,
   ion-select {
-    --color: #0f172a;
-    --placeholder-color: #94a3b8;
+    --color: var(--app-text);
+    --placeholder-color: var(--app-text-subtle);
     --placeholder-opacity: 1;
     font-size: 1rem;
     font-weight: 600;
 
     &::part(label) {
       font-weight: 700;
-      color: #475569;
+      color: var(--app-text-muted);
       font-size: 0.82rem;
       letter-spacing: 0.02em;
       text-transform: uppercase;
@@ -463,8 +463,8 @@ $emerald-primary: #064e3b;
     }
 
     &:disabled {
-      background: #e2e8f0;
-      color: #94a3b8;
+      background: var(--app-border);
+      color: var(--app-text-subtle);
       cursor: not-allowed;
       box-shadow: none;
     }

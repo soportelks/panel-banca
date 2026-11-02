@@ -757,3 +757,302 @@ ion-content:not(.modal-content):not(.menu-content) {
 ion-content {
   --padding-bottom: 4rem;
 }
+
+/* ==========================================================================
+   TEMA OSCURO - OVERRIDES GLOBALES DE OVERLAYS
+   ========================================================================== */
+
+html.dark {
+  color-scheme: dark;
+  background: var(--app-bg);
+
+  body {
+    background: var(--app-bg);
+    color: var(--app-text);
+  }
+
+  ion-alert {
+    .alert-wrapper {
+      background: var(--app-surface) !important;
+      box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.55),
+        0 0 0 1px var(--app-border) !important;
+    }
+
+    .alert-head {
+      .alert-title {
+        color: var(--app-text-strong) !important;
+      }
+      .alert-sub-title {
+        color: var(--app-text-muted) !important;
+      }
+    }
+
+    .alert-message {
+      color: var(--app-text-muted) !important;
+    }
+
+    .alert-input-group .alert-input {
+      background: var(--app-surface-2) !important;
+      border-color: var(--app-border-strong) !important;
+      color: var(--app-text) !important;
+      -webkit-text-fill-color: var(--app-text) !important;
+      caret-color: var(--app-blue) !important;
+
+      &:focus {
+        background: var(--app-surface-3) !important;
+        border-color: var(--app-blue) !important;
+      }
+
+      &::placeholder {
+        color: var(--app-text-subtle) !important;
+        -webkit-text-fill-color: var(--app-text-subtle) !important;
+      }
+    }
+
+    .alert-button {
+      &.alert-button-role-cancel {
+        color: var(--app-text-muted) !important;
+        background: var(--app-surface-2) !important;
+        border-color: var(--app-border-strong) !important;
+
+        .alert-button-inner {
+          color: var(--app-text-muted) !important;
+        }
+
+        &:hover {
+          background: var(--app-surface-3) !important;
+          color: var(--app-text) !important;
+
+          .alert-button-inner {
+            color: var(--app-text) !important;
+          }
+        }
+      }
+
+      &:not(.alert-button-role-cancel) {
+        background: var(--app-navy) !important;
+        color: #ffffff !important;
+
+        .alert-button-inner {
+          color: #ffffff !important;
+        }
+
+        &:hover {
+          background: var(--app-navy-hover) !important;
+        }
+      }
+    }
+  }
+
+  ion-alert.otp-custom-alert {
+    .alert-wrapper {
+      background: var(--app-surface) !important;
+    }
+
+    .otp-dialog-body {
+      .otp-info-text {
+        color: var(--app-text-muted) !important;
+      }
+
+      .otp-countdown-badge {
+        background: var(--app-accent-soft) !important;
+        border-color: var(--app-border-strong) !important;
+        color: var(--app-text) !important;
+
+        strong {
+          color: var(--app-blue) !important;
+        }
+      }
+    }
+  }
+
+  ion-action-sheet {
+    --background: var(--app-surface) !important;
+    --color: var(--app-text) !important;
+    --button-background-selected: var(--app-accent-soft) !important;
+    --button-color-selected: var(--app-blue) !important;
+
+    .action-sheet-wrapper {
+      background: var(--app-surface) !important;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .action-sheet-container,
+    .action-sheet-group,
+    .action-sheet-title,
+    .action-sheet-sub-title {
+      background: var(--app-surface) !important;
+    }
+
+    .action-sheet-title {
+      color: var(--app-text-strong) !important;
+    }
+
+    .action-sheet-sub-title {
+      color: var(--app-text-muted) !important;
+      border-color: var(--app-border) !important;
+    }
+
+    .action-sheet-button {
+      background: var(--app-surface) !important;
+      color: var(--app-text) !important;
+      border-bottom-color: var(--app-border) !important;
+
+      .action-sheet-button-inner {
+        color: var(--app-text) !important;
+      }
+
+      &:hover,
+      &.ion-focused,
+      &.action-sheet-selected {
+        background: var(--app-accent-soft) !important;
+        color: var(--app-blue) !important;
+
+        .action-sheet-button-inner {
+          color: var(--app-blue) !important;
+        }
+      }
+    }
+
+    .action-sheet-group-cancel {
+      background: var(--app-surface-2) !important;
+      border-top-color: var(--app-border) !important;
+
+      .action-sheet-button {
+        background: var(--app-surface-3) !important;
+        border-color: var(--app-border-strong) !important;
+        color: var(--app-text-muted) !important;
+
+        .action-sheet-button-inner {
+          color: var(--app-text-muted) !important;
+        }
+      }
+    }
+  }
+
+  ion-popover {
+    --background: var(--app-surface) !important;
+    --color: var(--app-text) !important;
+
+    &::part(content) {
+      background: var(--app-surface) !important;
+      border-color: var(--app-border) !important;
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.55),
+        0 0 0 1px var(--app-border) !important;
+    }
+
+    ion-select-popover {
+      background: var(--app-surface) !important;
+
+      ion-list {
+        background: var(--app-surface) !important;
+      }
+
+      ion-item {
+        --background: var(--app-surface) !important;
+        --background-hover: var(--app-accent-soft) !important;
+        --background-focused: var(--app-accent-soft) !important;
+        --color: var(--app-text) !important;
+        --border-color: var(--app-border) !important;
+
+        ion-radio {
+          --color: var(--app-text-subtle) !important;
+          --color-checked: var(--app-blue) !important;
+          color: var(--app-text) !important;
+
+          &::part(label) {
+            color: var(--app-text) !important;
+          }
+        }
+      }
+    }
+  }
+
+  ion-loading,
+  ion-loading.custom-loading {
+    --background: var(--app-surface) !important;
+    --color: var(--app-text) !important;
+    --spinner-color: var(--app-text) !important;
+    color: var(--app-text) !important;
+
+    .loading-wrapper {
+      background: var(--app-surface) !important;
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.55),
+        0 0 0 1.5px var(--app-border) !important;
+
+      ion-spinner {
+        color: var(--app-text) !important;
+        --color: var(--app-text) !important;
+      }
+
+      .loading-content {
+        color: var(--app-text) !important;
+      }
+    }
+  }
+
+  ion-loading.custom-loading-dispersion {
+    --background: var(--app-surface) !important;
+    --spinner-color: var(--app-blue) !important;
+
+    .loading-wrapper {
+      background: var(--app-surface) !important;
+      border-color: var(--app-border) !important;
+    }
+
+    ion-spinner {
+      color: var(--app-blue) !important;
+    }
+
+    .loading-content {
+      color: var(--app-text-muted) !important;
+
+      &::first-line {
+        color: var(--app-text-strong) !important;
+      }
+    }
+  }
+
+  ion-modal.custom-transaction-modal {
+    --background: var(--app-surface) !important;
+  }
+
+  ion-modal.custom-dispersion-modal,
+  .custom-dispersion-modal {
+    --background: var(--app-surface) !important;
+
+    &::part(content),
+    .modal-wrapper,
+    .result-modal-container {
+      background: var(--app-surface) !important;
+    }
+
+    .result-modal-header,
+    .result-modal-footer {
+      background: var(--app-surface-2) !important;
+      border-color: var(--app-border) !important;
+    }
+  }
+}
+
+/* Los logotipos institucionales oscuros se aclaran en modo oscuro */
+html.dark img[src*="Logo_RDAM_negro"],
+html.dark img[src*="logo.jpeg"] {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Red de seguridad para campos de formulario en modo oscuro */
+html.dark {
+  ion-input,
+  ion-select,
+  ion-textarea {
+    --color: var(--app-text);
+    --placeholder-color: var(--app-text-subtle);
+  }
+
+  ion-input::part(label),
+  ion-select::part(label),
+  ion-textarea::part(label) {
+    color: var(--app-text-muted);
+  }
+}

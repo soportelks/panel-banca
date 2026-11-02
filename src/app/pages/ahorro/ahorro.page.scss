@@ -2,25 +2,25 @@
 // MOVIMIENTOS DE AHORRO - ESTILO EDITORIAL RDAM (TEMA CLARO)
 // =============================================================
 
-$navy-primary: #162d4a;
-$navy-hover: #0e1e33;
-$navy-dark: #0f172a;
-$cream-bg: #fbf7f4;
-$card-bg: #ffffff;
-$border-light: #e2e8f0;
-$border-card: #d1d5db;
-$text-dark: #0f172a;
-$text-muted: #475569;
-$text-subtle: #64748b;
-$blue-accent: #2563eb;
+$navy-primary: var(--app-navy);
+$navy-hover: var(--app-navy-hover);
+$navy-dark: var(--app-text-strong);
+$cream-bg: var(--app-bg);
+$card-bg: var(--app-surface);
+$border-light: var(--app-border);
+$border-card: var(--app-border-strong);
+$text-dark: var(--app-text);
+$text-muted: var(--app-text-muted);
+$text-subtle: var(--app-text-subtle);
+$blue-accent: var(--app-blue);
 
-$emerald-text: #059669;
-$emerald-bg: #ecfdf5;
-$emerald-border: #a7f3d0;
+$emerald-text: var(--app-success-text);
+$emerald-bg: var(--app-success-soft);
+$emerald-border: var(--app-success-border);
 
-$rose-text: #dc2626;
-$rose-bg: #fef2f2;
-$rose-border: #fecaca;
+$rose-text: var(--app-danger-text);
+$rose-bg: var(--app-danger-soft);
+$rose-border: var(--app-danger-border);
 
 // -------------------------------------------------------------
 // ENCABEZADO INSTITUCIONAL
@@ -278,15 +278,15 @@ $rose-border: #fecaca;
   margin-bottom: 1.75rem;
 
   .custom-period-segment {
-    background: #e9ecef;
+    background: var(--app-surface-3);
     border-radius: 14px;
     padding: 4px;
-    border: 1px solid rgba(22, 45, 74, 0.08);
+    border: 1px solid var(--app-border);
 
     ion-segment-button {
       --background: transparent;
-      --background-checked: #162d4a;
-      --color: #475569;
+      --background-checked: var(--app-navy);
+      --color: var(--app-text-muted);
       --color-checked: #ffffff;
       --indicator-color: transparent;
       border-radius: 10px;
@@ -329,7 +329,7 @@ $rose-border: #fecaca;
     align-items: center;
     padding: 1.5rem 1.75rem;
     border-bottom: 1px solid $border-light;
-    background: #ffffff;
+    background: var(--app-surface);
 
     @media (max-width: 640px) {
       padding: 1.25rem 1rem;
@@ -373,10 +373,10 @@ $rose-border: #fecaca;
         font-size: 0.76rem;
         font-weight: 600;
         color: $navy-primary;
-        background: #f1f5f9;
+        background: var(--app-surface-3);
         padding: 0.35rem 0.75rem;
         border-radius: 999px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--app-border);
       }
     }
   }
@@ -389,13 +389,13 @@ $rose-border: #fecaca;
   display: grid;
   grid-template-columns: 2.5fr 1.5fr 1.2fr 1.2fr;
   padding: 0.85rem 1.75rem;
-  background: #f8fafc;
+  background: var(--app-surface-2);
   border-bottom: 1px solid $border-light;
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #64748b;
+  color: var(--app-text-subtle);
 
   @media (max-width: 640px) {
     display: none; // En móvil usamos vista de tarjeta por fila
@@ -415,14 +415,14 @@ $rose-border: #fecaca;
 }
 
 .transactions-list {
-  background: #ffffff;
+  background: var(--app-surface);
 
   .transaction-row {
     display: grid;
     grid-template-columns: 2.5fr 1.5fr 1.2fr 1.2fr;
     align-items: center;
     padding: 1.1rem 1.75rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--app-border);
     transition: background-color 0.15s ease;
 
     &:last-child {
@@ -430,7 +430,7 @@ $rose-border: #fecaca;
     }
 
     &:hover {
-      background-color: #fafbfd;
+      background-color: var(--app-surface-2);
     }
 
     @media (max-width: 640px) {
@@ -559,8 +559,8 @@ $rose-border: #fecaca;
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        background: #f8fafc;
-        border: 1px solid #cbd5e1;
+        background: var(--app-surface-2);
+        border: 1px solid var(--app-border-strong);
         color: $navy-primary;
         padding: 0.42rem 0.85rem;
         border-radius: 8px;
@@ -575,7 +575,7 @@ $rose-border: #fecaca;
         }
 
         &:hover {
-          background: #f1f5f9;
+          background: var(--app-surface-3);
           border-color: $navy-primary;
         }
 
@@ -588,7 +588,7 @@ $rose-border: #fecaca;
 
       .no-receipt-label {
         font-size: 0.88rem;
-        color: #94a3b8;
+        color: var(--app-text-subtle);
       }
     }
   }
@@ -600,14 +600,14 @@ $rose-border: #fecaca;
 .empty-state-card {
   padding: 3.5rem 1.5rem;
   text-align: center;
-  background: #ffffff;
+  background: var(--app-surface);
 
   .empty-icon-circle {
     width: 68px;
     height: 68px;
     border-radius: 50%;
-    background: #f1f5f9;
-    color: #94a3b8;
+    background: var(--app-surface-3);
+    color: var(--app-text-subtle);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -639,7 +639,7 @@ $rose-border: #fecaca;
   justify-content: space-between;
   align-items: center;
   padding: 1.15rem 1.75rem;
-  background: #f8fafc;
+  background: var(--app-surface-2);
   border-top: 1px solid $border-light;
 
   @media (max-width: 640px) {
@@ -652,8 +652,8 @@ $rose-border: #fecaca;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    background: #ffffff;
-    border: 1.5px solid #cbd5e1;
+    background: var(--app-surface);
+    border: 1.5px solid var(--app-border-strong);
     color: $navy-primary;
     padding: 0.45rem 0.95rem;
     border-radius: 10px;
@@ -676,7 +676,7 @@ $rose-border: #fecaca;
       opacity: 0.45;
       cursor: not-allowed;
       border-color: #e2e8f0;
-      color: #94a3b8;
+      color: var(--app-text-subtle);
     }
   }
 
@@ -695,7 +695,7 @@ $rose-border: #fecaca;
 // MODAL INSTITUCIONAL: DETALLE DEL MOVIMIENTO
 // -------------------------------------------------------------
 .custom-transaction-modal {
-  --background: #ffffff;
+  --background: var(--app-surface);
   --backdrop-opacity: 0.6;
   --border-radius: 24px;
   --max-width: 580px;
@@ -704,7 +704,7 @@ $rose-border: #fecaca;
   --height: auto;
 
   .modal-wrapper-container {
-    background: #ffffff;
+    background: var(--app-surface);
     width: 100%;
     height: 100%;
     display: flex;
@@ -718,7 +718,7 @@ $rose-border: #fecaca;
     align-items: center;
     padding: 1.35rem 1.75rem;
     border-bottom: 1px solid $border-light;
-    background: #ffffff;
+    background: var(--app-surface);
 
     .modal-title-box {
       display: flex;
@@ -753,7 +753,7 @@ $rose-border: #fecaca;
     }
 
     .modal-close-button {
-      background: #f1f5f9;
+      background: var(--app-surface-3);
       border: none;
       width: 36px;
       height: 36px;
@@ -767,7 +767,7 @@ $rose-border: #fecaca;
       transition: all 0.15s ease;
 
       &:hover {
-        background: #e2e8f0;
+        background: var(--app-border);
         color: $text-dark;
       }
     }
@@ -837,8 +837,8 @@ $rose-border: #fecaca;
     }
 
     .detail-cell {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      background: var(--app-surface-2);
+      border: 1px solid var(--app-border);
       border-radius: 12px;
       padding: 0.9rem 1rem;
 
@@ -847,8 +847,8 @@ $rose-border: #fecaca;
       }
 
       &.highlight-cell {
-        background: #f0f7ff;
-        border-color: #bfdbfe;
+        background: var(--app-accent-soft);
+        border-color: var(--app-border-strong);
       }
 
       .detail-cell-header {
@@ -859,7 +859,7 @@ $rose-border: #fecaca;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        color: #64748b;
+        color: var(--app-text-subtle);
         margin-bottom: 0.35rem;
 
         ion-icon {
@@ -891,7 +891,7 @@ $rose-border: #fecaca;
 
     ion-progress-bar {
       --progress-background: #{$navy-primary};
-      --background: #e2e8f0;
+      --background: var(--app-border);
       height: 6px;
       border-radius: 4px;
       margin-bottom: 0.75rem;

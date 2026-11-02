@@ -1,13 +1,13 @@
 // HubSpot Style Landing Page with AZUL MARINO Theme
 
-$navy-primary: #162d4a;
-$navy-hover: #0e1e33;
-$navy-light: #1e3a8a;
-$cream-bg: #fbf7f4;
-$cream-card: #ffffff;
-$border-light: #e5e7eb;
-$text-dark: #111827;
-$text-muted: #4b5563;
+$navy-primary: var(--app-navy);
+$navy-hover: var(--app-navy-hover);
+$navy-light: var(--app-navy-light);
+$cream-bg: var(--app-bg);
+$cream-card: var(--app-surface);
+$border-light: var(--app-border);
+$text-dark: var(--app-text);
+$text-muted: var(--app-text-muted);
 
 // HEADER ESTILO HUBSPOT
 .hubspot-header {
@@ -151,8 +151,8 @@ $text-muted: #4b5563;
     position: relative;
 
     .mockup-frame {
-      background: #ffffff;
-      border: 1.5px solid #d1d5db;
+      background: var(--app-surface);
+      border: 1.5px solid var(--app-border-strong);
       border-radius: 14px;
       box-shadow: 0 20px 40px -10px rgba(22, 45, 74, 0.12);
       overflow: hidden;
@@ -194,11 +194,11 @@ $text-muted: #4b5563;
 
       .window-body {
         padding: 1.5rem;
-        background: #fdfcfb;
+        background: var(--app-surface-2);
       }
 
       .account-summary-card {
-        background: #ffffff;
+        background: var(--app-surface);
         border: 1px solid $border-light;
         border-radius: 12px;
         padding: 1.25rem 1.5rem;
@@ -249,7 +249,7 @@ $text-muted: #4b5563;
           color: $text-muted;
 
           .meta-tag {
-            background: #ecfdf5;
+            background: var(--app-success-soft);
             color: #065f46;
             padding: 2px 8px;
             border-radius: 4px;
@@ -260,7 +260,7 @@ $text-muted: #4b5563;
       }
 
       .sub-mockup-card {
-        background: #ffffff;
+        background: var(--app-surface);
         border: 1px solid $border-light;
         border-radius: 10px;
         padding: 0.85rem 1rem;
@@ -273,7 +273,7 @@ $text-muted: #4b5563;
           width: 38px;
           height: 38px;
           border-radius: 8px;
-          background: #eff6ff;
+          background: var(--app-accent-soft);
           color: $navy-light;
           display: flex;
           align-items: center;
@@ -292,7 +292,7 @@ $text-muted: #4b5563;
           }
           .card-rendimiento {
             font-size: 0.775rem;
-            color: #059669;
+            color: var(--app-success-text);
             font-weight: 600;
           }
         }
@@ -313,7 +313,7 @@ $text-muted: #4b5563;
 
         .preview-item {
           flex: 1;
-          background: #ffffff;
+          background: var(--app-surface);
           border: 1px solid $border-light;
           border-radius: 8px;
           padding: 0.65rem 0.5rem;
@@ -467,7 +467,7 @@ $text-muted: #4b5563;
     gap: 2rem;
 
     .hubspot-card {
-      background: #ffffff;
+      background: var(--app-surface);
       border: 1px solid $border-light;
       border-radius: 12px;
       padding: 2.25rem 1.75rem;
@@ -479,7 +479,7 @@ $text-muted: #4b5563;
       &:hover {
         transform: translateY(-4px);
         box-shadow: 0 12px 25px rgba(22, 45, 74, 0.08);
-        border-color: #cbd5e1;
+        border-color: var(--app-border-strong);
       }
 
       .card-icon-box {
@@ -539,8 +539,8 @@ $text-muted: #4b5563;
   margin-top: 2rem;
 
   .callout-box {
-    background: #ffffff;
-    border: 1.5px solid #d1d5db;
+    background: var(--app-surface);
+    border: 1.5px solid var(--app-border-strong);
     border-radius: 14px;
     padding: 2.5rem 3rem;
     display: flex;

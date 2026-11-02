@@ -1,12 +1,12 @@
 // Register Page Styling - HubSpot Style with AZUL MARINO Theme
 
-$navy-primary: #162d4a;
-$navy-hover: #0e1e33;
-$cream-bg: #fbf7f4;
-$cream-card: #ffffff;
-$border-light: #e5e7eb;
-$text-dark: #111827;
-$text-muted: #4b5563;
+$navy-primary: var(--app-navy);
+$navy-hover: var(--app-navy-hover);
+$cream-bg: var(--app-bg);
+$cream-card: var(--app-surface);
+$border-light: var(--app-border);
+$text-dark: var(--app-text);
+$text-muted: var(--app-text-muted);
 
 ion-toolbar {
   --background: transparent;
@@ -33,9 +33,9 @@ ion-toolbar {
 .register-card {
   width: 100%;
   max-width: 490px;
-  background: #ffffff;
+  background: var(--app-surface);
   border-radius: 14px;
-  border: 1.5px solid #d1d5db;
+  border: 1.5px solid var(--app-border-strong);
   padding: 2.75rem 2.25rem;
   box-shadow: 0 16px 36px -10px rgba(22, 45, 74, 0.08);
   box-sizing: border-box;
@@ -123,9 +123,9 @@ ion-toolbar {
   }
 
   .custom-input-item {
-    --background: #ffffff;
-    --color: #111827 !important;
-    color: #111827 !important;
+    --background: var(--app-surface);
+    --color: var(--app-text) !important;
+    color: var(--app-text) !important;
     --border-radius: 6px;
     --padding-start: 14px;
     --padding-end: 10px;
@@ -133,7 +133,7 @@ ion-toolbar {
     --highlight-color-focused: transparent;
     --border-width: 0;
     min-height: 56px;
-    border: 1.5px solid #d1d5db;
+    border: 1.5px solid var(--app-border-strong);
     border-radius: 6px;
     transition: all 0.2s ease-in-out;
 
@@ -148,25 +148,25 @@ ion-toolbar {
 
     .input-icon {
       font-size: 20px;
-      color: #9ca3af;
+      color: var(--app-text-subtle);
       margin-right: 8px;
       align-self: center;
       transition: color 0.2s ease;
     }
 
     ion-input {
-      --color: #111827 !important;
-      --placeholder-color: #9ca3af !important;
+      --color: var(--app-text) !important;
+      --placeholder-color: var(--app-text-subtle) !important;
       --placeholder-opacity: 1 !important;
       --highlight-color-focused: transparent;
-      color: #111827 !important;
+      color: var(--app-text) !important;
       font-size: 0.95rem;
       font-weight: 500;
       min-height: 50px;
 
       input.native-input {
-        color: #111827 !important;
-        -webkit-text-fill-color: #111827 !important;
+        color: var(--app-text) !important;
+        -webkit-text-fill-color: var(--app-text) !important;
         font-size: 0.95rem !important;
         font-weight: 500 !important;
       }
@@ -174,13 +174,13 @@ ion-toolbar {
       input:-webkit-autofill,
       input:-webkit-autofill:hover, 
       input:-webkit-autofill:focus {
-        -webkit-text-fill-color: #111827 !important;
-        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+        -webkit-text-fill-color: var(--app-text) !important;
+        -webkit-box-shadow: 0 0 0px 1000px var(--app-surface) inset !important;
         transition: background-color 5000s ease-in-out 0s;
       }
 
       &::part(label) {
-        color: #6b7280 !important;
+        color: var(--app-text-muted) !important;
         font-weight: 500;
       }
 
@@ -195,7 +195,7 @@ ion-toolbar {
       width: 38px;
       --padding-start: 0;
       --padding-end: 0;
-      color: #9ca3af;
+      color: var(--app-text-subtle);
       margin: 0;
       cursor: pointer;
 
@@ -218,7 +218,7 @@ ion-toolbar {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      color: #dc2626;
+      color: var(--app-danger-text);
       font-size: 0.775rem;
       font-weight: 500;
 
@@ -236,7 +236,7 @@ ion-toolbar {
     .strength-track {
       width: 100%;
       height: 5px;
-      background: #e5e7eb;
+      background: var(--app-border);
       border-radius: 4px;
       overflow: hidden;
     }
@@ -265,14 +265,14 @@ ion-toolbar {
     margin: 1.25rem 0 1.5rem;
 
     .privacy-card {
-      background: #fdfcfb;
-      border: 1.5px solid #d1d5db;
+      background: var(--app-surface-2);
+      border: 1.5px solid var(--app-border-strong);
       border-radius: 6px;
       padding: 0.85rem 1rem;
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: #9ca3af;
+        border-color: var(--app-text-subtle);
       }
 
       .custom-checkbox {
@@ -362,7 +362,7 @@ ion-toolbar {
   justify-content: center;
   gap: 7px;
   margin-top: 2rem;
-  color: #9ca3af;
+  color: var(--app-text-subtle);
   font-size: 0.775rem;
   font-weight: 500;
   text-align: center;
