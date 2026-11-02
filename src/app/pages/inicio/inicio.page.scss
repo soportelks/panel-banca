@@ -2,15 +2,15 @@
 // INICIO DASHBOARD - ESTILO HUBSPOT EDITORIAL CON AZUL MARINO
 // =============================================================
 
-$navy-primary: #162d4a;
-$navy-hover: #0e1e33;
+$navy-primary: var(--app-navy);
+$navy-hover: var(--app-navy-hover);
 $navy-gradient: linear-gradient(135deg, #162d4a 0%, #0e1e33 60%, #172554 100%);
-$cream-bg: #fbf7f4;
-$card-bg: #ffffff;
-$border-light: #e5e7eb;
-$text-dark: #111827;
-$text-muted: #4b5563;
-$blue-primary: #2563eb;
+$cream-bg: var(--app-bg);
+$card-bg: var(--app-surface);
+$border-light: var(--app-border);
+$text-dark: var(--app-text);
+$text-muted: var(--app-text-muted);
+$blue-primary: var(--app-blue);
 
 // -------------------------------------------------------------
 // MENÚ LATERAL (ION-MENU)
@@ -27,7 +27,7 @@ $blue-primary: #2563eb;
   &::part(container) {
     border-radius: 0 24px 24px 0;
     box-shadow: 12px 0 40px rgba(22, 45, 74, 0.16);
-    background: #ffffff;
+    background: var(--app-surface);
   }
 
   .menu-header {
@@ -82,7 +82,7 @@ $blue-primary: #2563eb;
           gap: 6px;
           font-size: 0.775rem;
           font-weight: 600;
-          color: #059669;
+          color: var(--app-success-text);
 
           .status-indicator {
             width: 7px;
@@ -97,7 +97,7 @@ $blue-primary: #2563eb;
   }
 
   .menu-content {
-    --background: #ffffff;
+    --background: var(--app-surface);
     --padding-top: 1.25rem;
     --padding-bottom: 1.25rem;
     --padding-start: 1rem;
@@ -107,7 +107,7 @@ $blue-primary: #2563eb;
       font-size: 0.725rem;
       font-weight: 800;
       letter-spacing: 1px;
-      color: #9ca3af;
+      color: var(--app-text-subtle);
       padding: 0 0.75rem 0.6rem;
     }
 
@@ -130,7 +130,7 @@ $blue-primary: #2563eb;
         gap: 12px;
 
         &:hover {
-          background: #f8fafc;
+          background: var(--app-surface-2);
           transform: translateX(3px);
 
           .item-text {
@@ -152,13 +152,13 @@ $blue-primary: #2563eb;
           font-size: 19px;
           flex-shrink: 0;
 
-          &.item-blue { background: #eff6ff; color: #2563eb; }
-          &.item-emerald { background: #ecfdf5; color: #059669; }
-          &.item-amber { background: #fffbeb; color: #d97706; }
-          &.item-indigo { background: #eef2ff; color: #4f46e5; }
-          &.item-teal { background: #f0fdfa; color: #0d9488; }
-          &.item-purple { background: #faf5ff; color: #9333ea; }
-          &.item-slate { background: #f1f5f9; color: #475569; }
+          &.item-blue { background: var(--app-accent-soft); color: #2563eb; }
+          &.item-emerald { background: var(--app-success-soft); color: var(--app-success-text); }
+          &.item-amber { background: var(--app-warning-soft); color: var(--app-warning-text); }
+          &.item-indigo { background: var(--app-accent-soft); color: #4f46e5; }
+          &.item-teal { background: var(--app-success-soft); color: var(--app-success-text); }
+          &.item-purple { background: var(--app-purple-soft); color: var(--app-purple-text); }
+          &.item-slate { background: var(--app-surface-3); color: var(--app-text-muted); }
         }
 
         .item-text {
@@ -171,7 +171,7 @@ $blue-primary: #2563eb;
 
         .item-arrow {
           font-size: 16px;
-          color: #cbd5e1;
+          color: var(--app-border-strong);
           transition: all 0.15s ease;
         }
       }
@@ -180,7 +180,7 @@ $blue-primary: #2563eb;
 
   .menu-footer {
     padding: 1rem 1.25rem 1.5rem;
-    background: #ffffff;
+    background: var(--app-surface);
     border-top: 1px solid $border-light;
 
     .btn-logout {
@@ -190,9 +190,9 @@ $blue-primary: #2563eb;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: #fef2f2;
-      border: 1.5px solid #fee2e2;
-      color: #dc2626;
+      background: var(--app-danger-soft);
+      border: 1.5px solid var(--app-danger-border);
+      color: var(--app-danger-text);
       border-radius: 8px;
       font-size: 0.9rem;
       font-weight: 700;
@@ -204,9 +204,9 @@ $blue-primary: #2563eb;
       }
 
       &:hover {
-        background: #fee2e2;
-        border-color: #fca5a5;
-        color: #b91c1c;
+        background: var(--app-danger-border);
+        border-color: var(--app-danger-border);
+        color: var(--app-danger-text);
       }
     }
   }
@@ -250,9 +250,14 @@ $blue-primary: #2563eb;
     }
   }
 
+  .header-theme-toggle {
+    margin-right: 0.5rem;
+    align-self: center;
+  }
+
   .header-notif-button {
-    background: #ffffff;
-    border: 1px solid #d1d5db;
+    background: var(--app-surface);
+    border: 1px solid var(--app-border-strong);
     border-radius: 10px;
     width: 40px;
     height: 40px;
@@ -281,7 +286,7 @@ $blue-primary: #2563eb;
     }
 
     &:hover {
-      background: #f8fafc;
+      background: var(--app-surface-2);
       border-color: $navy-primary;
       transform: translateY(-1px);
     }
@@ -342,8 +347,8 @@ $blue-primary: #2563eb;
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    background: #ffffff;
-    border: 1px solid #d1d5db;
+    background: var(--app-surface);
+    border: 1px solid var(--app-border-strong);
     border-radius: 20px;
     font-size: 0.825rem;
     font-weight: 600;
@@ -618,8 +623,8 @@ $blue-primary: #2563eb;
   gap: 1.25rem;
 
   .quick-tile-card {
-    background: #ffffff;
-    border: 1.5px solid #d1d5db;
+    background: var(--app-surface);
+    border: 1.5px solid var(--app-border-strong);
     border-radius: 14px;
     padding: 1.5rem 1rem;
     text-align: center;
@@ -651,10 +656,10 @@ $blue-primary: #2563eb;
       font-size: 26px;
       transition: transform 0.2s ease;
 
-      &.circle-blue { background: #eff6ff; color: #2563eb; }
-      &.circle-emerald { background: #ecfdf5; color: #059669; }
-      &.circle-amber { background: #fffbeb; color: #d97706; }
-      &.circle-slate { background: #f1f5f9; color: #475569; }
+      &.circle-blue { background: var(--app-accent-soft); color: #2563eb; }
+      &.circle-emerald { background: var(--app-success-soft); color: var(--app-success-text); }
+      &.circle-amber { background: var(--app-warning-soft); color: var(--app-warning-text); }
+      &.circle-slate { background: var(--app-surface-3); color: var(--app-text-muted); }
     }
 
     .tile-name {
@@ -671,8 +676,8 @@ $blue-primary: #2563eb;
 // -------------------------------------------------------------
 .account-summary-section {
   .account-card-box {
-    background: #ffffff;
-    border: 1.5px solid #d1d5db;
+    background: var(--app-surface);
+    border: 1.5px solid var(--app-border-strong);
     border-radius: 16px;
     padding: 1.75rem 2rem;
     box-shadow: 0 8px 24px rgba(22, 45, 74, 0.05);
@@ -689,8 +694,8 @@ $blue-primary: #2563eb;
 
         &.clabe-cell {
           grid-column: span 2;
-          background: #f8fafc;
-          border: 1.5px solid #e2e8f0;
+          background: var(--app-surface-2);
+          border: 1.5px solid var(--app-border);
           border-radius: 12px;
           padding: 1rem 1.25rem;
         }
@@ -736,7 +741,7 @@ $blue-primary: #2563eb;
             align-items: center;
             gap: 6px;
             padding: 6px 14px;
-            background: #eff6ff;
+            background: var(--app-accent-soft);
             border: 1px solid #bfdbfe;
             border-radius: 8px;
             color: #1e40af;
@@ -796,8 +801,8 @@ $blue-primary: #2563eb;
   gap: 1rem;
 
   .operation-item-card {
-    background: #ffffff;
-    border: 1.5px solid #d1d5db;
+    background: var(--app-surface);
+    border: 1.5px solid var(--app-border-strong);
     border-radius: 14px;
     padding: 1.35rem 1.75rem;
     display: flex;
@@ -831,9 +836,9 @@ $blue-primary: #2563eb;
       font-size: 24px;
       flex-shrink: 0;
 
-      &.op-icon-indigo { background: #eef2ff; color: #4f46e5; }
-      &.op-icon-teal { background: #f0fdfa; color: #0d9488; }
-      &.op-icon-purple { background: #faf5ff; color: #9333ea; }
+      &.op-icon-indigo { background: var(--app-accent-soft); color: #4f46e5; }
+      &.op-icon-teal { background: var(--app-success-soft); color: var(--app-success-text); }
+      &.op-icon-purple { background: var(--app-purple-soft); color: var(--app-purple-text); }
     }
 
     .op-details {
@@ -856,7 +861,7 @@ $blue-primary: #2563eb;
     }
 
     .op-trailing {
-      color: #9ca3af;
+      color: var(--app-text-subtle);
       font-size: 20px;
       transition: all 0.2s ease;
       flex-shrink: 0;
@@ -876,7 +881,7 @@ $blue-primary: #2563eb;
 
   &::part(content) {
     border-radius: 20px;
-    background: #ffffff;
+    background: var(--app-surface);
     max-width: 500px;
     max-height: 550px;
     margin: auto;
@@ -902,7 +907,7 @@ $blue-primary: #2563eb;
       width: 36px;
       height: 36px;
       border-radius: 8px;
-      background: #ffffff;
+      background: var(--app-surface);
       border: 1px solid $border-light;
       color: $navy-primary;
       display: flex;
@@ -913,13 +918,13 @@ $blue-primary: #2563eb;
       transition: background 0.15s ease;
 
       &:hover {
-        background: #f1f5f9;
+        background: var(--app-surface-3);
       }
     }
   }
 
   .modal-content {
-    --background: #ffffff;
+    --background: var(--app-surface);
 
     .empty-notif-box {
       text-align: center;
@@ -929,8 +934,8 @@ $blue-primary: #2563eb;
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        background: #f1f5f9;
-        color: #94a3b8;
+        background: var(--app-surface-3);
+        color: var(--app-text-subtle);
         display: flex;
         align-items: center;
         justify-content: center;

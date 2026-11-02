@@ -1,13 +1,13 @@
 // Login Page - HubSpot Style with AZUL MARINO Theme
 
-$navy-primary: #162d4a;
-$navy-hover: #0e1e33;
-$navy-light: #1e3a8a;
-$cream-bg: #fbf7f4;
-$cream-card: #ffffff;
-$border-light: #e5e7eb;
-$text-dark: #111827;
-$text-muted: #4b5563;
+$navy-primary: var(--app-navy);
+$navy-hover: var(--app-navy-hover);
+$navy-light: var(--app-navy-light);
+$cream-bg: var(--app-bg);
+$cream-card: var(--app-surface);
+$border-light: var(--app-border);
+$text-dark: var(--app-text);
+$text-muted: var(--app-text-muted);
 
 .login-split-content {
   --background: #{$cream-bg};
@@ -44,10 +44,18 @@ $text-muted: #4b5563;
 // Logo Superior Izquierdo
 .brand-bar {
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 
   .brand-logo-link {
     display: inline-block;
     text-decoration: none;
+  }
+
+  .login-theme-toggle {
+    flex-shrink: 0;
   }
 
   .brand-logo {
@@ -109,9 +117,9 @@ $text-muted: #4b5563;
   }
 
   .field-container {
-    border: 1.5px solid #d1d5db;
+    border: 1.5px solid var(--app-border-strong);
     border-radius: 6px;
-    background: #ffffff;
+    background: var(--app-surface);
     transition: all 0.2s ease-in-out;
     overflow: hidden;
 
@@ -126,8 +134,8 @@ $text-muted: #4b5563;
 
     .minimal-input-item {
       --background: transparent;
-      --color: #111827 !important;
-      color: #111827 !important;
+      --color: var(--app-text) !important;
+      color: var(--app-text) !important;
       --padding-start: 14px;
       --padding-end: 12px;
       --inner-padding-end: 0;
@@ -136,18 +144,18 @@ $text-muted: #4b5563;
       min-height: 56px;
 
       ion-input {
-        --color: #111827 !important;
-        --placeholder-color: #9ca3af !important;
+        --color: var(--app-text) !important;
+        --placeholder-color: var(--app-text-subtle) !important;
         --placeholder-opacity: 1 !important;
         --highlight-color-focused: transparent;
-        color: #111827 !important;
+        color: var(--app-text) !important;
         font-size: 0.95rem;
         font-weight: 500;
         min-height: 50px;
 
         input.native-input {
-          color: #111827 !important;
-          -webkit-text-fill-color: #111827 !important;
+          color: var(--app-text) !important;
+          -webkit-text-fill-color: var(--app-text) !important;
           font-size: 0.95rem !important;
           font-weight: 500 !important;
         }
@@ -155,13 +163,13 @@ $text-muted: #4b5563;
         input:-webkit-autofill,
         input:-webkit-autofill:hover, 
         input:-webkit-autofill:focus {
-          -webkit-text-fill-color: #111827 !important;
-          -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+          -webkit-text-fill-color: var(--app-text) !important;
+          -webkit-box-shadow: 0 0 0px 1000px var(--app-surface) inset !important;
           transition: background-color 5000s ease-in-out 0s;
         }
 
         &::part(label) {
-          color: #6b7280 !important;
+          color: var(--app-text-muted) !important;
           font-weight: 500;
         }
 
@@ -173,7 +181,7 @@ $text-muted: #4b5563;
 
       .field-icon {
         font-size: 20px;
-        color: #9ca3af;
+        color: var(--app-text-subtle);
         margin-right: 4px;
         transition: color 0.2s ease;
       }
@@ -183,7 +191,7 @@ $text-muted: #4b5563;
         width: 38px;
         --padding-start: 0;
         --padding-end: 0;
-        color: #9ca3af;
+        color: var(--app-text-subtle);
         cursor: pointer;
 
         ion-icon {
@@ -206,7 +214,7 @@ $text-muted: #4b5563;
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      color: #dc2626;
+      color: var(--app-danger-text);
       font-size: 0.775rem;
       font-weight: 500;
 
@@ -407,7 +415,7 @@ $text-muted: #4b5563;
     &.active {
       width: 24px;
       border-radius: 6px;
-      background: #ffffff;
+      background: var(--app-surface);
     }
   }
 }

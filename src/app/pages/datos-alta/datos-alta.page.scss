@@ -1,6 +1,15 @@
 ion-item {
-  border-color: var(--ion-color-secondary);
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --border-color: var(--app-border-strong);
+  border-color: var(--app-border-strong);
   border-style: solid;
   border-width: 2px;
   border-radius: 20px;
+
+  ion-input {
+    --color: var(--app-text);
+    --placeholder-color: var(--app-text-subtle);
+    color: var(--app-text);
+  }
 }
