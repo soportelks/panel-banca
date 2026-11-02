@@ -30,33 +30,41 @@
       <p class="page-description">Historial oficial de operaciones, depósitos y transferencias SPEI</p>
     </div>
 
-    <!-- BANNER COMPACTO DE SALDO DISPONIBLE -->
-    <div class="compact-balance-strip">
-      <div class="strip-glow"></div>
-      
-      <div class="strip-left">
-        <div class="strip-icon-circle">
-          <ion-icon name="wallet-outline"></ion-icon>
-        </div>
-        <div class="strip-amount-group">
-          <span class="strip-label">Saldo Disponible en Ahorro</span>
-          <div class="strip-number-row">
-            <span class="strip-amount">
-              {{ (datosSaldo.info.saldo !== undefined ? datosSaldo.info.saldo : (datosSaldo.info[0]?.saldo ?? 0)) | currency:'USD':'symbol':'1.2-2' }}
-            </span>
-            <span class="strip-currency">MXN</span>
+    <!-- TARJETA DE SALDO ESTILO BANCA EJECUTIVA (AZUL MARINO) -->
+    <div class="banorte-balance-card">
+      <div class="card-top-bar">
+        <div class="account-identity">
+          <div class="bank-pill-indicator">
+            <span class="navy-flag"></span>
+            <span class="account-type-text">Cuenta de Ahorro</span>
           </div>
+          <span class="account-tag-sub">Multiplicando Oportunidades</span>
+        </div>
+
+        <div class="account-status-badge">
+          <span class="status-live-dot"></span>
+          <span>Saldo Disponible</span>
         </div>
       </div>
 
-      <div class="strip-right">
-        <span class="strip-status-pill">
-          <span class="status-dot"></span> Saldo Disponible
-        </span>
-        <span class="strip-spei-tag">
-          <ion-icon name="shield-checkmark-outline"></ion-icon>
-          <span>Fondos Protegidos</span>
-        </span>
+      <div class="card-main-body">
+        <div class="balance-content-left">
+          <span class="balance-kicker">Saldo disponible en ahorro</span>
+
+          <div class="balance-display-row">
+            <span class="balance-number">
+              {{ (datosSaldo.info.saldo !== undefined ? datosSaldo.info.saldo : (datosSaldo.info[0]?.saldo ?? 0)) | currency:'USD':'symbol':'1.2-2' }}
+            </span>
+            <span class="currency-tag">MXN</span>
+          </div>
+        </div>
+
+        <div class="card-actions-right">
+          <div class="safety-badge-box">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Fondos Protegidos SPEI</span>
+          </div>
+        </div>
       </div>
     </div>
 

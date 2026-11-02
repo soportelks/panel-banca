@@ -145,56 +145,85 @@
       </div>
     </div>
 
-    <!-- BANNER COMPACTO DE SALDO DISPONIBLE (SLIM & EXECUTIVE) -->
-    <div class="compact-balance-strip">
-      <div class="strip-glow"></div>
-
-      <div class="strip-left">
-        <div class="strip-icon-circle">
-          <ion-icon name="wallet-outline"></ion-icon>
-        </div>
-        <div class="strip-amount-group">
-          <div class="strip-label-row">
-            <span class="strip-label">Saldo Disponible en Ahorro</span>
-            <span class="strip-badge-live">
-              <span class="live-dot"></span> Multiplicando Oportunidades
-            </span>
+    <!-- TARJETA DE SALDO ESTILO BANCA BANORTE (LIMPIA, CORPORATIVA Y ELEGANTE) -->
+    <div class="banorte-balance-card">
+      <!-- Encabezado de la Tarjeta de Cuenta -->
+      <div class="card-top-bar">
+        <div class="account-identity">
+          <div class="bank-pill-indicator">
+            <span class="navy-flag"></span>
+            <span class="account-type-text">Cuenta de Ahorro</span>
           </div>
-          <div class="strip-number-row">
+          <span class="account-tag-sub">Multiplicando Oportunidades</span>
+        </div>
+
+        <div class="account-status-badge">
+          <span class="status-live-dot"></span>
+          <span>Activa • SPEI</span>
+        </div>
+      </div>
+
+      <!-- Cuerpo del Saldo -->
+      <div class="card-main-body">
+        <div class="balance-content-left">
+          <span class="balance-kicker">Saldo disponible</span>
+
+          <div class="balance-display-row">
             <ng-container *ngIf="mostrarSaldo; else saldoOculto">
-              <span class="strip-amount" *ngIf="datosSaldo?.info; else saldoCero">
+              <span class="balance-number" *ngIf="datosSaldo?.info; else saldoCero">
                 {{ (datosSaldo.info.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
               </span>
               <ng-template #saldoCero>
-                <span class="strip-amount">$0.00</span>
+                <span class="balance-number">$0.00</span>
               </ng-template>
             </ng-container>
             <ng-template #saldoOculto>
-              <span class="strip-amount masked">••••••</span>
+              <span class="balance-number masked">••••••</span>
             </ng-template>
-            <span class="strip-currency">MXN</span>
 
-            <!-- Botón Ojito para Ocultar/Mostrar Saldo -->
+            <span class="currency-tag">MXN</span>
+
+            <!-- Botón Ocultar / Mostrar Saldo -->
             <button
-              class="strip-eye-btn"
+              class="btn-toggle-eye"
               (click)="toggleMostrarSaldo()"
               type="button"
               [title]="mostrarSaldo ? 'Ocultar saldo' : 'Mostrar saldo'"
               [attr.aria-label]="mostrarSaldo ? 'Ocultar saldo' : 'Mostrar saldo'"
             >
               <ion-icon [name]="mostrarSaldo ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
-              <span class="eye-text">{{ mostrarSaldo ? 'Ocultar' : 'Mostrar' }}</span>
+              <span>{{ mostrarSaldo ? 'Ocultar' : 'Mostrar' }}</span>
             </button>
           </div>
         </div>
+
+        <!-- Acciones Rápidas Estilo Banorte -->
+        <div class="card-actions-right">
+        
+
+          <button class="btn-banorte-primary" (click)="sendDataToComponent('ahorro')" type="button">
+            <ion-icon name="receipt-outline"></ion-icon>
+            <span>Ver Movimientos</span>
+            <ion-icon name="chevron-forward-outline" class="btn-arrow"></ion-icon>
+          </button>
+        </div>
       </div>
 
-      <div class="strip-right">
-        <button class="strip-action-btn" (click)="sendDataToComponent('ahorro')" type="button">
-          <ion-icon name="receipt-outline"></ion-icon>
-          <span>Ver Movimientos</span>
-          <ion-icon name="arrow-forward-outline" class="action-chevron"></ion-icon>
-        </button>
+      <!-- Pie de la Tarjeta con CLABE (Discreto y Funcional) -->
+      <div class="card-footer-strip" *ngIf="datosCliente?.clabe">
+        <div class="clabe-snippet">
+          <span class="clabe-snippet-label">CLABE:</span>
+          <span class="clabe-snippet-num">{{ datosCliente.clabe }}</span>
+          <button class="btn-copy-mini" (click)="copiarTexto(datosCliente.clabe)" type="button">
+            <ion-icon [name]="clabeCopiada ? 'checkmark-outline' : 'copy-outline'"></ion-icon>
+            <span>{{ clabeCopiada ? 'Copiada' : 'Copiar' }}</span>
+          </button>
+        </div>
+
+        <div class="safety-note">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          <span>Operaciones protegidas SPEI</span>
+        </div>
       </div>
     </div>
 
@@ -237,43 +266,7 @@
       </div>
     </div>
 
-    <!-- TARJETA INFORMATIVA: DATOS DE LA CUENTA (Nombre, Correo, Cuenta CLABE) -->
-    <div class="section-container account-summary-section">
-      <div class="section-title-wrap">
-        <h2 class="section-main-title">Datos de la Cuenta</h2>
-        <p class="section-subtitle">Tu información registrada para transferencias SPEI y contacto</p>
-      </div>
-
-      <div class="account-card-box">
-        <div class="account-fields-grid">
-          
-
-          <div class="account-field-cell clabe-cell">
-            <span class="cell-label">Cuenta CLABE Interbancaria (SPEI)</span>
-            <div class="clabe-action-bar">
-              <span class="clabe-code">{{ datosCliente?.clabe || 'No disponible' }}</span>
-              <button
-                class="copy-clabe-btn"
-                *ngIf="datosCliente?.clabe"
-                (click)="copiarTexto(datosCliente.clabe)"
-                type="button"
-              >
-                <ion-icon [name]="clabeCopiada ? 'checkmark-outline' : 'copy-outline'"></ion-icon>
-                <span>{{ clabeCopiada ? '¡Copiada!' : 'Copiar' }}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="account-manage-row">
-          <button class="btn-goto-config" (click)="sendDataToComponent('reset-pass')">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-            <span>Ver perfil completo y cambiar contraseña</span>
-            <ion-icon name="chevron-forward-outline"></ion-icon>
-          </button>
-        </div>
-      </div>
-    </div>
+  
 
     <!-- OPERACIONES FRECUENTES (Tarjetas Horizontales Estilo Banca Premium) -->
     <div class="section-container operations-wrapper">

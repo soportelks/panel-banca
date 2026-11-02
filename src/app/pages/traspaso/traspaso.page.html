@@ -32,51 +32,59 @@
 
     <!-- BANNER DUAL DE SALDOS DISPONIBLES (COMPACTO) -->
     <div class="dual-balance-grid">
-      <!-- Tarjeta 1: Saldo a la Vista -->
-      <div class="compact-balance-strip strip-navy">
-        <div class="strip-glow"></div>
-        <div class="strip-left">
-          <div class="strip-icon-circle">
-            <ion-icon name="wallet-outline"></ion-icon>
-          </div>
-          <div class="strip-amount-group">
-            <span class="strip-label">Saldo Disponible a la Vista</span>
-            <div class="strip-number-row">
-              <span class="strip-amount">
-                {{ (datosSaldo?.info?.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
-              </span>
-              <span class="strip-currency">MXN</span>
+      <!-- Tarjeta 1: Saldo a la Vista (Azul Marino) -->
+      <div class="banorte-balance-card">
+        <div class="card-top-bar">
+          <div class="account-identity">
+            <div class="bank-pill-indicator">
+              <span class="navy-flag"></span>
+              <span class="account-type-text">Cuenta a la Vista</span>
             </div>
           </div>
+          <div class="account-status-badge">
+            <span class="status-live-dot"></span>
+            <span>Origen</span>
+          </div>
         </div>
-        <div class="strip-right">
-          <span class="strip-status-pill">
-            <span class="status-dot"></span> Origen
-          </span>
+
+        <div class="card-main-body">
+          <div class="balance-content-left">
+            <span class="balance-kicker">Saldo disponible</span>
+            <div class="balance-display-row">
+              <span class="balance-number">
+                {{ (datosSaldo?.info?.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+              <span class="currency-tag">MXN</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Tarjeta 2: Saldo en Parte Social / Subcuenta -->
-      <div class="compact-balance-strip strip-emerald">
-        <div class="strip-glow"></div>
-        <div class="strip-left">
-          <div class="strip-icon-circle">
-            <ion-icon name="layers-outline"></ion-icon>
-          </div>
-          <div class="strip-amount-group">
-            <span class="strip-label">Saldo en {{ datosSaldoParteSocial?.info?.cuenta || 'Parte Social' }}</span>
-            <div class="strip-number-row">
-              <span class="strip-amount">
-                {{ (datosSaldoParteSocial?.info?.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
-              </span>
-              <span class="strip-currency">MXN</span>
+      <!-- Tarjeta 2: Saldo en Parte Social / Subcuenta (Verde) -->
+      <div class="banorte-balance-card theme-emerald">
+        <div class="card-top-bar">
+          <div class="account-identity">
+            <div class="bank-pill-indicator">
+              <span class="navy-flag"></span>
+              <span class="account-type-text">{{ datosSaldoParteSocial?.info?.cuenta || 'Parte Social' }}</span>
             </div>
           </div>
+          <div class="account-status-badge">
+            <span class="status-live-dot"></span>
+            <span>Destino</span>
+          </div>
         </div>
-        <div class="strip-right">
-          <span class="strip-status-pill">
-            <span class="status-dot"></span> Destino
-          </span>
+
+        <div class="card-main-body">
+          <div class="balance-content-left">
+            <span class="balance-kicker">Saldo aportado</span>
+            <div class="balance-display-row">
+              <span class="balance-number">
+                {{ (datosSaldoParteSocial?.info?.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+              <span class="currency-tag">MXN</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
