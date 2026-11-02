@@ -1,18 +1,23 @@
 ion-app {
   display: flex;
   flex-direction: column;
+  height: 100vh;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 ion-router-outlet {
-  flex: 1;
-  position: relative; /* Asegura que el contenido fluya normalmente */
-  z-index: 0; /* Asegura que esté debajo del footer */
+  flex: 1 1 auto;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  z-index: 0;
 }
 
 app-footer {
   width: 100%;
-  text-align: center;
+  flex-shrink: 0;
   position: relative;
-  z-index: 1; /* Asegura que el footer esté encima */
+  z-index: 10;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }

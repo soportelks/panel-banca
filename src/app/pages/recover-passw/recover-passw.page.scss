@@ -1,0 +1,253 @@
+// Recover Password - HubSpot Style with AZUL MARINO Theme
+
+$navy-primary: #162d4a;
+$navy-hover: #0e1e33;
+$cream-bg: #fbf7f4;
+$cream-card: #ffffff;
+$border-light: #e5e7eb;
+$text-dark: #111827;
+$text-muted: #4b5563;
+
+ion-toolbar {
+  --background: transparent;
+  --border-width: 0;
+}
+
+.recover-content {
+  --background: #{$cream-bg};
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.recover-wrapper {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 4.5rem;
+  box-sizing: border-box;
+}
+
+.recover-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1.5px solid #d1d5db;
+  padding: 2.75rem 2.25rem;
+  box-shadow: 0 16px 36px -10px rgba(22, 45, 74, 0.08);
+  box-sizing: border-box;
+  animation: fadeInCard 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Brand Header
+.brand-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .brand-logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+
+    .brand-logo {
+      height: 48px;
+      width: auto;
+      max-width: 190px;
+      object-fit: contain;
+    }
+
+    .logo-dark {
+      display: none;
+    }
+    .logo-light {
+      display: block;
+    }
+  }
+
+  .brand-title {
+    font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+    font-size: 2.35rem;
+    font-weight: 500;
+    color: $text-dark;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .brand-subtitle {
+    font-size: 0.95rem;
+    color: $text-muted;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+// Form Inputs
+.recover-form {
+  .input-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .custom-input-item {
+    --background: #ffffff;
+    --color: #111827 !important;
+    color: #111827 !important;
+    --border-radius: 6px;
+    --padding-start: 14px;
+    --padding-end: 14px;
+    --inner-padding-end: 4px;
+    --highlight-color-focused: transparent;
+    --border-width: 0;
+    min-height: 56px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+
+    &:focus-within {
+      border-color: $navy-primary;
+      box-shadow: 0 0 0 3px rgba(22, 45, 74, 0.12);
+
+      .input-icon {
+        color: $navy-primary;
+      }
+    }
+
+    .input-icon {
+      font-size: 20px;
+      color: #9ca3af;
+      margin-right: 8px;
+      align-self: center;
+      transition: color 0.2s ease;
+    }
+
+    ion-input {
+      --color: #111827 !important;
+      --placeholder-color: #9ca3af !important;
+      --placeholder-opacity: 1 !important;
+      --highlight-color-focused: transparent;
+      color: #111827 !important;
+      font-size: 0.95rem;
+      font-weight: 500;
+      min-height: 50px;
+
+      input.native-input {
+        color: #111827 !important;
+        -webkit-text-fill-color: #111827 !important;
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
+      }
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover, 
+      input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #111827 !important;
+        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+
+      &::part(label) {
+        color: #6b7280 !important;
+        font-weight: 500;
+      }
+
+      &.has-focus::part(label) {
+        color: #{$navy-primary} !important;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Action Button
+  .action-wrapper {
+    margin-top: 0.5rem;
+
+    .submit-button {
+      --background: #{$navy-primary};
+      --color: #ffffff !important;
+      color: #ffffff !important;
+      --border-radius: 6px;
+      --box-shadow: 0 4px 12px rgba(22, 45, 74, 0.25);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      height: 48px;
+      text-transform: none;
+      margin: 0;
+      transition: all 0.2s ease;
+
+      &::part(native) {
+        color: #ffffff !important;
+      }
+
+      &:hover {
+        --background: #{$navy-hover};
+        --box-shadow: 0 6px 18px rgba(22, 45, 74, 0.35);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // Back to Login Link
+  .back-to-login {
+    text-align: center;
+    margin-top: 1.5rem;
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: $navy-primary;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+
+      ion-icon {
+        font-size: 16px;
+      }
+
+      &:hover {
+        color: $navy-hover;
+      }
+    }
+  }
+}
+
+// Security Footer
+.security-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 2rem;
+  color: #9ca3af;
+  font-size: 0.775rem;
+  font-weight: 500;
+  text-align: center;
+
+  ion-icon {
+    font-size: 15px;
+    color: $navy-primary;
+  }
+}
+
+

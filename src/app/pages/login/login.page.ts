@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonicSafeString } from '@ionic/angular';
 import { OtpServiceService } from 'src/app/services/otp-service.service';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 
@@ -203,34 +203,38 @@ export class LoginPage {
   }
 
   async openOtpModal(email: string, resolve: (value: boolean | PromiseLike<boolean>) => void) {
+    this.incorrectMessage = '';
     this.alertInstance = await this.alertController.create({
-      header: 'Ingresar OTP',
+      header: 'Verificación de Seguridad',
+      subHeader: 'Código OTP enviado',
+      cssClass: 'otp-custom-alert',
       backdropDismiss: false,
-      message: `
-     
-        Tiempo restante: ${this.timeLeft} segundos
-        ${this.incorrectMessage ? `${this.incorrectMessage}` : ''}
-        Si termina el tiempo, cancela y vuelve a intentar.
-    
-    `,
+      message: new IonicSafeString(this.getOtpMessageHtml()),
       inputs: [
         {
           name: 'otpCode',
           type: 'number',
-          placeholder: 'Introduce el código OTP'
+          placeholder: '• • • • • •',
+          attributes: {
+            maxlength: 6,
+            autocomplete: 'one-time-code',
+            inputmode: 'numeric'
+          }
         }
       ],
       buttons: [
         {
           text: 'Cancelar',
           role: 'cancel',
+          cssClass: 'alert-btn-cancel',
           handler: () => {
             clearInterval(this.timer);
             resolve(false); // Usuario canceló
           }
         },
         {
-          text: 'Verificar',
+          text: 'Verificar Código',
+          cssClass: 'alert-btn-confirm',
           handler: async (data) => {
             const isValid = await this.verifyOtp(email, data.otpCode);
             if (isValid) {
@@ -246,9 +250,33 @@ export class LoginPage {
     this.updateAlertMessage();
   }
 
+  getOtpMessageHtml(): string {
+    const min = Math.floor(this.timeLeft / 60);
+    const sec = this.timeLeft % 60;
+    const formatted = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+
+    return `
+      <div class="otp-dialog-body">
+        <p class="otp-info-text">
+          Hemos enviado un código de 6 dígitos a tu correo registrado.
+        </p>
+        <div class="otp-countdown-badge ${this.timeLeft <= 20 ? 'urgent' : ''}">
+          <span class="timer-clock">⏱️</span>
+          <span>Tiempo restante: <strong>${formatted}</strong></span>
+        </div>
+        ${this.incorrectMessage ? `<div class="otp-alert-error">${this.incorrectMessage}</div>` : ''}
+      </div>
+    `;
+  }
+
   updateAlertMessage() {
+    const html = this.getOtpMessageHtml();
     if (this.alertInstance) {
-      this.alertInstance.message = `Tiempo restante: ${this.timeLeft} segundos` + (this.incorrectMessage ? `${this.incorrectMessage}` : '');
+      this.alertInstance.message = new IonicSafeString(html);
+    }
+    const messageEl = document.querySelector('.otp-custom-alert .alert-message');
+    if (messageEl) {
+      messageEl.innerHTML = html;
     }
   }
 
@@ -262,21 +290,21 @@ export class LoginPage {
               clearInterval(this.timer);
               resolve(true);
             } else {
-              this.message = ' : Código incorrecto. Puedes intentarlo de nuevo.';
-              this.incorrectMessage = ' : Código incorrecto. Inténtalo nuevamente.';
+              this.message = 'Código incorrecto. Puedes intentarlo de nuevo.';
+              this.incorrectMessage = 'Código incorrecto. Inténtalo nuevamente.';
               this.resendDisabled = false;
               this.updateAlertMessage();
               resolve(false);
             }
           },
           () => {
-            this.incorrectMessage = ' : Error al validar el código. Inténtalo nuevamente.';
+            this.incorrectMessage = 'Error al validar el código. Inténtalo nuevamente.';
             this.updateAlertMessage();
             resolve(false);
           }
         );
       } else {
-        this.incorrectMessage = ' : Ingresa un código de verificación válido.';
+        this.incorrectMessage = 'Ingresa un código de verificación válido.';
         this.updateAlertMessage();
         resolve(false);
       }

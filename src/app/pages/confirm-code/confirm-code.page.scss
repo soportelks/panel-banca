@@ -1,0 +1,243 @@
+// Confirm Code Page - HubSpot Style with AZUL MARINO Theme
+
+$navy-primary: #162d4a;
+$navy-hover: #0e1e33;
+$cream-bg: #fbf7f4;
+$cream-card: #ffffff;
+$border-light: #e5e7eb;
+$text-dark: #111827;
+$text-muted: #4b5563;
+
+ion-toolbar {
+  --background: transparent;
+  --border-width: 0;
+}
+
+.confirm-content {
+  --background: #{$cream-bg};
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.confirm-wrapper {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 4.5rem;
+  box-sizing: border-box;
+}
+
+.confirm-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1.5px solid #d1d5db;
+  padding: 2.75rem 2.25rem;
+  box-shadow: 0 16px 36px -10px rgba(22, 45, 74, 0.08);
+  box-sizing: border-box;
+  animation: fadeInCard 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Brand Header
+.brand-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  .brand-logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+
+    .brand-logo {
+      height: 48px;
+      width: auto;
+      max-width: 190px;
+      object-fit: contain;
+    }
+
+    .logo-dark {
+      display: none;
+    }
+    .logo-light {
+      display: block;
+    }
+  }
+
+  .brand-title {
+    font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+    font-size: 2.35rem;
+    font-weight: 500;
+    color: $text-dark;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .brand-subtitle {
+    font-size: 0.95rem;
+    color: $text-muted;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+// Timer Badge
+.timer-badge-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  .timer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    background: rgba(22, 45, 74, 0.06);
+    border: 1px solid rgba(22, 45, 74, 0.15);
+    border-radius: 4px;
+    color: $navy-primary;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    .timer-icon {
+      font-size: 1rem;
+    }
+  }
+}
+
+// OTP Form Body
+.otp-form-body {
+  .otp-input-box {
+    margin-bottom: 1.5rem;
+
+    .custom-otp-item {
+      --background: #ffffff;
+      border: 2px solid #d1d5db;
+      border-radius: 6px;
+      transition: all 0.2s ease-in-out;
+      --padding-start: 12px;
+      --padding-end: 12px;
+
+      &:focus-within {
+        border-color: $navy-primary;
+        box-shadow: 0 0 0 4px rgba(22, 45, 74, 0.12);
+      }
+
+      .centered-otp-input {
+        --color: #{$text-dark};
+        --placeholder-color: #9ca3af;
+        font-size: 1.65rem;
+        font-weight: 700;
+        letter-spacing: 8px;
+        text-align: center;
+      }
+    }
+  }
+
+  .resend-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: $text-muted;
+    margin-bottom: 1.75rem;
+
+    .resend-link {
+      color: $navy-primary;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+
+      &:hover {
+        color: $navy-hover;
+      }
+    }
+  }
+
+  // Buttons
+  .action-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .btn-verify {
+      --background: #{$navy-primary};
+      --color: #ffffff !important;
+      color: #ffffff !important;
+      --border-radius: 6px;
+      --box-shadow: 0 4px 12px rgba(22, 45, 74, 0.25);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      height: 48px;
+      text-transform: none;
+      margin: 0;
+      transition: all 0.2s ease;
+
+      &::part(native) {
+        color: #ffffff !important;
+      }
+
+      &:hover {
+        --background: #{$navy-hover};
+        --box-shadow: 0 6px 18px rgba(22, 45, 74, 0.35);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .btn-cancel {
+      --color: #{$text-muted};
+      font-size: 0.95rem;
+      font-weight: 600;
+      height: 42px;
+      text-transform: none;
+      margin: 0;
+
+      &:hover {
+        --color: $text-dark;
+      }
+    }
+  }
+}
+
+// Security Footer
+.security-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 2rem;
+  color: #9ca3af;
+  font-size: 0.775rem;
+  font-weight: 500;
+  text-align: center;
+
+  ion-icon {
+    font-size: 15px;
+    color: $navy-primary;
+  }
+}
+
+

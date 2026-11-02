@@ -1,109 +1,161 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <div class="ion-text-center">
-        <ion-card-title>Iniciar Sesión</ion-card-title>
+<ion-content [fullscreen]="true" class="login-split-content">
+  <div class="split-container">
+    
+    <!-- PANEL IZQUIERDO: FORMULARIO -->
+    <div class="form-side">
+      
+      <!-- Logo Superior Izquierdo -->
+      <div class="brand-bar">
+        <a routerLink="/home" class="brand-logo-link">
+          <img
+            src="assets/images/Logo_RDAM_negro.png"
+            class="brand-logo"
+            alt="Logo RDAM"
+          />
+        </a>
       </div>
-    </ion-card-header>
-    <ion-card-content>
-      <form [formGroup]="formCliente">
-        <!-- Telefono -->
-        <ion-item>
-          <ion-icon name="call-outline" class="ion-margin-end"></ion-icon>
-          <ion-input
-            required="true"
-            label="Teléfono"
-            labelPlacement="floating"
-            inputmode="tel"
-            type="tel"
-            color="primary"
-            formControlName="numeroTelefono"
-            maxlength="10"
-            minlength="10"
-          >
-          </ion-input>
-        </ion-item>
-        <ng-template ngFor let-error [ngForOf]="validaciones.telefono">
-          <strong
-            class="ion-margin-start"
-            *ngIf="formCliente.get('numeroTelefono')?.hasError(error.type)"
-          >
-            {{error.message}}</strong
-          >
-        </ng-template>
 
-        <!-- Contraseña -->
-        <ion-item class="ion-margin-top">
-          <ion-icon
-            name="lock-closed-outline"
-            class="ion-margin-end"
-          ></ion-icon>
-          <ion-input
-            required="true"
-            label="Ingresa la contraseña"
-            labelPlacement="floating"
-            inputmode="password"
-            color="primary"
-            type="{{ isPasswordVisible ? 'text' : 'password' }}"
-            formControlName="contrasenaCliente"
-          >
-          </ion-input>
-          <ion-icon
-            name="{{isPasswordVisible ? 'eye-outline': 'eye-off-outline'}}"
-            (click)="togglePasswordVisibility()"
-          ></ion-icon>
-        </ion-item>
-        <ng-template ngFor let-error [ngForOf]="validaciones.contrasena">
-          <strong
-            class="ion-margin-start"
-            *ngIf="formCliente.get('contrasenaCliente')?.hasError(error.type)"
-          >
-            {{error.message}}</strong
-          >
-        </ng-template>
-      </form>
+      <!-- Área Central del Formulario -->
+      <div class="form-content-wrapper">
+        <div class="form-header">
+          <span class="form-kicker">Bienvenido de nuevo</span>
+          <h1 class="form-title">Iniciar Sesión</h1>
+        </div>
 
-      <!-- Boton Iniciar Sesion-->
-      <ion-grid class="ion-margin-top">
-        <ion-row>
-          <ion-col></ion-col>
-          <ion-col>
+        <form [formGroup]="formCliente" class="inside-form">
+          
+          <!-- Input Teléfono -->
+          <div class="input-block">
+            <div class="field-container">
+              <ion-item lines="none" class="minimal-input-item">
+                <ion-input
+                  required="true"
+                  label="Teléfono"
+                  labelPlacement="floating"
+                  inputmode="tel"
+                  type="tel"
+                  formControlName="numeroTelefono"
+                  maxlength="10"
+                  minlength="10"
+                  placeholder="Ingresa tus 10 dígitos"
+                ></ion-input>
+                <ion-icon name="call-outline" slot="end" class="field-icon"></ion-icon>
+              </ion-item>
+            </div>
+            
+            <div class="error-container">
+              <ng-template ngFor let-error [ngForOf]="validaciones.telefono">
+                <span
+                  class="error-message"
+                  *ngIf="(formCliente.get('numeroTelefono')?.touched || formCliente.get('numeroTelefono')?.dirty) && formCliente.get('numeroTelefono')?.hasError(error.type)"
+                >
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+                  {{ error.message }}
+                </span>
+              </ng-template>
+            </div>
+          </div>
+
+          <!-- Input Contraseña -->
+          <div class="input-block">
+            <div class="field-container">
+              <ion-item lines="none" class="minimal-input-item">
+                <ion-input
+                  required="true"
+                  label="Contraseña"
+                  labelPlacement="floating"
+                  inputmode="password"
+                  [type]="isPasswordVisible ? 'text' : 'password'"
+                  formControlName="contrasenaCliente"
+                  placeholder="Tu contraseña de acceso"
+                ></ion-input>
+                <ion-button
+                  fill="clear"
+                  slot="end"
+                  class="eye-button"
+                  (click)="togglePasswordVisibility()"
+                  type="button"
+                >
+                  <ion-icon
+                    slot="icon-only"
+                    [name]="isPasswordVisible ? 'eye-outline' : 'eye-off-outline'"
+                  ></ion-icon>
+                </ion-button>
+              </ion-item>
+            </div>
+
+            <div class="error-container">
+              <ng-template ngFor let-error [ngForOf]="validaciones.contrasena">
+                <span
+                  class="error-message"
+                  *ngIf="(formCliente.get('contrasenaCliente')?.touched || formCliente.get('contrasenaCliente')?.dirty) && formCliente.get('contrasenaCliente')?.hasError(error.type)"
+                >
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+                  {{ error.message }}
+                </span>
+              </ng-template>
+            </div>
+          </div>
+
+          <!-- Enlace Olvidé mi contraseña -->
+          <div class="forgot-wrapper">
+            <a routerLink="/recover-passw" class="forgot-link">
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+
+          <!-- Botón Iniciar Sesión (Estilo InsideBox) -->
+          <div class="submit-wrapper">
             <ion-button
-              shape="round"
-              color="secondary"
-              size="large"
+              expand="block"
+              class="btn-insidebox"
               (click)="searchClient()"
-              >Iniciar Sesión</ion-button
+              style="--color: #ffffff; color: #ffffff;"
             >
-          </ion-col>
-          <ion-col></ion-col>
-        </ion-row>
-      </ion-grid>
+              Iniciar Sesión
+            </ion-button>
+          </div>
 
-      <!-- Link  -->
-      <ion-grid class="ion-margin-top">
-        <ion-row>
-          <ion-col class="ion-text-end">
-            <a
-              routerLink="/recover-passw"
-              style="
-                text-decoration: none;
-                font-weight: bolder;
-                font-size: 20px;
-              "
-              >Olvide mi contraseña</a
-            >
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+        </form>
+      </div>
+
+      <!-- Footer inferior: Link a registro -->
+      <div class="form-footer">
+        <p class="footer-text">
+          ¿No tienes una cuenta?
+          <a routerLink="/register" class="footer-link">Crear Cuenta</a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- PANEL DERECHO: ARTE EDITORIAL / FINANCIERO -->
+    <div class="art-side">
+      <div class="art-bg-container">
+        <img
+          src="assets/images/login-hero-bank-tall.jpg"
+          class="art-bg-image"
+          alt="Banca Digital RDAM"
+        />
+        <div class="art-overlay"></div>
+      </div>
+
+      <!-- Tarjeta Glassmorphism de Información -->
+      <div class="art-badge">
+        <div class="badge-tag">Banca Digital RDAM</div>
+        <h2 class="badge-title">Multiplicando Oportunidades</h2>
+        <p class="badge-desc">
+          Ahorro y Crédito inteligente, seguro y disponible desde cualquier lugar.
+        </p>
+      </div>
+
+      <!-- Puntos de Navegación / Carousel -->
+      <div class="carousel-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+  </div>
 </ion-content>

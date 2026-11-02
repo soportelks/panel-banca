@@ -1,45 +1,239 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title class="ion-text-center">BANCA MOVIL RDAM</ion-title>
+<ion-header class="hubspot-header ion-no-border">
+  <ion-toolbar class="header-toolbar">
+    <div class="header-container">
+      
+      <!-- Logo RDAM -->
+      <div class="logo-box">
+        <img
+          src="assets/images/Logo_RDAM_negro.png"
+          class="brand-logo"
+          alt="Multiplicando Oportunidades"
+        />
+      </div>
+
+
+      <!-- Botones de Acción Superiores -->
+      <div class="header-ctas">
+        <ion-button
+          size="small"
+          class="btn-navy-solid"
+          routerLink="/login"
+          style="--color: #ffffff; color: #ffffff;"
+        >
+          Iniciar Sesión
+        </ion-button>
+        <ion-button
+          size="small"
+          fill="outline"
+          class="btn-navy-outline"
+          routerLink="/register"
+        >
+          Crear Cuenta
+        </ion-button>
+      </div>
+
+    </div>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-text-center ion-padding" [fullscreen]="true">
-  <swiper-container [loop]="true">
-    <!-- Slide N1 -->
-    <swiper-slide>
-      <ion-img
-        class="ion-margin-top"
-        [src]="isDarkMode ? '../../assets/images/Logo_RDAM_blanco.png' : '../../assets/images/Logo_RDAM_negro.png'"
-      >
-      </ion-img>
-    </swiper-slide>
-  </swiper-container>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-button
-          shape="round"
-          routerLink="/register"
-          color="secondary"
-          size="large"
-        >
-          <ion-icon name="create-outline" class="ion-margin-end"></ion-icon
-          >Crear Cuenta
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-margin-top">
-      <ion-col>
-        <ion-button
-          shape="round"
-          routerLink="/login"
-          color="secondary"
-          size="large"
-        >
-          <ion-icon name="log-in-outline" class="ion-margin-end"></ion-icon
-          >Iniciar Sesión
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+<ion-content [fullscreen]="true" class="hubspot-content">
+  <div class="page-wrapper">
+    
+
+    <!-- HERO SECTION ESTILO HUBSPOT (Visual a la izquierda, Contenido a la derecha) -->
+    <section class="hubspot-hero-section">
+      <div class="hero-split-grid">
+        
+        <!-- COLUMNA IZQUIERDA: MOCKUP VISUAL FLOTANTE -->
+        <div class="visual-column">
+          <div class="mockup-frame main-window">
+            <div class="window-header">
+              <div class="dots-group">
+                <span class="w-dot red"></span>
+                <span class="w-dot yellow"></span>
+                <span class="w-dot green"></span>
+              </div>
+              <div class="window-title-bar">banca.multiplicandooportunidades.com</div>
+            </div>
+            
+            <div class="window-body">
+              <div class="account-summary-card">
+                <div class="account-badge">Cuenta Activa • Socio RDAM</div>
+                <div class="balance-label">Saldo Disponible</div>
+                <div class="balance-amount">$148,920<span class="cents">.50</span> <span class="currency">MXN</span></div>
+                <div class="account-meta">
+                  <span>SPEI Transferencias 24/7</span>
+                  <span class="meta-tag">Conectado</span>
+                </div>
+              </div>
+
+              <div class="sub-mockup-card">
+                <div class="card-icon-avatar">
+                  <ion-icon name="trending-up"></ion-icon>
+                </div>
+                <div class="card-details">
+                  <div class="card-name">Multiplica Tu Ahorro</div>
+                  <div class="card-rendimiento">+12.5% Rendimiento Anual Estimado</div>
+                </div>
+                <div class="card-pill">Activo</div>
+              </div>
+
+              <div class="quick-services-preview">
+                <div class="preview-item">
+                  <ion-icon name="send-outline"></ion-icon>
+                  <span>Enviar SPEI</span>
+                </div>
+                <div class="preview-item">
+                  <ion-icon name="download-outline"></ion-icon>
+                  <span>Recibir</span>
+                </div>
+                <div class="preview-item">
+                  <ion-icon name="card-outline"></ion-icon>
+                  <span>Mis Créditos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: TEXTO EDITORIAL & BENEFICIOS -->
+        <div class="content-column">
+          <h1 class="editorial-title">
+            Banca Digital: Tu Plataforma Financiera y de Ahorro
+          </h1>
+
+          <p class="editorial-desc">
+            Usa la banca en línea de Multiplicando Oportunidades para administrar tu patrimonio, realizar transferencias inmediatas por SPEI y acceder a esquemas de crédito diseñados para impulsar tus metas.
+          </p>
+
+          <!-- Botones de Acción Principales -->
+          <div class="hero-buttons-row">
+            <ion-button
+              size="large"
+              class="btn-navy-primary"
+              routerLink="/login"
+            >
+              Acceder a Banca Digital
+            </ion-button>
+
+            <ion-button
+              size="large"
+              fill="outline"
+              class="btn-navy-secondary"
+              routerLink="/register"
+            >
+              Hacerte Socio
+            </ion-button>
+          </div>
+
+          <!-- Lista de Beneficios con Checkmarks Circulares (Estilo HubSpot) -->
+          <div class="checklist-group">
+            <div class="check-item">
+              <div class="check-icon">
+                <ion-icon name="checkmark"></ion-icon>
+              </div>
+              <div class="check-text">
+                Transferencias SPEI al instante sin comisión y disponibles los 365 días del año.
+              </div>
+            </div>
+
+            <div class="check-item">
+              <div class="check-icon">
+                <ion-icon name="checkmark"></ion-icon>
+              </div>
+              <div class="check-text">
+                Esquemas de ahorro con atractivos rendimientos garantizados para tus fondos.
+              </div>
+            </div>
+
+            <div class="check-item">
+              <div class="check-icon">
+                <ion-icon name="checkmark"></ion-icon>
+              </div>
+              <div class="check-text">
+                Créditos personales y empresariales con aprobación ágil y plazos a tu medida.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN DE SERVICIOS FINANCIEROS (Tarjetas Limpias en Fondo Crema) -->
+    <section class="services-hubspot-section">
+      <div class="section-title-wrap">
+        <h2 class="section-editorial-title">Soluciones Financieras para Socios</h2>
+        <p class="section-editorial-desc">
+          Herramientas pensadas para personas y negocios que buscan estabilidad, crecimiento y liquidez.
+        </p>
+      </div>
+
+      <div class="services-cards-grid">
+        
+        <div class="hubspot-card">
+          <div class="card-icon-box">
+            <ion-icon name="wallet-outline"></ion-icon>
+          </div>
+          <h3 class="card-title">Ahorro con Rendimiento</h3>
+          <p class="card-description">
+            Protege tu patrimonio de la inflación. Invierte en plazos fijos o flexibles con las mejores tasas de rendimiento.
+          </p>
+          <div class="card-footer-link">
+            <a routerLink="/register">Abrir Cuenta de Ahorro &rarr;</a>
+          </div>
+        </div>
+
+        <div class="hubspot-card">
+          <div class="card-icon-box">
+            <ion-icon name="cash-outline"></ion-icon>
+          </div>
+          <h3 class="card-title">Créditos de Impulso</h3>
+          <p class="card-description">
+            Financiamiento inmediato para expandir tu negocio, adquirir equipamiento o solventar compromisos personales.
+          </p>
+          <div class="card-footer-link">
+            <a routerLink="/register">Conoce los Requisitos &rarr;</a>
+          </div>
+        </div>
+
+        <div class="hubspot-card">
+          <div class="card-icon-box">
+            <ion-icon name="flash-outline"></ion-icon>
+          </div>
+          <h3 class="card-title">SPEI Digital 24/7</h3>
+          <p class="card-description">
+            Envía y recibe transferencias interbancarias en cuestión de segundos, desde tu computadora o teléfono celular.
+          </p>
+          <div class="card-footer-link">
+            <a routerLink="/login">Ingresar a SPEI &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BANNER DE CONTACTO INSTITUCIONAL -->
+    <section class="institution-callout">
+      <div class="callout-box">
+        <div class="callout-text">
+          <h3>¿Necesitas asesoría personalizada?</h3>
+          <p>
+            Visítanos en Blvd. Gustavo Díaz Ordaz 16217, Villa Floresta, Tijuana, B.C., o llámanos al (664) 660-7324.
+          </p>
+        </div>
+        <div class="callout-btn">
+          <ion-button
+            class="btn-navy-solid"
+            routerLink="/login"
+            style="--color: #ffffff; color: #ffffff;"
+          >
+            Iniciar Sesión
+          </ion-button>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </ion-content>

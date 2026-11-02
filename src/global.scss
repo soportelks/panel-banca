@@ -24,3 +24,207 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
+/* ==========================================================================
+   GLOBAL NOTIFICATION & MODAL ALERT STYLES (ION-ALERT)
+   ========================================================================== */
+
+ion-alert {
+  --backdrop-opacity: 0.6;
+
+  .alert-wrapper {
+    border-radius: 20px !important;
+    padding: 1.8rem 1.5rem 1.4rem !important;
+    background: #ffffff !important;
+    box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.28),
+                0 0 0 1px rgba(15, 23, 42, 0.08) !important;
+    max-width: 420px !important;
+    width: 90% !important;
+  }
+
+  .alert-head {
+    padding: 0 0.5rem 0.75rem !important;
+    text-align: center !important;
+
+    .alert-title {
+      font-size: 1.35rem !important;
+      font-weight: 800 !important;
+      color: #162d4a !important;
+      letter-spacing: -0.3px !important;
+    }
+
+    .alert-sub-title {
+      font-size: 0.95rem !important;
+      color: #475569 !important;
+      font-weight: 600 !important;
+      margin-top: 0.35rem !important;
+    }
+  }
+
+  .alert-message {
+    padding: 0 0.5rem 1.25rem !important;
+    color: #1e293b !important;
+    font-size: 0.95rem !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+  }
+
+  .alert-button-group {
+    padding: 0.85rem 0 0 !important;
+    gap: 0.75rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+
+  .alert-button {
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 0.85rem !important;
+    text-transform: none !important;
+    margin: 0 !important;
+    letter-spacing: 0.2px !important;
+    flex: 1 1 0px !important;
+    width: 50% !important;
+    box-sizing: border-box !important;
+
+    &.alert-button-role-cancel {
+      color: #475569 !important;
+      background: #f1f5f9 !important;
+      border: 1.5px solid #cbd5e1 !important;
+
+      &:hover {
+        background: #e2e8f0 !important;
+        color: #0f172a !important;
+      }
+    }
+
+    &:not(.alert-button-role-cancel) {
+      background: #2563eb !important;
+      color: #ffffff !important;
+      border: 1.5px solid transparent !important;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28) !important;
+
+      &:hover {
+        background: #1d4ed8 !important;
+        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35) !important;
+      }
+
+      &:active {
+        background: #1e40af !important;
+      }
+    }
+  }
+}
+
+/* Modal Especial de OTP */
+ion-alert.otp-custom-alert {
+  .alert-wrapper {
+    max-width: 440px !important;
+    background: #ffffff !important;
+  }
+
+  .alert-input-group {
+    padding: 0.25rem 0 1.25rem !important;
+    display: flex !important;
+    justify-content: center !important;
+
+    .alert-input {
+      background: #f8fafc !important;
+      border: 2px solid #cbd5e1 !important;
+      border-radius: 10px !important;
+      padding: 0.85rem 1rem !important;
+      text-align: center !important;
+      font-size: 1.75rem !important;
+      font-weight: 800 !important;
+      letter-spacing: 8px !important;
+      color: #162d4a !important;
+      width: 100% !important;
+      max-width: 260px !important;
+      margin: 0 auto !important;
+      transition: all 0.2s ease !important;
+
+      &:focus {
+        border-color: #162d4a !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 0 4px rgba(22, 45, 74, 0.14) !important;
+      }
+
+      &::placeholder {
+        color: #94a3b8 !important;
+        letter-spacing: 6px !important;
+      }
+    }
+  }
+
+  .otp-dialog-body {
+    text-align: center;
+
+    .otp-info-text {
+      color: #334155;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.5;
+      margin: 0 0 0.95rem;
+    }
+
+    .otp-countdown-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 30px;
+      color: #162d4a;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+
+      strong {
+        color: #1e40af;
+        font-weight: 800;
+      }
+
+      &.urgent {
+        background: #fef2f2;
+        border-color: #fecaca;
+        color: #991b1b;
+        strong {
+          color: #dc2626;
+        }
+      }
+    }
+
+    .otp-alert-error {
+      background: #fef2f2;
+      border: 1.5px solid #fecaca;
+      border-radius: 8px;
+      color: #b91c1c;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 8px 12px;
+      margin-top: 0.65rem;
+    }
+  }
+}
+
+/* Estilos de Alerta Clásica .custom-alert */
+ion-alert.custom-alert {
+  .alert-wrapper {
+    border-radius: 18px !important;
+  }
+}
+
+/* ==========================================================================
+   CLEARANCE SAFE AREA PARA EVITAR QUE EL FOOTER TAPE CONTENIDO
+   ========================================================================== */
+
+ion-content {
+  --padding-bottom: 4rem;
+}

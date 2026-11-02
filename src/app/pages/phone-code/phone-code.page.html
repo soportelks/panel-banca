@@ -1,41 +1,82 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back"></ion-back-button>
+      <ion-back-button defaultHref="/register" icon="chevron-back-outline" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Codigo de Confirmación</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding ion-text-center">
-  <p>Ingresa el código <br> recibido via SMS, <br> WhatsApp, Email:</p>
-  <br>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-input type="number"></ion-input>
-      </ion-col>
-      <ion-col>
-        <ion-input type="number"></ion-input>
-      </ion-col>
-      <ion-col>
-        <ion-input type="number"></ion-input>
-      </ion-col>
-      <ion-col>
-        <ion-input type="number"></ion-input>
-      </ion-col>
-      <ion-col>
-        <ion-input type="number"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-end ion-margin-top">
-      <a (click)="setOpen(true)">No recibi un código</a>
-      <ion-alert [isOpen]="isAlertOpen" header="Reenviando" message="Le hemos reenviado su código"
-        [buttons]="alertButtons" (didDismiss)="setOpen(false)"></ion-alert>
-    </ion-row>
-  </ion-grid>
-  <br>
-  <ion-button shape="round" class="ion-margin-top" routerLink="/datos-alta" size="large">
-    Continuar
-  </ion-button>
+<ion-content [fullscreen]="true" class="phone-code-content">
+  <div class="phone-code-wrapper">
+    <div class="phone-code-card">
+      
+      <!-- Logo RDAM -->
+      <div class="brand-header">
+        <div class="brand-logo-wrapper">
+          <img
+            src="assets/images/Logo_RDAM_negro.png"
+            class="brand-logo"
+            alt="Logo RDAM"
+          />
+        </div>
+        <h1 class="brand-title">Código de Confirmación</h1>
+        <p class="brand-subtitle">
+          Ingresa el código que recibiste vía SMS, WhatsApp o correo electrónico para continuar tu alta.
+        </p>
+      </div>
+
+      <!-- Grid de Dígitos -->
+      <div class="digits-container">
+        <ion-grid>
+          <ion-row class="digits-row">
+            <ion-col>
+              <ion-input type="number" maxlength="1" class="digit-box" placeholder="•"></ion-input>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" maxlength="1" class="digit-box" placeholder="•"></ion-input>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" maxlength="1" class="digit-box" placeholder="•"></ion-input>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" maxlength="1" class="digit-box" placeholder="•"></ion-input>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" maxlength="1" class="digit-box" placeholder="•"></ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-justify-content-center ion-margin-top">
+            <a (click)="setOpen(true)" class="resend-link">¿No recibiste el código?</a>
+            <ion-alert
+              [isOpen]="isAlertOpen"
+              header="Código Reenviado"
+              message="Te hemos enviado un nuevo código de confirmación a tus medios de contacto."
+              [buttons]="alertButtons"
+              (didDismiss)="setOpen(false)"
+            ></ion-alert>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <!-- Botón Continuar -->
+      <div class="action-wrapper">
+        <ion-button
+          expand="block"
+          size="large"
+          class="btn-continue"
+          routerLink="/datos-alta"
+        >
+          Continuar
+        </ion-button>
+      </div>
+
+      <!-- Pie de Seguridad -->
+      <div class="security-footer">
+        <ion-icon name="shield-checkmark"></ion-icon>
+        <span>Proceso seguro de validación telefónica</span>
+      </div>
+
+    </div>
+  </div>
 </ion-content>

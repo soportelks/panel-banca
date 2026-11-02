@@ -1,43 +1,76 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back"></ion-back-button>
+      <ion-back-button defaultHref="/login" icon="chevron-back-outline" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Recuperar Contraseña</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]=" true" class="ion-text-center ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>
-        Para recuperar tu contraseña por favor <br />
-        ingresa el número de teléfono que <br />
-        usaste al abrir tu cuenta.
-      </ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-icon name="call-outline" class="ion-margin-end"></ion-icon>
-        <ion-input
-          [(ngModel)]="phoneNumber"
-          label="Ingresa tu teléfono"
-          labelPlacement="floating"
-          color="primary"
-          maxlength="10"
-          minlength="10"
-        >
-        </ion-input>
-      </ion-item>
+<ion-content [fullscreen]="true" class="recover-content">
+  <div class="recover-wrapper">
+    <div class="recover-card">
+      
+      <!-- Encabezado con Logo Oficial RDAM -->
+      <div class="brand-header">
+        <div class="brand-logo-wrapper">
+          <img
+            src="assets/images/Logo_RDAM_negro.png"
+            class="brand-logo"
+            alt="Logo RDAM"
+          />
+        </div>
+        <h1 class="brand-title">Recuperar Contraseña</h1>
+        <p class="brand-subtitle">
+          Ingresa el número de teléfono que registraste al abrir tu cuenta para restablecer tu acceso.
+        </p>
+      </div>
 
-      <ion-button
-        shape="round"
-        (click)="searchClientForRecovery()"
-        expand="block"
-        class="ion-margin-top"
-      >
-        Continuar
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+      <!-- Formulario / Campo Teléfono -->
+      <div class="recover-form">
+        <div class="input-group">
+          <ion-item lines="none" class="custom-input-item">
+            <ion-icon name="call-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-input
+              [(ngModel)]="phoneNumber"
+              label="Teléfono (10 dígitos)"
+              labelPlacement="floating"
+              inputmode="tel"
+              type="tel"
+              maxlength="10"
+              minlength="10"
+              placeholder="Ej. 5512345678"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Botón Continuar -->
+        <div class="action-wrapper">
+          <ion-button
+            expand="block"
+            size="large"
+            class="submit-button"
+            (click)="searchClientForRecovery()"
+            style="--color: #ffffff; color: #ffffff;"
+          >
+            Continuar
+          </ion-button>
+        </div>
+
+        <!-- Enlace Regresar al Login -->
+        <div class="back-to-login">
+          <a routerLink="/login" class="back-link">
+            <ion-icon name="chevron-back"></ion-icon>
+            Regresar a Iniciar Sesión
+          </a>
+        </div>
+      </div>
+
+      <!-- Pie de Seguridad -->
+      <div class="security-footer">
+        <ion-icon name="shield-checkmark"></ion-icon>
+        <span>Proceso seguro de validación de identidad</span>
+      </div>
+
+    </div>
+  </div>
 </ion-content>
