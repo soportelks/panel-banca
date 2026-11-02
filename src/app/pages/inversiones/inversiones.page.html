@@ -29,24 +29,42 @@
       <h1 class="page-title">Mis Inversiones</h1>
     </div>
 
-    <!-- BANNER COMPACTO DE RENDIMIENTO / SALDO INVERSIÓN -->
-    <div class="compact-balance-strip">
-      <div class="strip-glow"></div>
-      
-      <div class="strip-left">
-        <div class="strip-icon-circle">
-          <ion-icon name="trending-up-outline"></ion-icon>
+    <!-- TARJETA DE CAPITAL EN INVERSIÓN ESTILO BANCA EJECUTIVA (VERDE PATRIMONIAL) -->
+    <div class="banorte-balance-card theme-emerald">
+      <div class="card-top-bar">
+        <div class="account-identity">
+          <div class="bank-pill-indicator">
+            <span class="navy-flag"></span>
+            <span class="account-type-text">Patrimonio en Inversión</span>
+          </div>
+          <span class="account-tag-sub">Pagaré RDAM con Rendimiento</span>
         </div>
-        <div class="strip-amount-group">
-          <span class="strip-label">Capital Total en Inversión</span>
-          <div class="strip-number-row">
-            <span class="strip-amount">
+
+        <div class="account-status-badge">
+          <span class="status-live-dot"></span>
+          <span>Rendimiento Activo</span>
+        </div>
+      </div>
+
+      <div class="card-main-body">
+        <div class="balance-content-left">
+          <span class="balance-kicker">Capital total en inversión</span>
+
+          <div class="balance-display-row">
+            <span class="balance-number">
               {{ (interesesResponse.info && interesesResponse.info[0]?.sum ? interesesResponse.info[0].sum : 0) | currency:'USD':'symbol':'1.2-2' }}
             </span>
-            <span class="strip-currency">MXN</span>
+            <span class="currency-tag">MXN</span>
           </div>
         </div>
-      </div>  
+
+        <div class="card-actions-right">
+          <div class="safety-badge-box">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Tasa Fija Garantizada</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- TARJETA CONTENEDOR DE PAGARÉS -->

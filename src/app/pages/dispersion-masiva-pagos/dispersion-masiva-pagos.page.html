@@ -30,54 +30,63 @@
       <p class="page-description">Carga lotes de transferencias en formato Excel (.xlsx) para procesar pagos masivos vía SPEI con confirmación bancaria</p>
     </div>
 
-    <!-- BANNER DE SALDO DISPONIBLE -->
+    <!-- BANNER DE SALDO DISPONIBLE (ESTILO BANCA EJECUTIVA) -->
     <div [class.dual-balance-grid]="mostrarTotalMontos" [class.single-balance-container]="!mostrarTotalMontos">
       
-      <!-- Tarjeta 1: Saldo en Ahorro -->
-      <div class="compact-balance-strip strip-navy">
-        <div class="strip-glow"></div>
-        <div class="strip-left">
-          <div class="strip-icon-circle">
-            <ion-icon name="wallet-outline"></ion-icon>
-          </div>
-          <div class="strip-amount-group">
-            <span class="strip-label">Saldo Disponible en Ahorro</span>
-            <div class="strip-number-row">
-              <span class="strip-amount">
-                {{ (datosSaldo?.info?.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
-              </span>
-              <span class="strip-currency">MXN</span>
+      <!-- Tarjeta 1: Saldo en Ahorro (Azul Marino) -->
+      <div class="banorte-balance-card">
+        <div class="card-top-bar">
+          <div class="account-identity">
+            <div class="bank-pill-indicator">
+              <span class="navy-flag"></span>
+              <span class="account-type-text">Cuenta de Ahorro</span>
             </div>
+            <span class="account-tag-sub">Cuenta Origen</span>
+          </div>
+          <div class="account-status-badge">
+            <span class="status-live-dot"></span>
+            <span>Disponible</span>
           </div>
         </div>
-        <div class="strip-right">
-          <span class="strip-status-pill">
-            <span class="status-dot"></span> Cuenta Origen
-          </span>
+
+        <div class="card-main-body">
+          <div class="balance-content-left">
+            <span class="balance-kicker">Saldo disponible para dispersión</span>
+            <div class="balance-display-row">
+              <span class="balance-number">
+                {{ (datosSaldo?.info?.saldo ?? 0) | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+              <span class="currency-tag">MXN</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Tarjeta 2: Total a Dispersar (si hay archivo cargado) -->
-      <div class="compact-balance-strip strip-indigo" *ngIf="mostrarTotalMontos">
-        <div class="strip-glow"></div>
-        <div class="strip-left">
-          <div class="strip-icon-circle">
-            <ion-icon name="calculator-outline"></ion-icon>
-          </div>
-          <div class="strip-amount-group">
-            <span class="strip-label">Total a Dispersar (Lote)</span>
-            <div class="strip-number-row">
-              <span class="strip-amount">
-                {{ totalMontos | currency:'USD':'symbol':'1.2-2' }}
-              </span>
-              <span class="strip-currency">MXN</span>
+      <div class="banorte-balance-card theme-indigo" *ngIf="mostrarTotalMontos">
+        <div class="card-top-bar">
+          <div class="account-identity">
+            <div class="bank-pill-indicator">
+              <span class="navy-flag"></span>
+              <span class="account-type-text">Total a Dispersar</span>
             </div>
+            <span class="account-tag-sub">Lote Calculado</span>
+          </div>
+          <div class="account-status-badge">
+            <span>{{ csvData.length }} Órdenes</span>
           </div>
         </div>
-        <div class="strip-right">
-          <span class="strip-status-pill badge-records">
-            {{ csvData.length }} Órdenes
-          </span>
+
+        <div class="card-main-body">
+          <div class="balance-content-left">
+            <span class="balance-kicker">Monto total con comisiones</span>
+            <div class="balance-display-row">
+              <span class="balance-number">
+                {{ totalMontos | currency:'USD':'symbol':'1.2-2' }}
+              </span>
+              <span class="currency-tag">MXN</span>
+            </div>
+          </div>
         </div>
       </div>
 

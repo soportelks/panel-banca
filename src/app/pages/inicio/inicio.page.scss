@@ -373,216 +373,343 @@ $blue-primary: var(--app-blue);
 }
 
 // -------------------------------------------------------------
-// BANNER COMPACTO DE SALDO DISPONIBLE (SLIM & EXECUTIVE)
+// TARJETA DE SALDO ESTILO BANCA EJECUTIVA (LIMPIA, CORPORATIVA Y EN AZUL MARINO)
 // -------------------------------------------------------------
-.compact-balance-strip {
+.banorte-balance-card {
   position: relative;
-  background: linear-gradient(135deg, #162d4a 0%, #1e3a5f 55%, #1e40af 100%);
-  border-radius: 14px;
-  padding: 0.95rem 1.4rem;
-  color: #ffffff;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  box-shadow: 0 12px 30px -6px rgba(22, 45, 74, 0.32),
-              0 0 0 1px rgba(255, 255, 255, 0.12) inset;
-  margin-bottom: 1.75rem;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  border-top: 4px solid #{$navy-primary}; /* Franja azul marino institucional */
+  padding: 1.35rem 1.75rem 1.15rem;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+  margin-bottom: 2rem;
+  transition: all 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 8px 28px -4px rgba(15, 23, 42, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04);
+  }
 
   @media (max-width: 640px) {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.95rem 1.15rem;
-    gap: 0.95rem;
+    padding: 1.15rem 1.25rem 1rem;
+    margin-bottom: 1.5rem;
   }
 
-  .strip-glow {
-    position: absolute;
-    top: -45px;
-    right: -45px;
-    width: 160px;
-    height: 160px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .strip-left {
-    position: relative;
-    z-index: 2;
+  // --- Encabezado Superior de la Tarjeta ---
+  .card-top-bar {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    min-width: 0;
+    justify-content: space-between;
+    margin-bottom: 1.15rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 
-    .strip-icon-circle {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      color: #93c5fd;
+    .account-identity {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 1.45rem;
-      flex-shrink: 0;
-    }
+      gap: 0.75rem;
+      flex-wrap: wrap;
 
-    .strip-amount-group {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-
-      .strip-label-row {
-        display: flex;
+      .bank-pill-indicator {
+        display: inline-flex;
         align-items: center;
-        gap: 0.65rem;
-        margin-bottom: 0.2rem;
-        flex-wrap: wrap;
+        gap: 0.45rem;
 
-        .strip-label {
-          font-size: 0.74rem;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-          color: rgba(255, 255, 255, 0.78);
+        .navy-flag {
+          width: 8px;
+          height: 8px;
+          border-radius: 2px;
+          background: #{$navy-primary};
         }
 
-        .strip-badge-live {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.35rem;
-          padding: 0.15rem 0.5rem;
-          background: rgba(255, 255, 255, 0.12);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          border-radius: 999px;
-          font-size: 0.68rem;
-          font-weight: 600;
-          color: #bfdbfe;
-
-          .live-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #60a5fa;
-            box-shadow: 0 0 6px #60a5fa;
-          }
+        .account-type-text {
+          font-size: 0.8rem;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: #1e293b;
         }
       }
 
-      .strip-number-row {
+      .account-tag-sub {
+        font-size: 0.775rem;
+        font-weight: 500;
+        color: #64748b;
+        position: relative;
+        padding-left: 0.75rem;
+
+        &::before {
+          content: '•';
+          position: absolute;
+          left: 0;
+          color: #cbd5e1;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .account-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.65rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #15803d;
+
+      .status-live-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+      }
+    }
+  }
+
+  // --- Cuerpo Principal: Monto & Acciones ---
+  .card-main-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 1.15rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .balance-content-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 0;
+
+      .balance-kicker {
+        font-size: 0.825rem;
+        font-weight: 600;
+        color: #64748b;
+        text-transform: capitalize;
+      }
+
+      .balance-display-row {
         display: flex;
-        align-items: center;
-        gap: 0.45rem;
+        align-items: baseline;
+        gap: 0.5rem;
         flex-wrap: wrap;
 
-        .strip-amount {
-          font-size: 1.85rem;
+        .balance-number {
+          font-size: 2.35rem;
           font-weight: 800;
-          color: #ffffff;
+          color: #0f172a;
           letter-spacing: -0.03em;
-          line-height: 1.1;
+          line-height: 1;
 
           &.masked {
             letter-spacing: 0.2em;
-            color: rgba(255, 255, 255, 0.9);
+            color: #94a3b8;
           }
 
-          @media (max-width: 480px) {
-            font-size: 1.55rem;
+          @media (max-width: 640px) {
+            font-size: 1.85rem;
           }
         }
 
-        .strip-currency {
-          font-size: 0.85rem;
+        .currency-tag {
+          font-size: 0.95rem;
           font-weight: 700;
-          color: #93c5fd;
+          color: #64748b;
         }
 
-        .strip-eye-btn {
+        .btn-toggle-eye {
           display: inline-flex;
           align-items: center;
-          gap: 0.3rem;
-          background: rgba(255, 255, 255, 0.14);
-          border: 1px solid rgba(255, 255, 255, 0.22);
-          color: #ffffff;
-          padding: 0.22rem 0.6rem;
-          border-radius: 6px;
+          gap: 0.35rem;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          color: #475569;
+          padding: 0.28rem 0.65rem;
+          border-radius: 8px;
           cursor: pointer;
-          margin-left: 0.35rem;
-          transition: all 0.2s ease;
+          font-size: 0.75rem;
+          font-weight: 600;
+          margin-left: 0.4rem;
+          transition: all 0.18s ease;
 
           ion-icon {
             font-size: 15px;
           }
 
-          .eye-text {
-            font-size: 0.72rem;
-            font-weight: 600;
-          }
-
           &:hover {
-            background: rgba(255, 255, 255, 0.24);
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #0f172a;
             transform: translateY(-1px);
           }
         }
       }
     }
-  }
 
-  .strip-right {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-
-    @media (max-width: 640px) {
-      width: 100%;
-    }
-
-    .strip-action-btn {
-      display: inline-flex;
+    .card-actions-right {
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: #ffffff;
-      padding: 0.6rem 1.15rem;
-      border-radius: 10px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-      transition: all 0.2s ease;
+      gap: 0.75rem;
+      flex-shrink: 0;
 
-      ion-icon {
-        font-size: 16px;
-        color: #93c5fd;
+      @media (max-width: 768px) {
+        width: 100%;
+        flex-wrap: wrap;
       }
 
-      .action-chevron {
-        font-size: 14px;
-        color: #ffffff;
-        transition: transform 0.2s ease;
-      }
+      .btn-banorte-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        color: #1e293b;
+        padding: 0.65rem 1.15rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
 
-      &:hover {
-        background: rgba(255, 255, 255, 0.24);
-        border-color: rgba(255, 255, 255, 0.4);
-        transform: translateY(-1px);
+        ion-icon {
+          font-size: 17px;
+          color: #64748b;
+        }
 
-        .action-chevron {
-          transform: translateX(3px);
+        &:hover {
+          background: #f8fafc;
+          border-color: #cbd5e1;
+          color: #0f172a;
+          transform: translateY(-1px);
+        }
+
+        @media (max-width: 640px) {
+          flex: 1;
+          justify-content: center;
         }
       }
 
-      @media (max-width: 640px) {
-        width: 100%;
-        justify-content: center;
+      .btn-banorte-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #{$navy-primary}; /* Azul marino institucional */
+        border: 1.5px solid #{$navy-primary};
+        color: #ffffff;
+        padding: 0.65rem 1.25rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(22, 45, 74, 0.2);
+        transition: all 0.2s ease;
+
+        ion-icon {
+          font-size: 16px;
+        }
+
+        .btn-arrow {
+          font-size: 14px;
+          transition: transform 0.2s ease;
+        }
+
+        &:hover {
+          background: #{$navy-hover};
+          border-color: #{$navy-hover};
+          box-shadow: 0 6px 16px rgba(22, 45, 74, 0.28);
+          transform: translateY(-1px);
+
+          .btn-arrow {
+            transform: translateX(3px);
+          }
+        }
+
+        @media (max-width: 640px) {
+          flex: 1;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  // --- Pie de la Tarjeta con CLABE (Discreto y Funcional) ---
+  .card-footer-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.95rem;
+    border-top: 1px solid #f1f5f9;
+    flex-wrap: wrap;
+
+    .clabe-snippet {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 0.3rem 0.65rem;
+      border-radius: 8px;
+
+      .clabe-snippet-label {
+        font-size: 0.725rem;
+        font-weight: 700;
+        color: #64748b;
+        letter-spacing: 0.04em;
+      }
+
+      .clabe-snippet-num {
+        font-family: 'SF Mono', Menlo, Consolas, Monaco, monospace;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #0f172a;
+        letter-spacing: 0.05em;
+      }
+
+      .btn-copy-mini {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        background: transparent;
+        border: none;
+        color: #{$navy-primary};
+        font-size: 0.72rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 0.1rem 0.35rem;
+        border-radius: 4px;
+        transition: all 0.15s ease;
+
+        ion-icon {
+          font-size: 13px;
+        }
+
+        &:hover {
+          background: #e2e8f0;
+        }
+      }
+    }
+
+    .safety-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #94a3b8;
+
+      ion-icon {
+        font-size: 15px;
+        color: #10b981;
       }
     }
   }
