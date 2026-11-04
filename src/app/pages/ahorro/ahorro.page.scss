@@ -700,25 +700,25 @@ $rose-border: var(--app-danger-border);
   --border-radius: 24px;
   --max-width: 580px;
   --width: 92%;
-  --max-height: 86vh;
-  --height: auto;
+  --max-height: 88vh;
+  --height: min(720px, 88vh);
 
-  .modal-wrapper-container {
+  &::part(content) {
+    border-radius: 24px;
     background: var(--app-surface);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.35);
     overflow: hidden;
   }
 
-  .modal-top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.35rem 1.75rem;
-    border-bottom: 1px solid $border-light;
+  .modal-header {
     background: var(--app-surface);
+    border-bottom: 1px solid $border-light;
+
+    .modal-toolbar {
+      --background: var(--app-surface);
+      --border-width: 0;
+      padding: 0.75rem 1.25rem;
+    }
 
     .modal-title-box {
       display: flex;
@@ -773,10 +773,14 @@ $rose-border: var(--app-danger-border);
     }
   }
 
+  .modal-content-body {
+    --background: var(--app-surface);
+    --color: $text-dark;
+  }
+
   .modal-scroll-content {
     padding: 1.5rem 1.75rem 2rem;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
 
     @media (max-width: 640px) {
       padding: 1.25rem 1.25rem 1.75rem;

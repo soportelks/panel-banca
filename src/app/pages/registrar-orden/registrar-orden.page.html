@@ -191,8 +191,10 @@
                 formControlName="referenciaNumerica"
                 label="Referencia Numérica"
                 labelPlacement="floating"
+                type="text"
+                inputmode="numeric"
                 maxlength="7"
-                placeholder="7 dígitos"
+                placeholder="Hasta 7 dígitos numéricos"
                 required
               ></ion-input>
             </ion-item>
@@ -203,7 +205,7 @@
         <div class="form-grid-two-cols">
           <!-- 7. Monto -->
           <div class="form-group-item">
-            <ion-item lines="none" class="custom-form-item monto-item">
+            <ion-item lines="none" class="custom-form-item">
               <ion-icon name="cash-outline" slot="start" class="field-icon"></ion-icon>
               <ion-input
                 formControlName="monto"

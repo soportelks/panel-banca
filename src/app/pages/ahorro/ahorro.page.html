@@ -52,7 +52,7 @@
 
           <div class="balance-display-row">
             <span class="balance-number">
-              {{ (datosSaldo.info.saldo !== undefined ? datosSaldo.info.saldo : (datosSaldo.info[0]?.saldo ?? 0)) | currency:'USD':'symbol':'1.2-2' }}
+              {{ (datosSaldo.info?.saldo !== undefined ? datosSaldo.info.saldo : (datosSaldo.info?.[0]?.saldo ?? 0)) | currency:'USD':'symbol':'1.2-2' }}
             </span>
             <span class="currency-tag">MXN</span>
           </div>
@@ -206,14 +206,14 @@
 <ion-modal
   #modal
   [isOpen]="isModalOpen"
-  [presentingElement]="presentingElement"
+  [backdropDismiss]="true"
+  (didDismiss)="closeModal()"
   class="custom-transaction-modal"
 >
   <ng-template>
-    <div class="modal-wrapper-container">
-      
-      <!-- ENCABEZADO DEL MODAL -->
-      <div class="modal-top-header">
+    <!-- ENCABEZADO DEL MODAL (TOOLBAR NATIVO IONIC) -->
+    <ion-header class="ion-no-border modal-header">
+      <ion-toolbar class="modal-toolbar">
         <div class="modal-title-box">
           <div class="modal-header-icon">
             <ion-icon name="receipt-outline"></ion-icon>
@@ -224,23 +224,27 @@
           </div>
         </div>
 
-        <button class="modal-close-button" (click)="closeModal()" aria-label="Cerrar modal">
-          <ion-icon name="close-outline"></ion-icon>
-        </button>
-      </div>
+        <ion-buttons slot="end">
+          <button class="modal-close-button" (click)="closeModal()" type="button" aria-label="Cerrar modal">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
 
-      <!-- CUERPO CON SCROLL -->
-      <div class="modal-scroll-content">
+    <!-- CUERPO DEL MODAL (SCROLL NATIVO IONIC) -->
+    <ion-content class="modal-content-body">
+      <div class="modal-scroll-content" *ngIf="movimientoActual">
 
         <!-- TARJETA DESTACADA DE MONTO -->
         <div class="modal-amount-hero">
           <span class="modal-amount-label">Monto Transferido</span>
           <h2 class="modal-amount-value">
-            {{ movimientosSELECT?.info[0]?.monto | currency:'USD':'symbol':'1.2-2' }}
+            {{ movimientoActual?.monto | currency:'USD':'symbol':'1.2-2' }}
           </h2>
-          <div class="modal-date-pill" *ngIf="movimientosSELECT?.info[0]?.fecha_hora">
+          <div class="modal-date-pill" *ngIf="movimientoActual?.fecha_hora">
             <ion-icon name="time-outline"></ion-icon>
-            <span>{{ movimientosSELECT?.info[0]?.fecha_hora | date:'medium' }}</span>
+            <span>{{ movimientoActual?.fecha_hora | date:'medium' }}</span>
           </div>
         </div>
 
@@ -254,7 +258,7 @@
               <span>Clave de Rastreo</span>
             </div>
             <div class="detail-cell-value mono-font">
-              {{ movimientosSELECT?.info[0]?.claverastreo || 'No disponible' }}
+              {{ movimientoActual?.claverastreo || 'No disponible' }}
             </div>
           </div>
 
@@ -265,7 +269,7 @@
               <span>Concepto de Pago</span>
             </div>
             <div class="detail-cell-value">
-              {{ movimientosSELECT?.info[0]?.conceptopago || 'Sin concepto' }}
+              {{ movimientoActual?.conceptopago || 'Sin concepto' }}
             </div>
           </div>
 
@@ -276,7 +280,7 @@
               <span>Nombre del Ordenante</span>
             </div>
             <div class="detail-cell-value">
-              {{ movimientosSELECT?.info[0]?.nombreordenante || '—' }}
+              {{ movimientoActual?.nombreordenante || '—' }}
             </div>
           </div>
 
@@ -287,7 +291,7 @@
               <span>Cuenta Origen</span>
             </div>
             <div class="detail-cell-value mono-font">
-              {{ movimientosSELECT?.info[0]?.cuentaordenante || '—' }}
+              {{ movimientoActual?.cuentaordenante || '—' }}
             </div>
           </div>
 
@@ -298,7 +302,7 @@
               <span>Beneficiario</span>
             </div>
             <div class="detail-cell-value">
-              {{ movimientosSELECT?.info[0]?.nombrebeneficiario || '—' }}
+              {{ movimientoActual?.nombrebeneficiario || '—' }}
             </div>
           </div>
 
@@ -309,7 +313,7 @@
               <span>Cuenta Destino</span>
             </div>
             <div class="detail-cell-value mono-font">
-              {{ movimientosSELECT?.info[0]?.cuentabeneficiario || '—' }}
+              {{ movimientoActual?.cuentabeneficiario || '—' }}
             </div>
           </div>
 
@@ -325,7 +329,8 @@
         <div class="modal-action-wrapper" *ngIf="!isLoading">
           <button
             class="btn-primary-comprobante"
-            (click)="comprobante(movimientosSELECT?.info[0]?.empresa, movimientosSELECT?.info[0]?.claverastreo, movimientosSELECT?.info[0]?.fechaoperacion)"
+            type="button"
+            (click)="comprobante(movimientoActual?.empresa, movimientoActual?.claverastreo, movimientoActual?.fechaoperacion)"
           >
             <ion-icon name="arrow-down-circle-outline"></ion-icon>
             <span>Descargar Comprobante PDF</span>
@@ -333,7 +338,6 @@
         </div>
 
       </div>
-
-    </div>
+    </ion-content>
   </ng-template>
 </ion-modal>

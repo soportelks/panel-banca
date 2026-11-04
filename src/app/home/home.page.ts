@@ -14,11 +14,6 @@ export class HomePage {
   }
 
   detectTheme() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    this.isDarkMode = prefersDark.matches;
-
-    prefersDark.addEventListener('change', (e) => {
-      this.isDarkMode = e.matches;
-    });
+    this.isDarkMode = false;
   }
 }

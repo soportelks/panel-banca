@@ -99,7 +99,7 @@ export class RegistrarOrdenPage implements AfterViewInit {
       conceptoPago: ['', Validators.required],
       referenciaNumerica: [
         '',
-        [Validators.required, Validators.pattern('^[0-9]{7}$')],
+        [Validators.required, Validators.pattern('^[0-9]{1,7}$')],
       ],
       monto: [
         '',
@@ -111,6 +111,45 @@ export class RegistrarOrdenPage implements AfterViewInit {
       ],
       tipoPago: ['', Validators.required],
     });
+
+    const storedData = localStorage.getItem('datosCliente');
+    if (storedData) {
+      this.datosCliente = JSON.parse(storedData);
+    }
+    this.cargarSaldoDeStorage();
+
+    window.addEventListener('saldoActualizado', (e: any) => {
+      if (e?.detail?.saldo !== undefined) {
+        this.aplicarSaldo(e.detail.saldo);
+      }
+    });
+  }
+
+  cargarSaldoDeStorage() {
+    const saldoGuardado = localStorage.getItem('ultimoSaldoConocido');
+    if (saldoGuardado !== null && !isNaN(parseFloat(saldoGuardado))) {
+      this.aplicarSaldo(parseFloat(saldoGuardado));
+    }
+  }
+
+  aplicarSaldo(saldoNum: number) {
+    if (!this.datosSaldo) {
+      this.datosSaldo = { codigo: 0, info: { saldo: saldoNum }, mensaje: '' };
+    } else if (!this.datosSaldo.info) {
+      this.datosSaldo.info = { saldo: saldoNum };
+    } else {
+      this.datosSaldo.info.saldo = saldoNum;
+    }
+  }
+
+  ionViewWillEnter(): void {
+    const storedData = localStorage.getItem('datosCliente');
+    if (storedData) {
+      this.datosCliente = JSON.parse(storedData);
+    }
+    this.llenarOrdenanteDesdeStorage();
+    this.cargarSaldoDeStorage();
+    this.searchSaldoCliente();
   }
 
   ngAfterViewInit(): void {
@@ -119,6 +158,7 @@ export class RegistrarOrdenPage implements AfterViewInit {
       this.datosCliente = JSON.parse(storedData);
     }
     this.llenarOrdenanteDesdeStorage();
+    this.cargarSaldoDeStorage();
     this.searchSaldoCliente();
     this.formOrden.get('tipoPago')?.disable();
     this.formOrden.reset();
@@ -143,6 +183,14 @@ export class RegistrarOrdenPage implements AfterViewInit {
   }
 
   searchSaldoCliente() {
+    if (!this.datosCliente?.numero_cliente) {
+      const storedData = localStorage.getItem('datosCliente');
+      if (storedData) {
+        this.datosCliente = JSON.parse(storedData);
+      }
+    }
+    if (!this.datosCliente?.numero_cliente) return;
+
     const json = {
       datos: {
         numero_cliente: this.datosCliente.numero_cliente
@@ -166,18 +214,18 @@ export class RegistrarOrdenPage implements AfterViewInit {
             }
 
             const saldoReal = saldoOriginal - saldoMinimo;
+            localStorage.setItem('ultimoSaldoConocido', saldoReal.toString());
+            window.dispatchEvent(new CustomEvent('saldoActualizado', { detail: { saldo: saldoReal } }));
 
-            this.datosSaldo = {
-              codigo: resp.codigo,
-              info: {
-                ...resp.info,
-                saldo: saldoReal
-              },
-              mensaje: resp.mensaje,
-            };
+            this.aplicarSaldo(saldoReal);
+            this.datosSaldo.codigo = resp.codigo;
+            this.datosSaldo.mensaje = resp.mensaje;
           },
           error: (err) => {
             console.error('Error al obtener las comisiones del cliente', err);
+            localStorage.setItem('ultimoSaldoConocido', saldoOriginal.toString());
+            window.dispatchEvent(new CustomEvent('saldoActualizado', { detail: { saldo: saldoOriginal } }));
+            this.aplicarSaldo(saldoOriginal);
           }
         });
       },
@@ -349,9 +397,10 @@ export class RegistrarOrdenPage implements AfterViewInit {
 
       this.dispersionesMasivasSrv.envioPagos(payload).subscribe({
         next: async (response) => {
-          console.log(response);
-          if (response.codigo !== "0") {
-            this.presentAlert(response.info.mensaje || 'Ocurrió un error inesperado');
+          console.log('Respuesta de envío de pago SPEI:', response);
+          if (response && response.codigo !== "0") {
+            const mensajeError = response.info?.mensaje || response.mensaje || 'Ocurrió un error al procesar el pago';
+            this.presentAlert(mensajeError);
             this.finalizarProgreso();
             this.searchSaldoCliente();
           } else {
@@ -381,7 +430,7 @@ export class RegistrarOrdenPage implements AfterViewInit {
   generarReferenciaNumerica() {
     let numeroAleatorio = Math.floor(1000000 + Math.random() * 9000000);
     this.formOrden.get('referenciaNumerica')?.setValue(numeroAleatorio.toString());
-    this.formOrden.get('referenciaNumerica')?.disable();
+    this.formOrden.get('referenciaNumerica')?.enable();
     this.formOrden.get('referenciaNumerica')?.updateValueAndValidity();
   }
 

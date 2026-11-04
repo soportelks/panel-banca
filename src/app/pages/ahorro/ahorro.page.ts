@@ -44,18 +44,63 @@ export class AhorroPage implements AfterViewInit {
   ) {
     this.datosSaldo = {
       codigo: '',
-      info: [{ saldo: 0 }],
+      info: { saldo: 0 },
       mensaje: '',
     };
 
+    const storedData = localStorage.getItem('datosCliente');
+    if (storedData) {
+      this.datosCliente = JSON.parse(storedData);
+    }
+
     const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras?.state?.['datosCliente']) {
+      this.datosCliente = navigation.extras.state['datosCliente'];
+    }
 
-    if (navigation) {
-      const state = navigation.extras.state;
+    this.cargarSaldoDeStorage();
 
-      this.datosCliente = state?.['datosCliente'];
+    window.addEventListener('saldoActualizado', (e: any) => {
+      if (e?.detail?.saldo !== undefined) {
+        this.aplicarSaldo(e.detail.saldo);
+      }
+    });
+
+    if (this.datosCliente?.numero_cliente) {
       this.searchMovs(1);
     }
+  }
+
+  cargarSaldoDeStorage() {
+    const saldoGuardado = localStorage.getItem('ultimoSaldoConocido');
+    if (saldoGuardado !== null && !isNaN(parseFloat(saldoGuardado))) {
+      this.aplicarSaldo(parseFloat(saldoGuardado));
+    }
+  }
+
+  aplicarSaldo(saldoNum: number) {
+    if (!this.datosSaldo) {
+      this.datosSaldo = { codigo: '', info: { saldo: saldoNum }, mensaje: '' };
+    } else if (!this.datosSaldo.info) {
+      this.datosSaldo.info = { saldo: saldoNum };
+    } else if (Array.isArray(this.datosSaldo.info)) {
+      this.datosSaldo.info = { saldo: saldoNum };
+    } else {
+      this.datosSaldo.info.saldo = saldoNum;
+    }
+  }
+
+  ionViewWillEnter(): void {
+    const storedData = localStorage.getItem('datosCliente');
+    if (storedData) {
+      this.datosCliente = JSON.parse(storedData);
+    }
+    this.cargarSaldoDeStorage();
+    this.searchSaldoCliente();
+    if (this.datosCliente?.numero_cliente) {
+      this.searchMovs(1);
+    }
+    this.getFechaOperacion();
   }
 
   ngAfterViewInit(): void {
@@ -93,18 +138,38 @@ export class AhorroPage implements AfterViewInit {
 
 
   /**
-   * Método que busca los movimientos de ahorro del cliente
+   * Getter seguro que obtiene la información del movimiento seleccionado,
+   * ya sea que venga como arreglo (info[0]) o como objeto directo (info).
+   */
+  get movimientoActual(): any {
+    if (!this.movimientosSELECT?.info) return null;
+    if (Array.isArray(this.movimientosSELECT.info)) {
+      return this.movimientosSELECT.info[0] || null;
+    }
+    return this.movimientosSELECT.info;
+  }
+
+  /**
+   * Método que busca los detalles de la transferencia SPEI para el recibo
    * @param movimiento_id ID del movimiento a consultar
    */
-  searchMovsOrd(movimiento_id: number) {
+  async searchMovsOrd(movimiento_id: number) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Consultando recibo...',
+      spinner: 'crescent',
+      cssClass: 'custom-loading',
+    });
+    await loading.present();
+
     const json = {
       datos: {
         idorden: movimiento_id
       }
     };
 
-    this.teso.getInfoMovimientos(json).subscribe(
-      (resp) => {
+    this.teso.getInfoMovimientos(json).subscribe({
+      next: (resp) => {
+        loading.dismiss();
         if (resp?.codigo !== '0') {
           this.presentAlert('Los datos de este movimiento no están disponibles en este momento');
           return;
@@ -112,10 +177,12 @@ export class AhorroPage implements AfterViewInit {
         this.movimientosSELECT = resp;
         this.isModalOpen = true;
       },
-      (error) => {
+      error: (error) => {
+        loading.dismiss();
+        console.error('Error al obtener detalle del movimiento:', error);
         this.presentAlert('Los datos de este movimiento no están disponibles en este momento');
       }
-    );
+    });
   }
 
   comprobante(empresa: string, clave_rastreo: any, fechaOperacion: any) {
@@ -165,6 +232,14 @@ export class AhorroPage implements AfterViewInit {
    * @returns void
    */
   searchSaldoCliente() {
+    if (!this.datosCliente?.numero_cliente) {
+      const storedData = localStorage.getItem('datosCliente');
+      if (storedData) {
+        this.datosCliente = JSON.parse(storedData);
+      }
+    }
+    if (!this.datosCliente?.numero_cliente) return;
+
     const json = {
       datos: {
         numero_cliente: this.datosCliente.numero_cliente
@@ -178,7 +253,6 @@ export class AhorroPage implements AfterViewInit {
 
         this.teso.getDatosComiciones({ numero_cliente: this.datosCliente.numero_cliente }).subscribe({
           next: (comicionesResp: any) => {
-
             let saldoMinimo = 0;
             const comisionData = comicionesResp?.info?.[0];
 
@@ -187,18 +261,18 @@ export class AhorroPage implements AfterViewInit {
             }
 
             const saldoReal = saldoOriginal - saldoMinimo;
+            localStorage.setItem('ultimoSaldoConocido', saldoReal.toString());
+            window.dispatchEvent(new CustomEvent('saldoActualizado', { detail: { saldo: saldoReal } }));
 
-            this.datosSaldo = {
-              codigo: resp.codigo,
-              info: {
-                ...resp.info,
-                saldo: saldoReal
-              },
-              mensaje: resp.mensaje,
-            };
+            this.aplicarSaldo(saldoReal);
+            this.datosSaldo.codigo = resp.codigo;
+            this.datosSaldo.mensaje = resp.mensaje;
           },
           error: (err) => {
             console.error('Error al obtener las comisiones del cliente', err);
+            localStorage.setItem('ultimoSaldoConocido', saldoOriginal.toString());
+            window.dispatchEvent(new CustomEvent('saldoActualizado', { detail: { saldo: saldoOriginal } }));
+            this.aplicarSaldo(saldoOriginal);
           }
         });
       },

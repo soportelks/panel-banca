@@ -132,6 +132,45 @@ export class DispersionMasivaPagosPage implements OnInit {
     private router: Router,
     private otpService: OtpServiceService,
   ) {
+    const storedData = localStorage.getItem('datosCliente');
+    if (storedData) {
+      this.datosCliente = JSON.parse(storedData);
+    }
+    this.cargarSaldoDeStorage();
+
+    window.addEventListener('saldoActualizado', (e: any) => {
+      if (e?.detail?.saldo !== undefined) {
+        this.aplicarSaldo(e.detail.saldo);
+      }
+    });
+  }
+
+  cargarSaldoDeStorage() {
+    const saldoGuardado = localStorage.getItem('ultimoSaldoConocido');
+    if (saldoGuardado !== null && !isNaN(parseFloat(saldoGuardado))) {
+      this.aplicarSaldo(parseFloat(saldoGuardado));
+    }
+  }
+
+  aplicarSaldo(saldoNum: number) {
+    if (!this.datosSaldo) {
+      this.datosSaldo = { codigo: 0, info: { saldo: saldoNum }, mensaje: '' };
+    } else if (!this.datosSaldo.info) {
+      this.datosSaldo.info = { saldo: saldoNum };
+    } else {
+      this.datosSaldo.info.saldo = saldoNum;
+    }
+  }
+
+  ionViewWillEnter() {
+    const storedData = localStorage.getItem('datosCliente');
+    if (storedData) {
+      this.datosCliente = JSON.parse(storedData);
+    }
+    this.llenarOrdenanteDesdeStorage();
+    this.cargarSaldoDeStorage();
+    this.searchSaldoCliente();
+    this.getFechaOperacion();
   }
 
   ngOnInit() {
@@ -141,11 +180,20 @@ export class DispersionMasivaPagosPage implements OnInit {
       this.datosCliente = JSON.parse(storedData);
     }
     this.llenarOrdenanteDesdeStorage();
+    this.cargarSaldoDeStorage();
     this.searchSaldoCliente();
     this.getFechaOperacion();
   }
 
   searchSaldoCliente() {
+    if (!this.datosCliente?.numero_cliente) {
+      const storedData = localStorage.getItem('datosCliente');
+      if (storedData) {
+        this.datosCliente = JSON.parse(storedData);
+      }
+    }
+    if (!this.datosCliente?.numero_cliente) return;
+
     const json = {
       datos: {
         numero_cliente: this.datosCliente.numero_cliente
@@ -169,18 +217,18 @@ export class DispersionMasivaPagosPage implements OnInit {
             }
 
             const saldoReal = saldoOriginal - saldoMinimo;
+            localStorage.setItem('ultimoSaldoConocido', saldoReal.toString());
+            window.dispatchEvent(new CustomEvent('saldoActualizado', { detail: { saldo: saldoReal } }));
 
-            this.datosSaldo = {
-              codigo: resp.codigo,
-              info: {
-                ...resp.info,
-                saldo: saldoReal
-              },
-              mensaje: resp.mensaje,
-            };
+            this.aplicarSaldo(saldoReal);
+            this.datosSaldo.codigo = resp.codigo;
+            this.datosSaldo.mensaje = resp.mensaje;
           },
           error: (err) => {
             console.error('Error al obtener las comisiones del cliente', err);
+            localStorage.setItem('ultimoSaldoConocido', saldoOriginal.toString());
+            window.dispatchEvent(new CustomEvent('saldoActualizado', { detail: { saldo: saldoOriginal } }));
+            this.aplicarSaldo(saldoOriginal);
           }
         });
       },

@@ -430,14 +430,6 @@ $blue-accent: var(--app-blue);
         }
       }
 
-      &.monto-item {
-        ion-input {
-          font-size: 1.15rem;
-          font-weight: 800;
-          color: $navy-primary !important;
-        }
-      }
-
       &.readonly-item {
         --background: var(--app-surface-3);
         opacity: 0.85;

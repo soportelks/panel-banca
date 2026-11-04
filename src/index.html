@@ -6,27 +6,20 @@
 
     <base href="/" />
 
-    <!-- Aplica el tema antes de renderizar para evitar destello -->
+    <!-- Tema institucional claro fijo en toda la aplicación -->
     <script>
       (function () {
         try {
-          var stored = localStorage.getItem('app-theme');
-          var theme =
-            stored === 'light' || stored === 'dark'
-              ? stored
-              : window.matchMedia &&
-                window.matchMedia('(prefers-color-scheme: dark)').matches
-              ? 'dark'
-              : 'light';
-          document.documentElement.classList.toggle('dark', theme === 'dark');
-          document.documentElement.setAttribute('data-theme', theme);
-          document.documentElement.style.colorScheme = theme;
+          localStorage.removeItem('app-theme');
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.style.colorScheme = 'light';
         } catch (e) {}
       })();
     </script>
 
     <!-- Configuraciones principales -->
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="light" />
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
