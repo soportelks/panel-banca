@@ -21,6 +21,8 @@ export class AppComponent implements OnDestroy {
   private tokenCheckInterval: any;
   public isPestanaBloqueada$ = this.singleTabService.isBloqueada$;
   public verificandoPestana = false;
+  public mensajeErrorPestana: string | null = null;
+  private errorPestanaTimeout: any;
 
   private readonly publicRoutes = [
     '',
@@ -52,19 +54,29 @@ export class AppComponent implements OnDestroy {
   }
 
   async reintentarConexionPestana() {
+    if (this.verificandoPestana) {
+      return;
+    }
+
     this.verificandoPestana = true;
+    this.mensajeErrorPestana = null;
+
+    // Descartar cualquier alerta previa abierta para evitar pantallas oscuras o superpuestas
+    await this.closeAllAlerts();
+
     const reanudado = await this.singleTabService.intentarReanudar();
     this.verificandoPestana = false;
 
-    if (!reanudado) {
-      // La otra pestaña SIGUE ABIERTA: advertir sin borrar la sesión
-      const alert = await this.alertCtrl.create({
-        header: 'Sesión activa en otra pestaña',
-        message: 'Tu sesión sigue abierta en la otra pestaña. Por favor ciérrala primero y luego presiona "Ya cerré la otra pestaña (Continuar)".',
-        buttons: ['Entendido'],
-        backdropDismiss: false
-      });
-      await alert.present();
+    if (reanudado) {
+      this.mensajeErrorPestana = null;
+      await this.closeAllAlerts();
+    } else {
+      // Mostrar advertencia directamente en la tarjeta (sin popups ni capas oscuras acumulables)
+      this.mensajeErrorPestana = 'Tu sesión sigue activa en la otra pestaña. Ciérrala primero para continuar en esta ventana.';
+      clearTimeout(this.errorPestanaTimeout);
+      this.errorPestanaTimeout = setTimeout(() => {
+        this.mensajeErrorPestana = null;
+      }, 5000);
     }
   }
 
@@ -183,9 +195,10 @@ export class AppComponent implements OnDestroy {
   }
 
   async closeAllAlerts() {
-    const topAlert = await this.alertCtrl.getTop();
-    if (topAlert) {
+    let topAlert = await this.alertCtrl.getTop();
+    while (topAlert) {
       await topAlert.dismiss();
+      topAlert = await this.alertCtrl.getTop();
     }
   }
 

@@ -22,19 +22,16 @@
 
       <div class="pestana-tip-box">
         <ion-icon name="information-circle-outline"></ion-icon>
-        <span>Para continuar operando, regresa a la pestaña original donde iniciaste tu sesión o cierra esta ventana.</span>
+        <span>Continúa en la pestaña original donde iniciaste tu sesión, o ciérrala para reactivar esta ventana.</span>
+      </div>
+
+      <!-- AVISO INLINE SI LA OTRA PESTAÑA SIGUE ABIERTA -->
+      <div class="pestana-inline-warning" *ngIf="mensajeErrorPestana">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>{{ mensajeErrorPestana }}</span>
       </div>
 
       <div class="pestana-actions">
-        <button
-          type="button"
-          class="btn-pestana-logout"
-          (click)="cerrarSesionDesdeBloqueo()"
-        >
-          <ion-icon name="log-out-outline"></ion-icon>
-          <span>Cerrar Sesión</span>
-        </button>
-
         <button
           type="button"
           class="btn-pestana-retry"
@@ -42,7 +39,16 @@
           (click)="reintentarConexionPestana()"
         >
           <ion-icon [name]="verificandoPestana ? 'hourglass-outline' : 'refresh-outline'"></ion-icon>
-          <span>{{ verificandoPestana ? 'Comprobando...' : 'Ya cerré la otra pestaña (Continuar)' }}</span>
+          <span>{{ verificandoPestana ? 'Comprobando...' : 'Reintentar y Continuar Aquí' }}</span>
+        </button>
+
+        <button
+          type="button"
+          class="btn-pestana-logout"
+          (click)="cerrarSesionDesdeBloqueo()"
+        >
+          <ion-icon name="log-out-outline"></ion-icon>
+          <span>Cerrar Sesión</span>
         </button>
       </div>
 

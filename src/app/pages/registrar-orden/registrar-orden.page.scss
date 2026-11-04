@@ -412,12 +412,21 @@ $blue-accent: var(--app-blue);
 
       ion-input {
         font-size: 0.95rem;
-        font-weight: 600;
+        font-weight: 500;
         color: var(--app-text) !important;
         --color: var(--app-text) !important;
 
+        &::part(label) {
+          font-size: 0.82rem;
+          font-weight: 600;
+          color: #64748b;
+          letter-spacing: -0.01em;
+        }
+
         &::part(native) {
           color: var(--app-text) !important;
+          font-weight: 600;
+          font-size: 0.95rem;
         }
       }
 

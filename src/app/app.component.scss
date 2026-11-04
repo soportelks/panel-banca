@@ -147,13 +147,36 @@ app-footer {
   }
 }
 
+.pestana-inline-warning {
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  color: #991b1b;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-align: left;
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+  animation: fadeInBackdrop 0.2s ease-out;
+
+  ion-icon {
+    font-size: 1.35rem;
+    color: #dc2626;
+    flex-shrink: 0;
+  }
+}
+
 .pestana-actions {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
   margin-bottom: 1.25rem;
 
-  .btn-pestana-logout {
+  .btn-pestana-retry {
     width: 100%;
     height: 48px;
     border-radius: 12px;
@@ -174,40 +197,42 @@ app-footer {
       font-size: 1.15rem;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: #0e1e33;
       transform: translateY(-1px);
     }
+
+    &:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
   }
 
-  .btn-pestana-retry {
+  .btn-pestana-logout {
     width: 100%;
-    height: 42px;
+    height: 44px;
     border-radius: 12px;
-    background: #f1f5f9;
+    background: #f8fafc;
     color: #475569;
-    border: 1px solid #cbd5e1;
+    border: 1.5px solid #e2e8f0;
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.45rem;
+    gap: 0.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
 
     ion-icon {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
+      color: #64748b;
     }
 
-    &:hover:not(:disabled) {
-      background: #e2e8f0;
+    &:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
       color: #0f172a;
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
     }
   }
 }
