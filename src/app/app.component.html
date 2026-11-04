@@ -1,4 +1,54 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
   <app-footer></app-footer>
+
+  <!-- PANTALLA INSTITUCIONAL DE BLOQUEO POR PESTAÑA DUPLICADA -->
+  <div class="pestana-bloqueada-backdrop" *ngIf="isPestanaBloqueada$ | async">
+    <div class="pestana-bloqueada-card">
+      <div class="pestana-icon-badge">
+        <ion-icon name="shield-outline"></ion-icon>
+      </div>
+
+      <div class="pestana-brand-logo">
+        <img src="assets/images/Logo_RDAM_negro.png" alt="Banca Digital RDAM" />
+      </div>
+
+      <h2 class="pestana-title">Sesión Activa en Otra Pestaña</h2>
+      <p class="pestana-kicker">SEGURIDAD BANCARIA RDAM</p>
+
+      <p class="pestana-desc">
+        Por tu seguridad y para evitar movimientos o transferencias duplicadas, solo está permitido operar en una sola pestaña a la vez.
+      </p>
+
+      <div class="pestana-tip-box">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <span>Para continuar operando, regresa a la pestaña original donde iniciaste tu sesión o cierra esta ventana.</span>
+      </div>
+
+      <div class="pestana-actions">
+        <button
+          type="button"
+          class="btn-pestana-logout"
+          (click)="cerrarSesionDesdeBloqueo()"
+        >
+          <ion-icon name="log-out-outline"></ion-icon>
+          <span>Cerrar Sesión</span>
+        </button>
+
+        <button
+          type="button"
+          class="btn-pestana-retry"
+          [disabled]="verificandoPestana"
+          (click)="reintentarConexionPestana()"
+        >
+          <ion-icon [name]="verificandoPestana ? 'hourglass-outline' : 'refresh-outline'"></ion-icon>
+          <span>{{ verificandoPestana ? 'Comprobando...' : 'Ya cerré la otra pestaña (Continuar)' }}</span>
+        </button>
+      </div>
+
+      <div class="pestana-footer-note">
+        <span>SPEI Conectado 24/7 · Multiplicando Oportunidades</span>
+      </div>
+    </div>
+  </div>
 </ion-app>
