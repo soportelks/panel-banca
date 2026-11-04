@@ -5,6 +5,7 @@ import { register } from 'swiper/element/bundle';
 import { filter } from 'rxjs/operators';
 import { AuthServiceService } from './services/auth-service.service';
 import { ThemeService } from './services/theme.service';
+import { SingleTabService } from './services/single-tab.service';
 
 
 register();
@@ -18,6 +19,9 @@ export class AppComponent implements OnDestroy {
   private inactivityTimeout: any;
   private readonly TIMEOUT_DURATION = 5 * 60 * 1000;
   private tokenCheckInterval: any;
+  public isPestanaBloqueada$ = this.singleTabService.isBloqueada$;
+  public verificandoPestana = false;
+
   private readonly publicRoutes = [
     '',
     '/',
@@ -39,11 +43,33 @@ export class AppComponent implements OnDestroy {
     private modalCtrl: ModalController,
     private authService: AuthServiceService,
     private navCtrl: NavController,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private singleTabService: SingleTabService
   ) {
     this.resetInactivityTimer();
     this.iniciarVerificacionToken();
     this.iniciarMonitoreoNavegacion();
+  }
+
+  async reintentarConexionPestana() {
+    this.verificandoPestana = true;
+    const reanudado = await this.singleTabService.intentarReanudar();
+    this.verificandoPestana = false;
+
+    if (!reanudado) {
+      // La otra pestaña SIGUE ABIERTA: advertir sin borrar la sesión
+      const alert = await this.alertCtrl.create({
+        header: 'Sesión activa en otra pestaña',
+        message: 'Tu sesión sigue abierta en la otra pestaña. Por favor ciérrala primero y luego presiona "Ya cerré la otra pestaña (Continuar)".',
+        buttons: ['Entendido'],
+        backdropDismiss: false
+      });
+      await alert.present();
+    }
+  }
+
+  cerrarSesionDesdeBloqueo() {
+    this.limpiarSesionLocal();
   }
 
   @HostListener('window:popstate')
