@@ -18,6 +18,7 @@ import { SpeiService } from 'src/app/services/spei.service';
 import { TesoreriaService } from 'src/app/services/tesoreria.service';
 import { Router } from '@angular/router';
 import { OtpServiceService } from 'src/app/services/otp-service.service';
+import { CodigoSeguridadService } from 'src/app/services/codigo-seguridad.service';
 
 @Component({
   selector: 'app-registrar-orden',
@@ -40,6 +41,8 @@ export class RegistrarOrdenPage implements AfterViewInit {
   timeLeft: number = 120;
   alertInstance: HTMLIonAlertElement | null = null;
   incorrectMessage: string = '';
+  tokenSolicitudSeguridad: string = '';
+  tokenAutorizacionSeguridad: string = '';
   fechaOperacion: string = "";
   datosSaldo: any = {
     codigo: 0,
@@ -80,6 +83,7 @@ export class RegistrarOrdenPage implements AfterViewInit {
     private teso: TesoreriaService,
     private router: Router,
     private otpService: OtpServiceService,
+    private codigoSeguridadService: CodigoSeguridadService,
   ) {
     this.formOrden = this.formBuilder.group({
       cuentaBeneficiario: [
@@ -365,6 +369,7 @@ export class RegistrarOrdenPage implements AfterViewInit {
       this.avanzarProgreso(0.6);
 
       const payload = {
+        tokenAutorizacion: this.tokenAutorizacionSeguridad,
         pago: {
           conceptoPago: formData.conceptoPago.trim(),
           cuentaOrdenante: this.ordenate.cuentaOrdenante.trim(),
@@ -545,27 +550,33 @@ export class RegistrarOrdenPage implements AfterViewInit {
 
   sendOtp(email: string): Promise<boolean> {
     return new Promise((resolve) => {
-      if (email) {
-        // Mostrar mensaje de envío antes de hacer la petición
-        this.message = 'Enviando código al correo...';
-        this.incorrectMessage = '';
+      this.message = 'Enviando código de seguridad...';
+      this.incorrectMessage = '';
 
-        this.otpService.sendOtp(email).subscribe(
-          (response) => {
+      this.codigoSeguridadService.solicitarCodigo('TRANSFERENCIA_SPEI').subscribe({
+        next: (response) => {
+          if (response.codigo === 0) {
+            this.tokenSolicitudSeguridad = response.tokenSolicitud || '';
             this.message = 'Código enviado al correo.';
             this.resendDisabled = true;
-            this.timeLeft = 120;
+            this.timeLeft = response.expiracionSegundos ? Math.floor(response.expiracionSegundos) : 120;
             this.startTimer();
-            this.openOtpModal(email, resolve);
-          },
-          (error) => {
-            this.message = 'Error al enviar el código.';
+            const destino = response.destinatarioEnmascarado || email;
+            this.openOtpModal(destino, resolve);
+          } else {
+            const errorMsg = response.mensaje || 'Error al solicitar código de seguridad.';
+            this.message = errorMsg;
+            this.presentAlert(errorMsg);
             resolve(false);
           }
-        );
-      } else {
-        resolve(false);
-      }
+        },
+        error: (error) => {
+          const mensajeError = error?.error?.mensaje || 'Error al enviar el código de seguridad.';
+          this.message = mensajeError;
+          this.presentAlert(mensajeError);
+          resolve(false);
+        }
+      });
     });
   }
 
@@ -584,7 +595,8 @@ export class RegistrarOrdenPage implements AfterViewInit {
 
   async openOtpModal(email: string, resolve: (value: boolean | PromiseLike<boolean>) => void) {
     this.alertInstance = await this.alertCtrl.create({
-      header: 'Ingresar Codigo de verificación',
+      header: 'Autorización de Transferencia SPEI',
+      subHeader: `Código enviado a: ${email}`,
       backdropDismiss: false,
       cssClass: 'otp-custom-alert',
       message: `
@@ -635,27 +647,39 @@ export class RegistrarOrdenPage implements AfterViewInit {
 
   verifyOtp(email: string, code: number) {
     return new Promise<boolean>((resolve) => {
-      if (email && code !== null && code !== undefined && `${code}`.trim() !== '') {
-        this.otpService.verifyOtp(email, code).subscribe(
-          valid => {
-            if (valid) {
-              this.message = 'Código correcto. Autenticación exitosa.';
+      if (code !== null && code !== undefined && `${code}`.trim() !== '') {
+        this.codigoSeguridadService.validarCodigo(`${code}`.trim(), 'TRANSFERENCIA_SPEI', this.tokenSolicitudSeguridad).subscribe({
+          next: (res) => {
+            if (res.valido) {
+              this.tokenAutorizacionSeguridad = res.tokenAutorizacion || '';
+              this.message = 'Código correcto. Autorización exitosa.';
               clearInterval(this.timer);
               resolve(true);
             } else {
-              this.message = ' : Código incorrecto. Puedes intentarlo de nuevo.';
-              this.incorrectMessage = ' : Código incorrecto. Inténtalo nuevamente.';
+              this.message = ` : ${res.mensaje}`;
+              this.incorrectMessage = ` : ${res.mensaje}`;
+              if (res.codigo === 2) {
+                // Código bloqueado por exceder intentos
+                clearInterval(this.timer);
+                if (this.alertInstance) {
+                  this.alertInstance.dismiss();
+                }
+                this.presentAlert(res.mensaje);
+                resolve(false);
+                return;
+              }
               this.resendDisabled = false;
               this.updateAlertMessage();
               resolve(false);
             }
           },
-          () => {
-            this.incorrectMessage = ' : Error al validar el código. Inténtalo nuevamente.';
+          error: (err) => {
+            const msg = err?.error?.mensaje || 'Error al validar el código. Inténtalo nuevamente.';
+            this.incorrectMessage = ` : ${msg}`;
             this.updateAlertMessage();
             resolve(false);
           }
-        );
+        });
       } else {
         this.incorrectMessage = ' : Ingresa un código de verificación válido.';
         this.updateAlertMessage();
